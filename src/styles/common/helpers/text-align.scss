@@ -1,0 +1,10 @@
+@each $key, $val in (c, center), (l, left), (r, right) {
+  .dts-ta-#{$key} {
+    text-align: $val;
+  }
+}
+
+@mixin lineH($index){
+  height: $index;
+  line-height: $index;
+}

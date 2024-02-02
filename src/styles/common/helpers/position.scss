@@ -1,0 +1,5 @@
+@each $key, $val in (r, relative), (a, absolute), (f, fixed) {
+  .dts-pos-#{$key} {
+    position: $val;
+  }
+}

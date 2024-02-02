@@ -1,0 +1,26 @@
+@include b(public) {
+
+  @include e(content) {
+    align-items: center;
+    @include m(icon) {
+      color:#f7ba2a;
+      position: relative;
+      font-size: 36px !important;
+      margin-right:13px;
+    }
+  }
+
+  @include e(more) {
+    text-align: right;
+    color:#b2945e;
+    margin-left: 46px;
+    margin-top:12px;
+    line-height: 1;
+    cursor:pointer;
+  }
+
+  @include e(btns) {
+    padding:20px 0 20px 15px;
+    text-align: right;
+  }
+}

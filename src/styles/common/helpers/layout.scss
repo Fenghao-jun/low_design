@@ -1,0 +1,49 @@
+@use 'sass:math';
+
+@mixin col($type) {
+  @for $i from 1 through 24{
+    .dts-col-#{$i}{
+      @if $type{
+        float: left;
+        width: math.div(100%, (24 * $i));
+        &.dts-col-offset--#{$i} {
+          margin-left: math.div(100%, (24 * $i));
+        }
+      }@else{
+        width: math.div(100% / (24 * $i));
+        &.dts-col-offset--#{$i} {
+          margin-left: math.div(100% / (24 * $i));
+        }
+      }
+    }
+  }
+}
+@mixin generateGrid($type){
+	@if $type{
+    position: relative;
+    box-sizing: border-box;
+    &::after {
+      display: table;
+      content: "";
+      clear: both;
+    }
+		@include col(#{$type});
+	}@else{
+    display: flex;
+    &::after {
+      display: none;
+    }
+    @include col(#{$type});
+  }
+}
+
+.dts-row--float{
+  @include generateGrid(true);
+}
+.dts-row--flex {
+  @include generateGrid(false);
+}
+
+@function px2rem($px) {
+  @return $px/16/2+rem;
+}

@@ -1,0 +1,13 @@
+@each $key, $val in (r, right), (l, left) {
+  .dts-fl-#{$key} {
+    float: $val;
+  }
+}
+
+.dts-clearfix::after {
+  content: '';
+  height: 0;
+  clear: both;
+  visibility: hidden;
+  display: block;
+}

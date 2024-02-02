@@ -1,0 +1,23 @@
+@include b(admin-pages) {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  padding-left: 200px;
+  background-color: #ecf0f5;
+  min-width: 980px;
+}
+
+@include b(admin-navbar) {
+  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 200px;
+  bottom: 0;
+}
+
+@include b(admin-main) {
+  padding-bottom: 20px;
+}

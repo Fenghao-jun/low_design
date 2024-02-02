@@ -1,0 +1,65 @@
+@import "./notic.scss";
+@import "./popover.scss";
+@import './msg.scss';
+
+@include b(topbar) {
+  height: 76px;
+  background: #fff;
+  padding-left: 20px;
+  padding-right: 38px;
+  margin-bottom: 20px;
+
+  @include e(box) {
+    height: 100%;
+  }
+
+  @include e(name) {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    @include m(icon) {
+      color: #58595b;
+      @include when(show) {
+        transform: rotate(180deg) scale(0.75);
+      }
+    }
+  }
+
+  @include e(user) {
+    padding-right: 13px;
+    margin-right: 15px;
+
+    @include m(avatar) {
+      width: 25px;
+      height: 25px;
+      overflow: hidden;
+      border-radius: 50%;
+      display: block;
+      margin-right: 13px;
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    @include m(name) {
+      color: #333;
+      font-size: 14px;
+      padding-right: 8px;
+    }
+
+    @include m(role) {
+      color: #808080;
+      font-size: 12px;
+      padding-right: 8px;
+    }
+  }
+}
+
+@include b(topsetting) {
+  color: #333;
+  display: block;
+  text-decoration: none;
+}

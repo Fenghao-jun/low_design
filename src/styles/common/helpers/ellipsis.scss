@@ -1,0 +1,7 @@
+@import '../mixins/ellipsis.scss';
+
+@each $key, $val in (l1, 1), (l2, 2) {
+  .dts-ellipsis-#{$key} {
+    @include ellipsis($val)
+  }
+}

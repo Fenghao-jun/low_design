@@ -1,0 +1,22 @@
+
+$flex-params: (
+	x: row,
+	y: column,
+	start: flex-start,
+	center: center,
+	around: space-around,
+	between: space-between,
+);
+ 
+@mixin flex($coor:null, $justify:null, $alignItems:null) {
+	display: flex;
+	@if $coor {
+		flex-direction: map-get($flex-params, $coor);
+	}
+	@if $justify {
+		justify-content: map-get($flex-params, $justify);
+	}
+	@if $alignItems {
+		align-items: map-get($flex-params, $alignItems);
+	}
+}

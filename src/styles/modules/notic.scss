@@ -1,0 +1,37 @@
+@include b(ordernotice) {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 99999999;
+  background-color: rgba(0, 0, 0, .5);
+  left: 0;
+  top: 0;
+
+  @include e(content) {
+    width: 430px;
+    text-align: center;
+    background-color: #fff;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    margin-left: -215px;
+    padding-top: 20px;
+    border-radius: 2px;
+    overflow: hidden;
+    @include m(title) {
+      color: rgb(31, 45, 61);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    @include m(desc) {
+      padding: 30px 0;
+      font-size: 14px;
+      text-align: center;
+    }
+    @include m(btns) {
+      padding: 10px 20px 15px 0;
+      text-align: right;
+    }
+  }
+}

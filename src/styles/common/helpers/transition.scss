@@ -1,0 +1,10 @@
+.dts-transition{
+  transition: all 0.3s;
+}
+.dts-transparent {
+  opacity: 0;
+}
+
+.dts-shadow {
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+}

@@ -1,53 +1,42 @@
-const path = require('path');
+const proxyConfig = require('./proxy.ts')
 const { name } = require('./package')
 const { defineConfig } = require('@vue/cli-service')
 
-function resolve(dir) {
-  return path.join(__dirname, dir);
-}
 module.exports = defineConfig({
-  transpileDependencies: true,
+  transpileDependencies: false,
   devServer: {
-    port: 10008,
+    port: 10003,
     headers: {
       'Access-Control-Allow-Origin': '*'
     },
-    proxy: {
-      '/pos-api': {
-        target: 'https://dev-dts-gateway.dataso.net',
-        changeOrigin: true,
-        secure: false,
-        wx: true
-      },
-      '/oss-api': {
-        target: 'https://dts-gateway.dataso.net',
-        changeOrigin: true,
-        secure: false,
-        wx: true
-      },
-      '/franchisee-api': {
-        target: 'https://dev-dts-gateway.dataso.net',
-        changeOrigin: true,
-        secure: false,
-        wx: true
-      }
+    proxy: proxyConfig
+  },
+  productionSourceMap: false,
+  configureWebpack: {
+    output: {
+      library: `${name}-[name]`,
+      libraryTarget: 'umd', // 把微应用打包成 umd 库格式
+      chunkLoadingGlobal: `webpackJsonp_${name}`
     }
   },
-  configureWebpack: config => {
-    // 多核启动编译及内存提升
-    const data = config.plugins[8];
-    // 进程数量
-    data.workersNumber = require('os').cpus().length > 4 ? 4 : require('os').cpus().length;
-    // 单个进程最大使用内存
-    data.memoryLimit = 8192;
+
+  chainWebpack: (config) => {
+    if (process.env.NODE_ENV === 'production') {
+      // 生产环境下关闭插件，降低占用CPU资源
+      config.module
+        .rule('ts')
+        .use('ts-loader')
+        .loader('ts-loader')
+        .tap((options) => {
+          options.transpileOnly = true
+          return options
+        })
+
+      config.plugins.delete('fork-ts-checker')
+      config.plugins.delete('eslint')
+    }
   },
-  // configureWebpack: {
-  //   output: {
-  //     library: `${name}-[name]`,
-  //     libraryTarget: 'umd', // 把微应用打包成 umd 库格式
-  //     chunkLoadingGlobal: `webpackJsonp_${name}`
-  //   }
-  // },
-  // 多线程打包
-  parallel: require('os').cpus().length > 1
+
+  // 关闭多线程打包
+  parallel: false
 })

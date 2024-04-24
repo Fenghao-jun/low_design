@@ -22,7 +22,10 @@
     "paths": {
       "@/*": [
         "src/*"
-      ]
+      ],
+      "@core/*": ["src/design-core/*"],
+      "@design/*": ["src/design/*"],
+
     },
     "lib": [
       "esnext",

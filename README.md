@@ -1,24 +1,10 @@
-# vue3-ts
+## 项目结构
 
-## Project setup
 ```
-npm install
-```
+|-- design 项目页面入口
+	｜-- pages 页面
+	｜-- component 关于低代码业务封装的ui
+|-- design-code 低代码逻辑处理
 
-### Compiles and hot-reloads for development
-```
-npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

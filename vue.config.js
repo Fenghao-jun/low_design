@@ -8,7 +8,7 @@ function resolve(dir) {
 module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
-    port: 10003,
+    port: 10008,
     headers: {
       'Access-Control-Allow-Origin': '*'
     },

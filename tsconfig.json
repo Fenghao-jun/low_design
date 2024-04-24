@@ -11,13 +11,14 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "baseUrl": ".",
     "types": [
       "webpack-env",
       "element-plus/global",
       "node"
     ],
+    "noImplicitAny": false,
     "paths": {
       "@/*": [
         "src/*"

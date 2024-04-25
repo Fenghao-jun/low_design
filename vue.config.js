@@ -1,11 +1,12 @@
 const proxyConfig = require('./proxy.ts')
+const path = require('path')
 const { name } = require('./package')
 const { defineConfig } = require('@vue/cli-service')
 
 module.exports = defineConfig({
   transpileDependencies: false,
   devServer: {
-    port: 10003,
+    port: 10008,
     headers: {
       'Access-Control-Allow-Origin': '*'
     },
@@ -13,6 +14,14 @@ module.exports = defineConfig({
   },
   productionSourceMap: false,
   configureWebpack: {
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src'),
+        '@component': path.resolve(__dirname, 'src/design/component'),
+        '@core': path.resolve(__dirname, 'src/design-core'),
+        '@design': path.resolve(__dirname, 'src/design')
+      }
+    },
     output: {
       library: `${name}-[name]`,
       libraryTarget: 'umd', // 把微应用打包成 umd 库格式

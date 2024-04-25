@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "dev": "vue-cli-service serve",
-    "build:test": "cross-env NODE_ENV=production vue-cli-service build --mode test",
+    "build:test": "cross-env NODE_ENV=production MODE=test vue-cli-service build --mode test",
     "build": "cross-env NODE_ENV=production vue-cli-service build --mode production",
     "lint": "vue-cli-service lint"
   },
@@ -13,6 +13,7 @@
     "@vueuse/core": "^10.9.0",
     "am-admin-component": "^0.2.5",
     "am-admin-http": "^5.0.0",
+    "am-polyfill": "^0.2.3",
     "axios": "^1.6.7",
     "core-js": "^3.8.3",
     "dayjs": "^1.11.10",

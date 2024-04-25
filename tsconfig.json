@@ -25,6 +25,7 @@
       ],
       "@core/*": ["src/design-core/*"],
       "@design/*": ["src/design/*"],
+      "@component/*":["src/design/component/*"]
 
     },
     "lib": [

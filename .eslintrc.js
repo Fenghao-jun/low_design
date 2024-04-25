@@ -18,7 +18,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     '@typescript-eslint/no-explicit-any': ['off'],
     'vue/multi-word-component-names': [
-      'error',
+      'off',
       {
         ignores: ['index', 'main', 'Pagination'] // 需要忽略的组件名
       }

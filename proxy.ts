@@ -8,6 +8,24 @@ const proxyConfig = {
     secure: false,
     wx: true
   },
+  js: {
+    target: 'http://localhost:5008',
+    changeOrigin: true,
+    secure: false,
+    wx: true
+  },
+  css: {
+    target: 'http://localhost:5008',
+    changeOrigin: true,
+    secure: false,
+    wx: true
+  },
+  img: {
+    target: 'http://localhost:5008',
+    changeOrigin: true,
+    secure: false,
+    wx: true
+  },
   '/member-api': {
     target: javaGatewayLink,
     changeOrigin: true,

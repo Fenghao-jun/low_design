@@ -1,7 +1,7 @@
 <template>
   <div>
     <component
-      v-for="component in mock"
+      v-for="component in props.components"
       :key="component.componentId"
       :_id="component.componentId"
       :_name="component.name"
@@ -14,7 +14,7 @@
           Array.isArray(component.children) && component.children.length > 0
         "
       >
-        <RootRender />
+        <RootRender :components="component.children" />
       </template>
     </component>
   </div>
@@ -23,65 +23,10 @@
 // TODO 最外层的render
 import { setComponentRef } from '@core/utils/component-ref'
 import componentRegister from '@core/utils/component-regiter'
+import { defineProps } from 'vue'
+import { RootRenderProps } from './RootRenderOptions'
 
-const mock = [
-  {
-    key: 'CRUD',
-    name: '表格组件',
-    description: '增删改查表格',
-    componentId: 6,
-    props: {
-      columns: [
-        {
-          prop: 'name',
-          label: '门店名称',
-          search: {
-            key: 'storeName',
-            el: 'input',
-            props: {
-              placeholder: '输入门店名称'
-            }
-          }
-        },
-        {
-          prop: 'tel',
-          label: '手机号码',
-          search: {
-            key: 'phone',
-            el: 'input',
-            props: {
-              placeholder: '输入负责人手机号码'
-            }
-          }
-        },
-        {
-          prop: 'storedBalance',
-          label: '储蓄余额（元）',
-          sortable: 'custom'
-        },
-        {
-          prop: 'weightReducingApparatusBootNum',
-          label: '减肥仪开机次数',
-          sortable: 'custom'
-        },
-        {
-          prop: 'cabinBootNum',
-          label: '舱开机次数',
-          sortable: 'custom'
-        },
-        {
-          prop: 'operation',
-          label: '操作',
-          fixed: 'right',
-          width: 250
-        }
-      ],
-      api: 'baidu.com',
-      'row-key': 'id'
-    },
-    children: []
-  }
-]
+const props = defineProps<RootRenderProps>()
 </script>
 
 <style scoped></style>

@@ -28,3 +28,7 @@ declare module '@/components/ProTable/index.vue' {
 }
 
 declare module '@packy-tang/vue-tinymce' {}
+
+declare interface AnyObject {
+  [key: string]: any
+}

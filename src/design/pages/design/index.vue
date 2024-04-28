@@ -1,9 +1,22 @@
 <template>
   <div>
-    设计 321
-    <Render />
+    <Render :components="pageConfig.components" />
   </div>
 </template>
+
 <script setup lang="ts" name="design">
 import Render from '@core/render/RootRender/RootRender.vue'
+import { getPageConfig } from '@design/api'
+import { ref } from 'vue'
+
+const pageConfig = ref({
+  components: []
+})
+
+const initPageConfig = async () => {
+  const res = await getPageConfig()
+  pageConfig.value = res.data
+}
+
+initPageConfig()
 </script>

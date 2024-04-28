@@ -1,5 +1,11 @@
 import requestAxios from 'am-admin-http'
 import { getCookie } from 'am-polyfill'
+console.log(
+  'process.env: ',
+  process.env.VUE_APP_HTTP_MODE,
+  process.env.VUE_APP_HTTP_MODE === 'dev'
+)
+
 const request = requestAxios.createAxiosInstance({
   baseURL: process.env.VUE_APP_BASE_API,
   envObj: {

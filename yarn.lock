@@ -2188,10 +2188,10 @@ am-admin-hooks@^0.2.3:
   resolved "https://npm.dataso.net/repository/npm/am-admin-hooks/-/am-admin-hooks-0.2.3.tgz#e98633c077b7a0f2a98b254a1aec9ffbd7b182e2"
   integrity sha512-mr9gfb8BC8m0SgZ6inEPNUYrHo8+dSxySOJXIqlKLZPPS3RhagDqIvsZ3jPCXWMur4blmyBrIrZ8oRMcRxPE3w==
 
-am-admin-http@^5.0.0:
-  version "5.0.0"
-  resolved "https://npm.dataso.net/repository/npm/am-admin-http/-/am-admin-http-5.0.0.tgz"
-  integrity sha512-ZfU/mOQ9IzCpZqEi/l9+uYsmRvOl/M6+IqFwaiQDQfgnx2HMkeyOiIo/Uz33ht3HT0AtpqsLzJqBrJpbVh7YPA==
+am-admin-http@^6.2.0:
+  version "6.2.0"
+  resolved "https://npm.dataso.net/repository/npm/am-admin-http/-/am-admin-http-6.2.0.tgz#ac97c83ca3f1eeefe22a5f2ad716936b9ddc5b82"
+  integrity sha512-icWINPMw/5gR6eA078qQdKbTsAD0XAcF5EtpiHuUu/rSFffqnrs2N+b2+VmZPkVdgQiWDjhQYbCqz2hxJzWg7g==
   dependencies:
     axios "1.6.8"
 

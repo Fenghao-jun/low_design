@@ -37,6 +37,12 @@ const proxyConfig = {
     changeOrigin: true,
     secure: false,
     wx: true
+  },
+  '/design-api': {
+    target: gatewayLink,
+    changeOrigin: true,
+    secure: false,
+    wx: true
   }
 }
 

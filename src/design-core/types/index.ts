@@ -16,7 +16,7 @@ export interface Component {
   children: Component[]
 
   events: ComponentEvent // 组件事件
-  slots: any[]
-  styles: any[]
-  examples: any[]
+  slots: any[] // TODO 组件插槽
+  styles: any[] // TODO 样式
+  examples: any[] // TODO 示例
 }

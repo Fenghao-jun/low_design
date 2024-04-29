@@ -1,3 +1,5 @@
+import { LinkAction } from '@core/actions'
+
 /**
  * 事件注册中心类，集中管理不同事件的注册与检索过程，
  */
@@ -35,13 +37,15 @@ class ActionRegisterCenter {
    *
    * @returns - 包含所有已注册事件的 `Map` 对象。
    */
-  public static getRegisterComInfo(): Map<string, any> {
+  public static getRegisterActionInfo(): Map<string, any> {
     return ActionRegisterCenter._registerActionMap
   }
 }
 
 // 创建并初始化事件注册中心的单一实例。
 const actionRegisterCenter = new ActionRegisterCenter()
+
+ActionRegisterCenter.register('link', new LinkAction())
 
 // 导出该实例以便于全局访问和使用。
 export default actionRegisterCenter

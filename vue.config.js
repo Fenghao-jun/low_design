@@ -32,20 +32,20 @@ module.exports = defineConfig({
       chunkLoadingGlobal: `webpackJsonp_${name}`
     },
     plugins: [
-
-      // new ModuleFederationPlugin({
-      //   remotes: {
-      //     components: 'myApp@http://localhost:5008/componentEntry.js',
-      //   },
-      //   shared: {
-      //     // vue必须两边都需要写
-      //     vue: {
-      //       eager: true, // 立即加载  不做按需加载
-      //       singleton: true,
-      //     }
-      //   },
-      // })
-
+      new ModuleFederationPlugin({
+        remotes: {
+          // 消费提供方的组件时
+          // [当前使用的命名]: [消费方提供的name]@[域名]/[提供方定义的入口文件名称]
+          demo_components: 'demo@http://localhost:3001/demoComponentEntry.js',
+        },
+        shared: {
+          // vue必须两边都需要写
+          vue: {
+            eager: true, // 立即加载  不做按需加载
+            singleton: true,
+          }
+        },
+      })
     ]
   },
   chainWebpack: (config) => {

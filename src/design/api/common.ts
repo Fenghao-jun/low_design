@@ -3,6 +3,7 @@ import request from '../http'
 import { CustomRequestConfig } from 'am-admin-http'
 
 const DESIGN_API = '/design-api'
+const NORMAL_REQUEST_URL = `${DESIGN_API}/aiAPI`
 
 export function getPageConfig(id = '2') {
   return request.get({ url: `${DESIGN_API}/pageConfigurationModel/${id}` })
@@ -19,6 +20,6 @@ export function normalRequest(
 ) {
   return request.post({
     ...config,
-    url: `${DESIGN_API}/aiApi/${config.url}`
+    url: `${NORMAL_REQUEST_URL}${config.url}`
   })
 }

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <ProTable v-bind="proTablePropsWrapper" />
+    <ProTable v-bind="proTablePropsWrapper">
+      <template v-if="OperationList.size > 0" #operation="scope">
+        {{ scope.row }}
+      </template>
+    </ProTable>
   </div>
 </template>
 
@@ -41,6 +45,14 @@ const proTablePropsWrapper = computed(() => {
     ...props,
     requestApi: apiRequest
   }
+})
+
+const OperationList = computed(() => {
+  const listMap = new Map()
+  if (props.columns.find((item) => item.prop === 'operation')) {
+    // TODO
+  }
+  return listMap
 })
 </script>
 

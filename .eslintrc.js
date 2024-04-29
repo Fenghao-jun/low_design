@@ -23,6 +23,7 @@ module.exports = {
         ignores: ['index', 'main', 'Pagination'] // 需要忽略的组件名
       }
     ],
-    '@typescript-eslint/no-non-null-assertion': 'off'
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    "no-template-curly-in-string": "warn"
   }
 }

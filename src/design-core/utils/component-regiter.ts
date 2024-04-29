@@ -1,5 +1,4 @@
 import { Button, CRUD } from '@design/components'
-console.log('Button: ', Button)
 
 /**
  * 组件注册中心类，用于管理组件的注册与引用。
@@ -24,11 +23,6 @@ class ComponentRegisterCenter {
    */
   public getComponent(name) {
     if (name) {
-      console.log(
-        'ComponentRegisterCenter._registerComponentMap: ',
-        ComponentRegisterCenter._registerComponentMap.get('CURD')
-      )
-
       return ComponentRegisterCenter._registerComponentMap.get(name) || null
     }
     return null

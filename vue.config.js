@@ -32,18 +32,20 @@ module.exports = defineConfig({
       chunkLoadingGlobal: `webpackJsonp_${name}`
     },
     plugins: [
-      new ModuleFederationPlugin({
-        remotes: {
-          components: 'myApp@http://localhost:5008/componentEntry.js',
-        },
-        shared: {
-          // vue必须两边都需要写
-          vue: {
-            eager: true, // 立即加载  不做按需加载
-            singleton: true,
-          }
-        },
-      })
+
+      // new ModuleFederationPlugin({
+      //   remotes: {
+      //     components: 'myApp@http://localhost:5008/componentEntry.js',
+      //   },
+      //   shared: {
+      //     // vue必须两边都需要写
+      //     vue: {
+      //       eager: true, // 立即加载  不做按需加载
+      //       singleton: true,
+      //     }
+      //   },
+      // })
+
     ]
   },
   chainWebpack: (config) => {

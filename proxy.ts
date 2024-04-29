@@ -57,7 +57,7 @@ const proxyConfig = {
     wx: true
   },
   '/design-api': {
-    target: gatewayLink,
+    target: javaGatewayLink,
     changeOrigin: true,
     secure: false,
     wx: true

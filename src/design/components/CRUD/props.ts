@@ -1,11 +1,12 @@
+import { ListenerAction } from '@/design-core/utils/componentActionCenter/Action'
 import { ApiConfig } from '@core/types'
 import { ProTableProps } from 'am-admin-component'
 
 type RowOperationType = 'edit' | 'delete' | 'custom'
 
-interface RowOperation {
-  desc: string
-  action: string
+interface RowOperation extends ListenerAction {
+  desc?: string
+  text: string
 }
 
 type TableRowOperation = {
@@ -14,4 +15,5 @@ type TableRowOperation = {
 
 export interface CRUDProps extends ProTableProps {
   api: ApiConfig
+  operations?: TableRowOperation
 }

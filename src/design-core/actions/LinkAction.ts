@@ -4,7 +4,6 @@ import {
 } from '@core/utils/componentActionCenter/Action'
 
 import { evaluate } from 'amis-formula'
-import actionRegisterCenter from '../utils/componentActionCenter/action-regiter'
 
 // 跳转动作
 interface ILinkAction extends ListenerAction {
@@ -19,7 +18,11 @@ export class LinkAction implements RendererAction {
   async run(action: ILinkAction, render, eventData) {
     if (action.actionType === 'link') {
       // TODO 根据公式和事件参数提取url
-      const url = evaluate('/hhhhh/dddd/${bbb.aaa}', { bbb: { aaa: '123' } })
+      if (!action.args.url) {
+        console.error('LinkAction缺少url')
+        return
+      }
+      const url = evaluate(action.args.url, { ...eventData })
       console.log('url: ', url)
     } else {
       console.error('actionType 不存在')

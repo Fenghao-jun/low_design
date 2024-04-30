@@ -1,8 +1,7 @@
 <template>
   <div>
     <Render :components="pageConfig.components" />
-    设计 321
-    <!-- <Render /> -->
+
     <!-- <DemoComponentOfIncrement :count="count" @increment="count++"></DemoComponentOfIncrement>
     <DemoComponentOfProTable></DemoComponentOfProTable> -->
   </div>

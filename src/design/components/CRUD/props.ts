@@ -4,7 +4,7 @@ import { ProTableProps } from 'am-admin-component'
 
 type RowOperationType = 'edit' | 'delete' | 'custom'
 
-interface RowOperation extends ListenerAction {
+export interface RowOperation extends ListenerAction {
   desc?: string
   text: string
 }

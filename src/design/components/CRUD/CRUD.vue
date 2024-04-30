@@ -1,8 +1,18 @@
 <template>
   <div>
-    <ProTable v-bind="proTablePropsWrapper">
-      <template v-if="OperationList.size > 0" #operation="scope">
-        {{ scope.row }}
+    <ProTable v-bind="proTablePropsWrapper" :columns="columns">
+      <template #operation="scope">
+        <!-- {{ scope.row }} -->
+
+        <template v-for="(value, key) in operations" :key="key">
+          <ElButton
+            text
+            type="primary"
+            @click="handleActionClick(value, scope.row)"
+          >
+            {{ value.text }}</ElButton
+          >
+        </template>
       </template>
     </ProTable>
   </div>
@@ -11,8 +21,9 @@
 <script setup lang="ts">
 import { ProTable } from 'am-admin-component'
 import { computed, withDefaults } from 'vue'
-import { CRUDProps } from './props'
+import { CRUDProps, RowOperation } from './props'
 import { useApi } from '@design/hooks/useApi'
+import actionRegisterCenter from '@/design-core/utils/componentActionCenter/action-regiter'
 
 const props = withDefaults(defineProps<CRUDProps>(), {
   columns: () => [],
@@ -47,13 +58,30 @@ const proTablePropsWrapper = computed(() => {
   }
 })
 
-const OperationList = computed(() => {
-  const listMap = new Map()
-  if (props.columns.find((item) => item.prop === 'operation')) {
-    // TODO
+const columns = computed(() => {
+  const list = props.columns
+
+  if (props.operations) {
+    list.push({
+      prop: 'operation',
+      fixed: 'right',
+      label: '操作',
+      width: 250
+    })
   }
-  return listMap
+
+  return list
 })
+
+const handleActionClick = (action: RowOperation, rowData: any) => {
+  const actionInstance = actionRegisterCenter.getAction(action.actionType)
+
+  if (!actionInstance) {
+    console.warn('未注册该action:', action.actionType)
+    return
+  }
+  actionInstance.run(action, {}, rowData)
+}
 </script>
 
 <style scoped></style>

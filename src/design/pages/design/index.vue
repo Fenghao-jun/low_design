@@ -2,12 +2,12 @@
   <div>
     <!-- <Render :components="pageConfig.components" /> -->
 
-    <!-- <Render :components="pageConfig.components" /> -->
+    <Render :components="pageConfig.components" />
     设计 321
-    <RemoteComponent
+    <!-- <RemoteComponent
       :remote-config="{ scope: 'demo_components', target: 'protable' }"
       link="demo_components/protable.vue"
-    />
+    /> -->
     <!-- <Render /> -->
     <!-- <DemoComponentOfIncrement :count="count" @increment="count++"></DemoComponentOfIncrement>
     <DemoComponentOfProTable></DemoComponentOfProTable> -->

@@ -1,9 +1,8 @@
-import { Button, CRUD } from '@design/components'
-
+import { Button, CRUD, RemoteComponent } from '@design/components'
 /**
  * 组件注册中心类，用于管理组件的注册与引用。
  */
-class ComponentRegisterCenter {
+export class ComponentRegisterCenter {
   // 组件注册映射表，存储组件名称与组件实例的映射关系
   public static _registerComponentMap = new Map<string, any>()
 
@@ -42,6 +41,7 @@ const componentRegister = new ComponentRegisterCenter()
 
 ComponentRegisterCenter.register('Button', Button)
 ComponentRegisterCenter.register('CRUD', CRUD)
+ComponentRegisterCenter.register('RemoteComponent', RemoteComponent)
 
 // 导出组件注册中心实例
 export default componentRegister

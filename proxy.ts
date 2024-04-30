@@ -9,19 +9,19 @@ const proxyConfig = {
     wx: true
   },
   js: {
-    target: 'http://localhost:3001',
+    target: 'https://fatjun-file.oss-cn-shenzhen.aliyuncs.com/remote-comp/',
     changeOrigin: true,
     secure: false,
     wx: true
   },
   css: {
-    target: 'http://localhost:3001',
+    target: 'https://fatjun-file.oss-cn-shenzhen.aliyuncs.com/remote-comp/',
     changeOrigin: true,
     secure: false,
     wx: true
   },
   img: {
-    target: 'http://localhost:3001',
+    target: 'https://fatjun-file.oss-cn-shenzhen.aliyuncs.com/remote-comp/',
     changeOrigin: true,
     secure: false,
     wx: true

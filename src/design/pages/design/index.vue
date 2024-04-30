@@ -1,7 +1,8 @@
 <template>
   <div>
-    <Render :components="pageConfig.components" />
+    <!-- <Render :components="pageConfig.components" /> -->
     设计 321
+    <RemoteComponent :remote-config="{ scope: 'demo_components', target: 'protable' }" link="demo_components/protable.vue"/>
     <!-- <Render /> -->
     <!-- <DemoComponentOfIncrement :count="count" @increment="count++"></DemoComponentOfIncrement>
     <DemoComponentOfProTable></DemoComponentOfProTable> -->
@@ -9,8 +10,9 @@
 </template>
 
 <script setup lang="ts" name="design">
-import { defineAsyncComponent, ref } from 'vue'
+import { ref } from 'vue'
 import Render from '@core/render/RootRender/RootRender.vue'
+import { RemoteComponent } from '../../components/RemoteComponent'
 import { getPageConfig } from '@design/api'
 
 const pageConfig = ref({

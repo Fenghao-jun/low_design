@@ -3,6 +3,5 @@ export interface Props {
     scope: string
     name: string
   }
-  componentProps?: Record<string, any>
-  componentEvents?: Record<string, string>
+  [key: string]: any
 }

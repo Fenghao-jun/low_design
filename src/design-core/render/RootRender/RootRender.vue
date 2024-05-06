@@ -56,7 +56,7 @@ const handleEvent = (component: Component) => {
 const getComponentProps = (component: Component) => {
   return {
     ...component.props,
-    children: component.name === 'Form' ? component.children : undefined
+    children: component.key === 'Form' ? component.children : undefined
   }
 }
 </script>

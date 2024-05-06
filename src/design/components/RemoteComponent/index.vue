@@ -1,15 +1,17 @@
 <template>
   <template v-if="show">
-    <component :is="componentRegister.getComponent(componentName)" v-bind="$attrs"></component>
+    <component :is="componentRegister.getComponent(componentName)" v-bind="$attrs" v-on="attr.events"></component>
   </template>
+
 </template>
 
 <script setup lang="ts">
-import { Component, computed, ref, onErrorCaptured } from 'vue'
+import { Component, computed, ref, onErrorCaptured, useAttrs } from 'vue'
 import componentRegister, { ComponentRegisterCenter } from '@core/utils/component-regiter'
 import { Props } from './type'
 
 const props = defineProps<Props>()
+const attr = useAttrs()
 
 const emits = defineEmits(['error'])
 

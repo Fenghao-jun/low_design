@@ -24,6 +24,7 @@ module.exports = {
       }
     ],
     '@typescript-eslint/no-non-null-assertion': 'off',
-    "no-template-curly-in-string": "warn"
+    "no-template-curly-in-string": "warn",
+    "@typescript-eslint/ban-ts-comment": "warn"
   }
 }

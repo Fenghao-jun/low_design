@@ -17,6 +17,7 @@ const initPageConfig = async () => {
   const res = await getPageConfig()
   pageConfig.value = res.data as any
   // 测试remote
+  // @ts-ignore
   pageConfig.value.components = (pageConfig.value.components as any[]).map(
     (c) => {
       if (c.key === 'RemoteComponent') {
@@ -33,7 +34,9 @@ const initPageConfig = async () => {
       return c
     }
   )
+  // @ts-ignore
   pageConfig.value.components.push({
+    // @ts-ignore
     ...pageConfig.value.components[pageConfig.value.components.length - 1],
     key: 'RemoteComponent',
     props: {

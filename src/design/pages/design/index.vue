@@ -16,37 +16,6 @@ const pageConfig = ref({
 const initPageConfig = async () => {
   const res = await getPageConfig()
   pageConfig.value = res.data as any
-  // 测试remote
-  // @ts-ignore
-  pageConfig.value.components = (pageConfig.value.components as any[]).map(
-    (c) => {
-      if (c.key === 'RemoteComponent') {
-        return {
-          ...c,
-          props: {
-            remote: {
-              scope: 'demo',
-              name: 'protable'
-            }
-          }
-        }
-      }
-      return c
-    }
-  )
-  // @ts-ignore
-  pageConfig.value.components.push({
-    // @ts-ignore
-    ...pageConfig.value.components[pageConfig.value.components.length - 1],
-    key: 'RemoteComponent',
-    props: {
-      remote: { scope: 'demo', name: 'increment' },
-      msg: 'hello world',
-      increment: () => {
-        console.log('hello world')
-      }
-    }
-  })
 }
 
 initPageConfig()

@@ -1,4 +1,4 @@
-import { Button, CRUD, RemoteComponent } from '@design/components'
+import { Button, CRUD, RemoteComponent, Form } from '@design/components'
 /**
  * 组件注册中心类，用于管理组件的注册与引用。
  */
@@ -42,6 +42,7 @@ const componentRegister = new ComponentRegisterCenter()
 ComponentRegisterCenter.register('Button', Button)
 ComponentRegisterCenter.register('CRUD', CRUD)
 ComponentRegisterCenter.register('RemoteComponent', RemoteComponent)
+ComponentRegisterCenter.register('Form', Form)
 
 // 导出组件注册中心实例
 export default componentRegister

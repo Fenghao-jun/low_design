@@ -1,5 +1,5 @@
-import { Component } from '@core/types'
+import { ComponentScheme } from '@core/types'
 
 export interface RootRenderProps {
-  components: Component[]
+  components: ComponentScheme[]
 }

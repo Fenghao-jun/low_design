@@ -13,16 +13,21 @@
           >
         </template>
       </template>
+
+      <template #tableHeader>
+        <RootRender :components="headerSlot" />
+      </template>
     </ProTable>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ProTable } from 'am-admin-component'
-import { computed, withDefaults } from 'vue'
+import { computed, ref, withDefaults } from 'vue'
 import { CRUDProps, RowOperation } from './props'
 import { useApi } from '@design/hooks/useApi'
 import actionRegisterCenter from '@/design-core/utils/componentActionCenter/action-regiter'
+import RootRender from '@/design-core/render/RootRender/RootRender.vue'
 
 const props = withDefaults(defineProps<CRUDProps>(), {
   columns: () => [],
@@ -34,7 +39,8 @@ const props = withDefaults(defineProps<CRUDProps>(), {
   rowKey: 'id',
   searchCol: () => ({ xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }),
   defaultExpandAll: false,
-  field: 'data'
+  field: 'data',
+  headerSlot: () => []
 })
 
 const apiRequest = async (params) => {

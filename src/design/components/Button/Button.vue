@@ -5,12 +5,10 @@
 <script setup lang="ts">
 import { defineEmits } from 'vue'
 
-const emit = defineEmits(['increment'])
+const emit = defineEmits(['click'])
 
 const foo = () => {
-  console.log('emit')
-
-  emit('increment', 'hello')
+  emit('click', 'hello')
 }
 </script>
 

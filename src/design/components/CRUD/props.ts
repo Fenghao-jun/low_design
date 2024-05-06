@@ -1,5 +1,5 @@
 import { ListenerAction } from '@/design-core/utils/componentActionCenter/Action'
-import { ApiConfig } from '@core/types'
+import { ApiConfig, ComponentScheme } from '@core/types'
 import { ProTableProps } from 'am-admin-component'
 
 type RowOperationType = 'edit' | 'delete' | 'custom'
@@ -16,4 +16,5 @@ type TableRowOperation = {
 export interface CRUDProps extends ProTableProps {
   api: ApiConfig
   operations?: TableRowOperation
+  headerSlot?: ComponentScheme[]
 }

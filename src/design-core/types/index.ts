@@ -1,4 +1,4 @@
-import { ComponentEvent } from '@core/utils/componentActionCenter/Action'
+import { ComponentEvent } from '@core/utils/event-flow'
 
 type ApiType = 'normal' | 'custom'
 export interface ApiConfig {
@@ -10,7 +10,7 @@ export interface ApiConfig {
 /**
  * 表示一个可复用的组件的接口。
  */
-export interface Component {
+export interface ComponentScheme {
   /**
    * 组件的唯一标识符，通常用于区分不同的组件类型。
    */
@@ -39,7 +39,7 @@ export interface Component {
   /**
    * 子组件数组，表示组件结构的嵌套层次。
    */
-  children: Component[]
+  children: ComponentScheme[]
 
   /**
    * 可选的组件事件对象，包含组件支持的事件及其处理方法。

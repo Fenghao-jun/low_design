@@ -28,11 +28,11 @@ import { setComponentRef } from '@core/utils/component-ref'
 import componentRegister from '@core/utils/component-regiter'
 import { computed, defineProps } from 'vue'
 import { RootRenderProps } from './RootRenderOptions'
-import { Component } from '@/design-core/types'
+import { ComponentScheme } from '@/design-core/types'
 
 const props = defineProps<RootRenderProps>()
 
-const handleEvent = (component: Component) => {
+const handleEvent = (component: ComponentScheme) => {
   const props: Record<string, any> = {}
   // TODO 可视化之后来处理这里的事件，不要让所有的事件都注册到 RootRender 中
   const events = component.events
@@ -44,16 +44,14 @@ const handleEvent = (component: Component) => {
   }
 
   keys.forEach((key) => {
-    console.log('key: ', key)
-    props.onClick = () => {
-      // TODO 执行事件流
-      console.log('312321')
+    props[key] = () => {
+      console.log('321312321')
     }
   })
   return props
 }
 
-const getComponentProps = (component: Component) => {
+const getComponentProps = (component: ComponentScheme) => {
   return {
     ...component.props,
     children: component.name === 'Form' ? component.children : undefined

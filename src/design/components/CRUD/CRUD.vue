@@ -1,9 +1,8 @@
 <template>
   <div>
     <ProTable v-bind="proTablePropsWrapper" :columns="columns">
+      <!-- 操作列 -->
       <template #operation="scope">
-        <!-- {{ scope.row }} -->
-
         <template v-for="(value, key) in operations" :key="key">
           <ElButton
             text

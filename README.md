@@ -125,4 +125,17 @@ module.exports = {
 
 ### 如何引入
 
-待定
+引入需要在 `src/design/components/RemoteComponent/index.vue` 文件下进行 `import` 引入
+
+```js
+// eg:
+// demo_components 在上诉例子中 为 customComponent
+// components.vue 是你提供方定义的文件名字，在上述例子中 为 components.vue
+import('demo_components/components.vue')
+  .then((res) => {
+    registerBatch('demo', res.default)
+  })
+  .catch((err) => {
+    console.log('[demo_components/components.vue]', err)
+  })
+```

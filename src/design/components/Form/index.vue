@@ -40,7 +40,6 @@
 <script setup lang="ts" name="Form">
 import { computed, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
-import componentRegister from '@core/utils/component-regiter'
 import Render from '@core/render/RootRender/RootRender.vue'
 import { FormProps } from './type'
 
@@ -74,20 +73,23 @@ const rules = computed(() => {
 
 const formRef = ref<FormInstance>()
 
-const validate = async () => {
-  await formRef.value?.validate()
-}
+const validate = async () => await formRef.value?.validate()
+const validateField = async () => await formRef.value?.validateField()
+const resetFields = async () => await formRef.value?.resetFields()
+const scrollToField = async (arg: any) =>
+  await formRef.value?.scrollToField(arg)
+const clearValidate = async () => await formRef.value?.clearValidate()
 
 defineExpose({
   validate,
-  validateField: formRef.value?.validateField,
-  resetFields: formRef.value?.resetFields,
-  scrollToField: formRef.value?.scrollToField,
-  clearValidate: formRef.value?.clearValidate,
+  validateField,
+  resetFields,
+  scrollToField,
+  clearValidate,
   initData(data?: Record<string, any>) {
     formData.value = { ...formData.value, ...(data || {}) }
   },
-  getData(): Record<string, any> {
+  async getData(): Promise<Record<string, any>> {
     return formData.value
   }
 })

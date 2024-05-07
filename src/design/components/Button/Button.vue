@@ -8,6 +8,8 @@ import { defineEmits } from 'vue'
 const emit = defineEmits(['click'])
 
 const foo = () => {
+  console.log('emit')
+
   emit('click', 'hello')
 }
 </script>

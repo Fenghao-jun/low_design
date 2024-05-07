@@ -2,7 +2,7 @@ import {
   ListenerAction,
   RendererAction
 } from '@core/utils/componentActionCenter/Action'
-import { EventNode } from '@core/utils/event-flow'
+import { EventNode, excelEventFlow } from '@core/utils/event-flow'
 import { ElMessageBox } from 'element-plus'
 
 // 确认弹窗
@@ -15,25 +15,33 @@ interface IConfirmAction extends ListenerAction {
 }
 
 export class ConfirmAction implements RendererAction {
-  async run(action: EventNode<IConfirmAction>, render, eventData) {
-    if (!action.actionConfig) {
+  async run(node: EventNode<IConfirmAction>, render, eventData) {
+    if (!node.actionConfig) {
       console.error('confrimAction 缺少actionConfig')
       return
     }
-    const args = action.actionConfig?.args
+
+    const args = node.actionConfig?.args
     ElMessageBox({
       title: '提示',
-      message: args?.text,
+      message: args?.text || '内容',
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning',
       center: true,
-      beforeClose: (action, instance, done) => {
-        if (action === 'confirm') {
-          instance.confirmButtonLoading = true
-          instance.confirmButtonText = '执行中...'
-        }
-      }
+      showCancelButton: true
     })
+      .then((res) => {
+        console.log('res: ', res)
+        excelEventFlow(
+          node.children?.filter((item) => item.eventKey === 'success')
+        )
+      })
+      .catch((err) => {
+        console.log('err: ', err)
+        excelEventFlow(
+          node.children?.filter((item) => item.eventKey === 'error')
+        )
+      })
   }
 }

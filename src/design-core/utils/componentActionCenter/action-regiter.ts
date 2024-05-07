@@ -1,4 +1,9 @@
-import { LinkAction } from '@core/actions'
+import {
+  LinkAction,
+  ConfirmAction,
+  MessageAction,
+  ComponentAction
+} from '@core/actions'
 import { RendererAction } from './Action'
 
 /**
@@ -47,6 +52,9 @@ class ActionRegisterCenter {
 const actionRegisterCenter = new ActionRegisterCenter()
 
 ActionRegisterCenter.register('link', new LinkAction())
+ActionRegisterCenter.register('confirm', new ConfirmAction())
+ActionRegisterCenter.register('message', new MessageAction())
+ActionRegisterCenter.register('component', new ComponentAction())
 
 // 导出该实例以便于全局访问和使用。
 export default actionRegisterCenter

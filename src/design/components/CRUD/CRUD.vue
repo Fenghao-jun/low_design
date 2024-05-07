@@ -9,8 +9,8 @@
             type="primary"
             @click="handleActionClick(value, scope.row)"
           >
-            {{ value.text }}</ElButton
-          >
+            {{ value.text }}
+          </ElButton>
         </template>
       </template>
 
@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { ProTable } from 'am-admin-component'
-import { computed, ref, withDefaults } from 'vue'
+import { computed, withDefaults, defineExpose } from 'vue'
 import { CRUDProps, RowOperation } from './props'
 import { useApi } from '@design/hooks/useApi'
 import actionRegisterCenter from '@/design-core/utils/componentActionCenter/action-regiter'
@@ -87,6 +87,14 @@ const handleActionClick = (action: RowOperation, rowData: any) => {
   }
   actionInstance.run(action, {}, rowData)
 }
+
+const say = () => {
+  console.log('hello')
+}
+
+defineExpose({
+  say
+})
 </script>
 
 <style scoped></style>

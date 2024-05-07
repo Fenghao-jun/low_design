@@ -7,18 +7,20 @@
       :rules="rules"
     >
       <template v-if="props.children?.length">
-        <el-form-item
+        <el-row
           v-for="item in props.children"
           :key="item.componentId"
-          v-bind="item.props.formItemProps"
+          v-bind="item.props.rowProps"
         >
-          <component
-            :is="componentRegister.getComponent(item.key)"
-            v-bind="item.props"
-            v-on="{ updateModel }"
-            :value="formData[item.props.fieldKey]"
-          />
-        </el-form-item>
+          <el-form-item style="width: 100%" v-bind="item.props.formItemProps">
+            <component
+              :is="componentRegister.getComponent(item.key)"
+              v-bind="item.props"
+              v-on="{ updateModel }"
+              :value="formData[item.props.fieldKey]"
+            />
+          </el-form-item>
+        </el-row>
       </template>
     </el-form>
     <div style="margin-top: 30px">

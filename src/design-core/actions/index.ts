@@ -1,4 +1,4 @@
 export * from './LinkAction'
-export * from './ConfirmAction'
+export * from './Confirm-Action'
 export * from './MessageAction'
 export * from './ComponentAction'

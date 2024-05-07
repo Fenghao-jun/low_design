@@ -2,9 +2,9 @@
   <div class="form-container">
     <el-form
       ref="formRef"
+      v-bind="props.formProps"
       :model="formData"
       :rules="rules"
-      v-bind="props.formProps"
     >
       <template v-if="props.children?.length">
         <el-form-item
@@ -20,7 +20,9 @@
         </el-form-item>
       </template>
     </el-form>
-    <div>🚀 {{ props }}</div>
+    <div style="margin-top: 30px">
+      🚀 {{ JSON.stringify(props, undefined, 2) }}
+    </div>
   </div>
 </template>
 
@@ -43,13 +45,16 @@ const rules = computed(() => {
     const childRules = (childProps?.rules || []).map((rule) => {
       if (rule.validator) {
         rule.validator =
-          rule.validator instanceof String
+          typeof rule.validator === 'string'
             ? // eslint-disable-next-line no-new-func
-              new Function(rule.validator)
+              new Function('rule', 'value', 'callback', rule.validator).bind(
+                formData.value
+              )
             : rule.validator
       } else {
         return rule
       }
+      return rule
     })
     _rules[childProps.fieldKey] = childRules
   })
@@ -75,7 +80,10 @@ defineExpose({
 // 更新表单数据
 const updateModel = (fieldKey, newValue) => {
   formData.value[fieldKey] = newValue
-  console.log('updateModel: ', formData.value)
+  // log
+  console.log('updateModel: ', formData.value, {
+    [fieldKey.toString()]: formData.value[fieldKey]
+  })
 }
 </script>
 

@@ -8,7 +8,7 @@ const { ModuleFederationPlugin } = require('webpack').container
 module.exports = defineConfig({
   transpileDependencies: false,
   devServer: {
-    port: 10008,
+    port: 10004,
     headers: {
       'Access-Control-Allow-Origin': '*'
     },

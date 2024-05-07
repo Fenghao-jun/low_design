@@ -1,13 +1,18 @@
 <template>
   <template v-if="show">
-    <component :is="componentRegister.getComponent(componentName)" v-bind="$attrs" v-on="attr.events"></component>
+    <component
+      :is="componentRegister.getComponent(componentName)"
+      v-bind="$attrs"
+      v-on="attr.events"
+    ></component>
   </template>
-
 </template>
 
 <script setup lang="ts">
 import { Component, computed, ref, onErrorCaptured, useAttrs } from 'vue'
-import componentRegister, { ComponentRegisterCenter } from '@core/utils/component-regiter'
+import componentRegister, {
+  ComponentRegisterCenter
+} from '@core/utils/component-regiter'
 import { Props } from './type'
 
 const props = defineProps<Props>()
@@ -26,20 +31,25 @@ const componentName = computed(() => {
 
 const show = ref(false)
 
-const registerBatch = (scope: string, components: Record<string, Component>) => {
+const registerBatch = (
+  scope: string,
+  components: Record<string, Component>
+) => {
   const componentNames = Object.keys(components)
   for (const name of componentNames) {
-    ComponentRegisterCenter.register(`${scope.toLowerCase()}-${name.toLowerCase()}`, components[name])
+    ComponentRegisterCenter.register(
+      `${scope.toLowerCase()}-${name.toLowerCase()}`,
+      components[name]
+    )
   }
   show.value = componentRegister.getComponent(componentName.value)
 }
 
-
 import('demo_components/components.vue')
-  .then(res => {
+  .then((res) => {
     registerBatch('demo', res.default)
   })
-  .catch(err => {
+  .catch((err) => {
     console.log('[demo_components/components.vue]', err)
   })
 </script>

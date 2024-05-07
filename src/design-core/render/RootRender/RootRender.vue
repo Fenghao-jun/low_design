@@ -1,26 +1,24 @@
 <template>
-  <div>
-    <component
-      v-for="component in props.components"
-      :key="component.componentId"
-      :_id="component.componentId"
-      :_name="component.name"
-      :is="componentRegister.getComponent(component.key)"
-      :ref="(el) => setComponentRef(component.componentId, el)"
-      v-bind="getComponentProps(component)"
-      v-on="handleEvent(component)"
+  <component
+    v-for="component in props.components"
+    :key="component.componentId"
+    :_id="component.componentId"
+    :_name="component.name"
+    :is="componentRegister.getComponent(component.key)"
+    :ref="(el) => setComponentRef(component.componentId, el)"
+    v-bind="getComponentProps(component)"
+    v-on="handleEvent(component)"
+  >
+    <template
+      v-if="
+        Array.isArray(component.children) &&
+        component.children.length > 0 &&
+        component.key !== 'Form'
+      "
     >
-      <template
-        v-if="
-          Array.isArray(component.children) &&
-          component.children.length > 0 &&
-          component.key !== 'Form'
-        "
-      >
-        <RootRender :components="component.children" />
-      </template>
-    </component>
-  </div>
+      <RootRender :components="component.children" />
+    </template>
+  </component>
 </template>
 <script setup lang="ts">
 // TODO 最外层的render

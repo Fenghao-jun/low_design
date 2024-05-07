@@ -14,12 +14,19 @@
             style="width: 100%"
             v-bind="item.props.formItemProps"
           >
-            <component
+            <!-- <component
               :is="componentRegister.getComponent(item.key)"
               v-bind="item.props"
               v-on="{ updateModel }"
               :value="formData[item.props.fieldKey]"
-            />
+            /> -->
+            <!-- <div>{{ item.props }}</div> -->
+            <Render
+              :components="[item]"
+              v-on="{ updateModel }"
+              v-bind="item.props"
+              :value="formData[item.props.fieldKey]"
+            ></Render>
           </el-form-item>
         </el-row>
       </template>
@@ -34,6 +41,7 @@
 import { computed, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
 import componentRegister from '@core/utils/component-regiter'
+import Render from '@core/render/RootRender/RootRender.vue'
 import { FormProps } from './type'
 
 const props = defineProps<FormProps>()

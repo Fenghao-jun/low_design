@@ -74,8 +74,12 @@ const rules = computed(() => {
 
 const formRef = ref<FormInstance>()
 
+const validate = async () => {
+  await formRef.value?.validate()
+}
+
 defineExpose({
-  validate: formRef.value?.validate,
+  validate,
   validateField: formRef.value?.validateField,
   resetFields: formRef.value?.resetFields,
   scrollToField: formRef.value?.scrollToField,

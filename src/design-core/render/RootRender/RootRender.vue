@@ -32,7 +32,6 @@ import { ComponentScheme } from '@/design-core/types'
 const props = defineProps<RootRenderProps>()
 
 const attrs = useAttrs()
-console.log('attrs: ', attrs)
 
 const handleEvent = (component: ComponentScheme) => {
   const props: Record<string, any> = {}
@@ -53,16 +52,18 @@ const handleEvent = (component: ComponentScheme) => {
     }
   })
   console.log('props: ', props)
+  console.log('attrs: ', attrs)
 
   return {
     ...props,
-    ...(attrs.events || {})
+    ...attrs
   }
 }
 
 const getComponentProps = (component: ComponentScheme) => {
   return {
     ...component.props,
+    ...attrs,
     children: component.key === 'Form' ? component.children : undefined
   }
 }

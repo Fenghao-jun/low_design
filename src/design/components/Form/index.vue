@@ -7,12 +7,13 @@
       :rules="rules"
     >
       <template v-if="props.children?.length">
-        <el-row
-          v-for="item in props.children"
-          :key="item.componentId"
-          v-bind="item.props.rowProps"
-        >
-          <el-form-item style="width: 100%" v-bind="item.props.formItemProps">
+        <el-row v-bind="props.rowProps">
+          <el-form-item
+            v-for="item in props.children"
+            :key="item.componentId"
+            style="width: 100%"
+            v-bind="item.props.formItemProps"
+          >
             <component
               :is="componentRegister.getComponent(item.key)"
               v-bind="item.props"
@@ -23,9 +24,9 @@
         </el-row>
       </template>
     </el-form>
-    <div style="margin-top: 30px">
+    <!-- <div style="margin-top: 30px">
       🚀 {{ JSON.stringify(props, undefined, 2) }}
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -42,7 +43,6 @@ const rules = computed(() => {
   const children = props.children || []
   const _rules = {}
   children.forEach((child) => {
-    console.log('child: ', child)
     const childProps = child.props
     // eslint-disable-next-line array-callback-return
     const childRules = (childProps?.rules || []).map((rule) => {
@@ -61,7 +61,6 @@ const rules = computed(() => {
     })
     _rules[childProps.fieldKey] = childRules
   })
-  console.log(_rules)
   return _rules
 })
 
@@ -74,19 +73,17 @@ defineExpose({
   scrollToField: formRef.value?.scrollToField,
   clearValidate: formRef.value?.clearValidate,
   initData(data?: Record<string, any>) {
-    if (data) {
-      formData.value = data
-    }
+    formData.value = { ...formData.value, ...(data || {}) }
+  },
+  getData(): Record<string, any> {
+    return formData.value
   }
 })
 
 // 更新表单数据
 const updateModel = (fieldKey, newValue) => {
   formData.value[fieldKey] = newValue
-  // log
-  console.log('updateModel: ', formData.value, {
-    [fieldKey.toString()]: formData.value[fieldKey]
-  })
+  console.log('updateModel: ', formData.value)
 }
 </script>
 

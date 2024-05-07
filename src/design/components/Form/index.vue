@@ -16,6 +16,7 @@
             :is="componentRegister.getComponent(item.key)"
             v-bind="item.props"
             v-on="{ updateModel }"
+            :value="formData[item.props.fieldKey]"
           />
         </el-form-item>
       </template>

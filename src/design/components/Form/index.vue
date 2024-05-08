@@ -38,12 +38,14 @@
 </template>
 
 <script setup lang="ts" name="Form">
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import type { FormInstance } from 'element-plus'
 import Render from '@core/render/RootRender/RootRender.vue'
 import { FormProps } from './type'
 
 const props = defineProps<FormProps>()
+const emits = defineEmits(['mounted'])
+
 const formData = ref({ ...(props.formProps?.model || {}) })
 
 const rules = computed(() => {
@@ -93,6 +95,8 @@ defineExpose({
     return formData.value
   }
 })
+
+onMounted(() => emits('mounted'))
 
 // 更新表单数据
 const updateModel = (fieldKey, newValue) => {

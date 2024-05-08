@@ -1,20 +1,29 @@
 <template>
-  <el-input v-model="value" v-bind="props" @change="handleChange"></el-input>
+  <el-input-number
+    v-bind="omit(props, ['fieldKey', 'value'])"
+    v-model="value"
+    @change="handleChange"
+  ></el-input-number>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="InputNumber">
 import { ref } from 'vue'
-import { InputNumberProps } from './type'
-const props = defineProps<InputNumberProps>()
+import { omit } from 'lodash-es'
+import { InputNumberProps } from 'element-plus'
 
-// 上层组件监听 updateModel 方法来辅助更新表单的值
-const emits = defineEmits(['updateModel'])
+import { CustomerInputNumberProps } from './type'
 
-const value = ref(props.value || '')
+const props = defineProps<CustomerInputNumberProps & InputNumberProps>()
+
+const emits = defineEmits(['updateModel', 'updateValue'])
+const value = ref(props.value || 0)
 
 const handleChange = () => {
   // 没有字段名的值传递下来 不做emit处理
-  if (!props.fieldKey) return
-  emits('updateModel', props.fieldKey, value.value)
+  if (props.fieldKey) {
+    emits('updateModel', props.fieldKey, value.value)
+  } else {
+    emits('updateValue', value.value)
+  }
 }
 </script>

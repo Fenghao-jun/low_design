@@ -5,10 +5,9 @@ const { defineConfig } = require('@vue/cli-service')
 const { ModuleFederationPlugin } = require('webpack').container
 
 
-// const remoteUrl = process.env.NODE_ENV === 'production' ? 'demo@https://cdn.dataso.cn/static/remote-components/demo-vue-cli/demoComponentEntry.js' : 'demo@http://localhost:3001/demoComponentEntry.js'
+const remoteUrl = process.env.NODE_ENV === 'production' ? 'demo@https://cdn.dataso.cn/static/remote-components/demo-vue-cli/demoComponentEntry.js' : 'demo@http://localhost:3001/demoComponentEntry.js'
 
 
-const remoteUrl = 'demo@https://cdn.dataso.cn/static/remote-components/demo-vue-cli/demoComponentEntry.js'
 
 module.exports = defineConfig({
   transpileDependencies: false,

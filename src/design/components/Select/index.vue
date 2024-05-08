@@ -12,7 +12,6 @@
       :label="item[optionProps.labelKey || 'label']"
     ></el-option>
   </el-select>
-  <div>{{ $attrs }}</div>
 </template>
 
 <script setup lang="ts">

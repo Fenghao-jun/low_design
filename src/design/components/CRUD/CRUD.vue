@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ProTable v-bind="proTablePropsWrapper" :columns="columns">
+    <ProTable v-bind="proTablePropsWrapper" :columns="columns" ref="tableRef">
       <!-- 操作列 -->
       <template #operation="scope">
         <template v-for="(value, key) in operations" :key="key">
@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { ProTable } from 'am-admin-component'
-import { computed, withDefaults, defineExpose } from 'vue'
+import { computed, withDefaults, defineExpose, ref } from 'vue'
 import { CRUDProps, RowOperation } from './props'
 import { useApi } from '@design/hooks/useApi'
 import actionRegisterCenter from '@/design-core/utils/componentActionCenter/action-regiter'
@@ -88,12 +88,27 @@ const handleActionClick = (action: RowOperation, rowData: any) => {
   actionInstance.run(action, {}, rowData)
 }
 
-const say = () => {
-  console.log('hello')
+const tableRef = ref<InstanceType<typeof ProTable>>()
+
+const getSelectedRow = () => {
+  return tableRef.value?.selectedList
+}
+
+const clearSelectedRow = () => {
+  return tableRef.value?.clearSelection()
+}
+
+const search = () => {
+  tableRef.value?.search()
 }
 
 defineExpose({
-  say
+  // 获取当前选中的行
+  getSelectedRow,
+  // 清空选中
+  clearSelectedRow,
+  // 搜索
+  search
 })
 </script>
 

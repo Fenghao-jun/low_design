@@ -2,7 +2,8 @@ import {
   LinkAction,
   ConfirmAction,
   MessageAction,
-  ComponentAction
+  ComponentAction,
+  RequestAction
 } from '@core/actions'
 import { RendererAction } from './Action'
 
@@ -55,6 +56,7 @@ ActionRegisterCenter.register('link', new LinkAction())
 ActionRegisterCenter.register('confirm', new ConfirmAction())
 ActionRegisterCenter.register('message', new MessageAction())
 ActionRegisterCenter.register('component', new ComponentAction())
+ActionRegisterCenter.register('request', new RequestAction())
 
 // 导出该实例以便于全局访问和使用。
 export default actionRegisterCenter

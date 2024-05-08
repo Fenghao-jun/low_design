@@ -37,10 +37,16 @@ export function findStatusNode(nodes: EventNode[] = [], status = 'success') {
   return nodes.filter((item) => item.eventKey === status)
 }
 
-export function excelEventFlow(nodes: EventNode[] = []) {
+export function excelEventFlow(
+  nodes: EventNode[] = [],
+  eventData?: any,
+  initEventData: any = ''
+) {
   if (!nodes.length) {
     return
   }
+
+  console.log('nodes: ', nodes)
 
   nodes.forEach((node) => {
     if (node.key === 'action') {
@@ -62,11 +68,12 @@ export function excelEventFlow(nodes: EventNode[] = []) {
         )
         return
       }
+      console.log('eventData: ', eventData)
 
-      actionInstance.run(node, '')
+      actionInstance.run(node, eventData, initEventData)
     } else if (node.key === 'event') {
       // 如果是事件，则执行事件下的子节点事件流
-      excelEventFlow(node.children)
+      excelEventFlow(node.children, eventData, initEventData)
     }
   })
 }

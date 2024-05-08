@@ -15,7 +15,7 @@ interface IConfirmAction extends ListenerAction {
 }
 
 export class ConfirmAction implements RendererAction {
-  async run(node: EventNode<IConfirmAction>, render, eventData) {
+  async run(node: EventNode<IConfirmAction>, eventData, initEventData) {
     if (!node.actionConfig) {
       console.error('confrimAction 缺少actionConfig')
       return
@@ -34,13 +34,17 @@ export class ConfirmAction implements RendererAction {
       .then((res) => {
         console.log('res: ', res)
         excelEventFlow(
-          node.children?.filter((item) => item.eventKey === 'success')
+          node.children?.filter((item) => item.eventKey === 'success'),
+          eventData,
+          initEventData
         )
       })
       .catch((err) => {
         console.log('err: ', err)
         excelEventFlow(
-          node.children?.filter((item) => item.eventKey === 'error')
+          node.children?.filter((item) => item.eventKey === 'error'),
+          eventData,
+          initEventData
         )
       })
   }

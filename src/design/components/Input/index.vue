@@ -2,7 +2,7 @@
   <el-input v-bind="props" v-model="value" @change="handleChange"></el-input>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="Input">
 import { ref } from 'vue'
 import { inputProps } from 'element-plus'
 const props = defineProps({

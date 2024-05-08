@@ -4,7 +4,8 @@ import {
   RemoteComponent,
   Form,
   Input,
-  InputNumber
+  InputNumber,
+  Select
 } from '@design/components'
 /**
  * 组件注册中心类，用于管理组件的注册与引用。
@@ -52,6 +53,7 @@ ComponentRegisterCenter.register('RemoteComponent', RemoteComponent)
 ComponentRegisterCenter.register('Form', Form)
 ComponentRegisterCenter.register('Input', Input)
 ComponentRegisterCenter.register('InputNumber', InputNumber)
+ComponentRegisterCenter.register('Select', Select)
 
 // 导出组件注册中心实例
 export default componentRegister

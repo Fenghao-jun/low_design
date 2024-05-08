@@ -5,7 +5,7 @@ import { CustomRequestConfig } from 'am-admin-http'
 const DESIGN_API = '/design-api'
 const NORMAL_REQUEST_URL = `${DESIGN_API}/aiAPI`
 
-export function getPageConfig(id = '1787666552664543234') {
+export function getPageConfig(id = '2') {
   return request.get({ url: `${DESIGN_API}/pageConfigurationModel/${id}` })
 }
 

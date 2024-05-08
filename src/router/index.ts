@@ -2,14 +2,20 @@ import { RouteRecordRaw } from 'vue-router'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
+    path: '/:pageId?/:id?',
     name: 'design',
-    component: () => import(/* webpackChunkName: "design" */ '../design/pages/design/index.vue')
+    component: () =>
+      import(
+        /* webpackChunkName: "design" */ '../design/pages/design/index.vue'
+      )
   },
   {
     path: '/generator',
     name: 'generator',
-    component: () => import(/* webpackChunkName: "generator" */ '../design/pages/generator/index.vue')
+    component: () =>
+      import(
+        /* webpackChunkName: "generator" */ '../design/pages/generator/index.vue'
+      )
   }
 ]
 

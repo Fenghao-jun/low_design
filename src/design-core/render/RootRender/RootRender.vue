@@ -46,9 +46,9 @@ const handleEvent = (component: ComponentScheme) => {
   }
 
   keys.forEach((key) => {
-    props[key] = () => {
+    props[key] = (params: any) => {
       console.log(component.name, '，事件流：', events[key])
-      events[key].length && excelEventFlow(events[key])
+      events[key].length && excelEventFlow(events[key], params, params)
     }
   })
   console.log('props: ', props)
@@ -66,6 +66,10 @@ const getComponentProps = (component: ComponentScheme) => {
     ...attrs,
     children: component.key === 'Form' ? component.children : undefined
   }
+}
+
+const foo = () => {
+  console.log('321321')
 }
 </script>
 

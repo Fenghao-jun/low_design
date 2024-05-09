@@ -13,7 +13,12 @@ import { InputNumberProps } from 'element-plus'
 
 import { CustomerInputNumberProps } from './type'
 
-const props = defineProps<CustomerInputNumberProps & InputNumberProps>()
+const props = withDefaults(
+  defineProps<CustomerInputNumberProps & InputNumberProps>(),
+  {
+    controls: true
+  }
+)
 
 const emits = defineEmits(['updateModel', 'updateValue'])
 const value = ref(props.value || 0)

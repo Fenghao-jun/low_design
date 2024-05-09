@@ -13,14 +13,19 @@
             :key="item.componentId"
             v-bind="item?.props?.colProps"
           >
-            <el-form-item v-bind="item?.props?.formItemProps">
-              <Render
-                :components="[item]"
-                v-on="{ updateModel }"
-                v-bind="item.props"
-                :value="formData[item?.props?.fieldKey]"
-              ></Render>
-            </el-form-item>
+            <template v-if="item.key === 'Title'">
+              <Render :components="[item]" v-bind="item.props"></Render>
+            </template>
+            <templte v-else>
+              <el-form-item v-bind="item?.props?.formItemProps">
+                <Render
+                  :components="[item]"
+                  v-on="{ updateModel }"
+                  v-bind="item.props"
+                  :value="formData[item?.props?.fieldKey]"
+                ></Render>
+              </el-form-item>
+            </templte>
           </el-col>
         </el-row>
       </template>
@@ -66,6 +71,7 @@ const rules = computed(() => {
       _rules[childProps.fieldKey] = childRules
     }
   })
+  console.log('rules :>', _rules)
   return _rules
 })
 

@@ -1,12 +1,10 @@
 <template>
-  <el-col v-bind="colProps">
-    <el-cascader
-      placeholder="请选择内容"
-      v-bind="cascaderProps"
-      v-model="_value"
-      @change="handleChange"
-    ></el-cascader>
-  </el-col>
+  <el-cascader
+    placeholder="请选择内容"
+    v-bind="cascaderProps"
+    v-model="_value"
+    @change="handleChange"
+  ></el-cascader>
 </template>
 
 <script setup lang="ts" name="Cascader">
@@ -22,7 +20,6 @@ const {
    * change 更新值时格式化值的处理
    */
   handlers = {},
-  colProps = {},
   ...cascaderProps
 } = useAttrs() as Record<string, any>
 

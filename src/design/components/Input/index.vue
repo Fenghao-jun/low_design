@@ -1,7 +1,5 @@
 <template>
-  <el-col v-bind="colProps">
-    <el-input v-bind="props" v-model="value" @change="handleChange"></el-input>
-  </el-col>
+  <el-input v-bind="props" v-model="value" @change="handleChange"></el-input>
 </template>
 
 <script lang="ts" setup name="Input">

@@ -36,16 +36,19 @@ export class RequestAction implements RendererAction {
       return
     }
     const { params = [] } = node.actionConfig.args
-    const requestParams = params.reduce((prev, cur) => {
-      if (cur.formula) {
-        // 执行公式
-        prev[cur.key] = evaluate(cur.formula, { eventData, initEventData })
+    const requestParams = params.reduce(
+      (prev, cur) => {
+        if (cur.formula) {
+          // 执行公式
+          prev[cur.key] = evaluate(cur.formula, { eventData, initEventData })
 
+          return prev
+        }
+        prev[cur.key] = get({ eventData, initEventData }, cur.value)
         return prev
-      }
-      prev[cur.key] = get({ eventData, initEventData }, cur.value)
-      return prev
-    }, {})
+      },
+      { ...eventData }
+    )
 
     console.log('requestParams: ', requestParams)
   }

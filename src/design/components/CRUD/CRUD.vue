@@ -3,14 +3,15 @@
     <ProTable v-bind="proTablePropsWrapper" :columns="columns" ref="tableRef">
       <!-- 操作列 -->
       <template #operation="scope">
-        <template v-for="(value, key) in operations" :key="key">
+        <template v-for="(item, index) in operations" :key="index">
           <ElButton
             text
             type="primary"
-            @click="handleActionClick(value, scope.row)"
+            @click="handleActionClick(item, scope.row)"
           >
-            {{ value.text }}
+            {{ item.text }}
           </ElButton>
+          <!-- <RootRender :components="headerSlot" /> -->
         </template>
       </template>
 
@@ -28,6 +29,7 @@ import { CRUDProps, RowOperation } from './props'
 import { useApi } from '@design/hooks/useApi'
 import actionRegisterCenter from '@/design-core/utils/componentActionCenter/action-regiter'
 import RootRender from '@/design-core/render/RootRender/RootRender.vue'
+import { excelEventFlow } from '@/design-core/utils/event-flow'
 
 const props = withDefaults(defineProps<CRUDProps>(), {
   columns: () => [],
@@ -78,14 +80,8 @@ const columns = computed(() => {
   return list
 })
 
-const handleActionClick = (action: RowOperation, rowData: any) => {
-  const actionInstance = actionRegisterCenter.getAction(action.actionType)
-
-  if (!actionInstance) {
-    console.warn('未注册该action:', action.actionType)
-    return
-  }
-  actionInstance.run(action, {}, rowData)
+const handleActionClick = (operation: RowOperation, rowData: any) => {
+  operation.events && excelEventFlow(operation.events, rowData, rowData)
 }
 
 const tableRef = ref<InstanceType<typeof ProTable>>()

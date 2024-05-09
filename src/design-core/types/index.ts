@@ -8,6 +8,30 @@ export interface ApiConfig {
 }
 
 /**
+ * 页面字段
+ */
+export interface Variable {
+  /**
+   * 变量名
+   */
+  name: string
+  /**
+   * 默认值
+   */
+  defaultValue: string
+  /**
+   * 备注
+   */
+  remark: string
+}
+
+export interface HiddenConfig {
+  type: 'static' | 'variable'
+
+  value: string
+}
+
+/**
  * 表示一个可复用的组件的接口。
  */
 export interface ComponentScheme {
@@ -45,7 +69,6 @@ export interface ComponentScheme {
    * 可选的组件事件对象，包含组件支持的事件及其处理方法。
    */
   events?: ComponentEvent
-
   /**
    * 待完成：组件的插槽信息，允许插入自定义内容。
    */

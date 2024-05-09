@@ -31,7 +31,8 @@ const initPageConfig = async (pageId: string) => {
  * 初始化页面数据
  */
 const initializePageData = (pageData: Variable[] = []) => {
-  const initializeData = pageData.reduce((prev, variable) => {
+  console.log('pageData: ', pageData)
+  const initializeData = (pageData || []).reduce((prev, variable) => {
     prev[variable.name] = variable.defaultValue
     return prev
   }, {})

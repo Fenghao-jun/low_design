@@ -3,7 +3,9 @@ import {
   ConfirmAction,
   MessageAction,
   ComponentAction,
-  RequestAction
+  RequestAction,
+  CpoyAction,
+  ScriptAction
 } from '@core/actions'
 import { RendererAction } from './Action'
 
@@ -57,6 +59,8 @@ ActionRegisterCenter.register('confirm', new ConfirmAction())
 ActionRegisterCenter.register('message', new MessageAction())
 ActionRegisterCenter.register('component', new ComponentAction())
 ActionRegisterCenter.register('request', new RequestAction())
+ActionRegisterCenter.register('copy', new CpoyAction())
+ActionRegisterCenter.register('script', new ScriptAction())
 
 // 导出该实例以便于全局访问和使用。
 export default actionRegisterCenter

@@ -29,7 +29,10 @@ export interface ComponentEvent {
   [key: string]: EventNode[]
 }
 
-export function findStatusNode(nodes: EventNode[] = [], status = 'success') {
+export function findStatusNode(
+  nodes: EventNode[] = [],
+  status: EventKey = 'success'
+) {
   if (!nodes.length) {
     return []
   }

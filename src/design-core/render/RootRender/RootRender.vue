@@ -28,6 +28,7 @@ import { excelEventFlow } from '@core/utils/event-flow'
 import { computed, defineProps, useAttrs } from 'vue'
 import { RootRenderProps } from './RootRenderOptions'
 import { ComponentScheme } from '@/design-core/types'
+import { usePageDataStore } from '@/design-core/store/page-data'
 
 const props = defineProps<RootRenderProps>()
 
@@ -68,8 +69,10 @@ const getComponentProps = (component: ComponentScheme) => {
   }
 }
 
-const foo = () => {
-  console.log('321321')
+const store = usePageDataStore()
+
+const isHidden = (component: ComponentScheme) => {
+  return component.props?.hidden
 }
 </script>
 

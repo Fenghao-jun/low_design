@@ -9,6 +9,7 @@ import locale from 'element-plus/es/locale/lang/zh-cn'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import './styles/main.scss'
+import { createPinia } from 'pinia'
 
 // import VueTinymce from '@packy-tang/vue-tinymce'
 
@@ -34,6 +35,7 @@ function render(props: any | undefined) {
   instance.use(btn)
   instance.use(ElementPlus, { locale })
   instance.use(router)
+  instance.use(createPinia())
   instance.mount(container ? container.querySelector('#app') : '#app')
 }
 

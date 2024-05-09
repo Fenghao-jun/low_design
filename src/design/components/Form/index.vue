@@ -58,8 +58,7 @@ const rules = computed(() => {
       if (rule.validator) {
         rule.validator =
           typeof rule.validator === 'string'
-            ? // eslint-disable-next-line no-new-func
-              new Function('rule', 'value', 'callback', rule.validator).bind(
+            ? new Function('rule', 'value', 'callback', rule.validator).bind(
                 formData.value
               )
             : rule.validator

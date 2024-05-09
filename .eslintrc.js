@@ -25,6 +25,7 @@ module.exports = {
     ],
     '@typescript-eslint/no-non-null-assertion': 'off',
     "no-template-curly-in-string": "warn",
-    "@typescript-eslint/ban-ts-comment": "off"
+    "@typescript-eslint/ban-ts-comment": "off",
+    "no-new-func": "off"
   }
 }

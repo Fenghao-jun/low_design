@@ -8,8 +8,8 @@ export function useApi(params: ApiConfig) {
     config: CustomRequestConfig<AnyObject, AnyObject>
   ) => {
     return params.type === 'normal'
-      ? normalRequest(config)
-      : request[params.method](config)
+      ? await normalRequest(config)
+      : await request[params.method](config)
   }
 
   return {

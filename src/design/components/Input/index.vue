@@ -1,5 +1,7 @@
 <template>
-  <el-input v-bind="props" v-model="value" @change="handleChange"></el-input>
+  <el-col v-bind="colProps">
+    <el-input v-bind="props" v-model="value" @change="handleChange"></el-input>
+  </el-col>
 </template>
 
 <script lang="ts" setup name="Input">
@@ -7,6 +9,7 @@ import { ref } from 'vue'
 import { inputProps } from 'element-plus'
 const props = defineProps({
   ...inputProps,
+  colProps: Object,
   fieldKey: String,
   value: String
 })

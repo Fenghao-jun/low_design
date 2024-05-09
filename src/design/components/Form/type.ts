@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'vue'
 import { ElForm, ElRow } from 'element-plus'
 
 type ElFormProps = Parameters<Exclude<(typeof ElForm)['setup'], undefined>>[0]
@@ -10,4 +11,5 @@ export interface FormProps {
    */
   formProps?: Partial<ElFormProps>
   rowProps?: Partial<ElRowProps>
+  wrapperStyle?: CSSProperties
 }

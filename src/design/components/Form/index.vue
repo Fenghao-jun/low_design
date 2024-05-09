@@ -1,5 +1,5 @@
 <template>
-  <div class="form-container">
+  <div class="form-container" v-bind:style="props.wrapperStyle">
     <el-form
       ref="formRef"
       v-bind="props.formProps"

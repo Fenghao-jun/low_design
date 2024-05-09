@@ -7,6 +7,7 @@ import { ref } from 'vue'
 import { inputProps } from 'element-plus'
 const props = defineProps({
   ...inputProps,
+  colProps: Object,
   fieldKey: String,
   value: String
 })

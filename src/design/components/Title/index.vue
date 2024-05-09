@@ -1,21 +1,21 @@
 <template>
   <div class="title" v-bind:style="wrapperStyle">
-    <div :class="`is-${type}`" v-bind:style="style">{{ title }}</div>
+    <div :class="`is-${type}`" v-bind:style="style">{{ value }}</div>
   </div>
 </template>
 
 <script lang="ts" setup name="Title">
 import type { CSSProperties } from 'vue'
-withDefaults(
+const props = withDefaults(
   defineProps<{
     type?: 'maintitle' | 'subtitle'
-    title?: string
+    value?: string
     wrapperStyle?: CSSProperties
     style?: CSSProperties
   }>(),
   {
     type: 'subtitle',
-    title: '',
+    value: '',
     wrapperStyle: () => ({}),
     style: () => ({})
   }

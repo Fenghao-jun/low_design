@@ -8,26 +8,25 @@
     >
       <template v-if="props.children?.length">
         <el-row v-bind="props.rowProps">
-          <el-form-item
+          <el-col
             v-for="item in props.children"
             :key="item.componentId"
-            style="width: 100%"
-            v-bind="item.props.formItemProps"
+            v-bind="item?.props?.colProps"
           >
-            <!-- <component
-              :is="componentRegister.getComponent(item.key)"
-              v-bind="item.props"
-              v-on="{ updateModel }"
-              :value="formData[item.props.fieldKey]"
-            /> -->
-            <!-- <div>{{ item.props }}</div> -->
-            <Render
-              :components="[item]"
-              v-on="{ updateModel }"
-              v-bind="item.props"
-              :value="formData[item.props.fieldKey]"
-            ></Render>
-          </el-form-item>
+            <template v-if="item.key === 'Title'">
+              <Render :components="[item]" v-bind="item.props"></Render>
+            </template>
+            <templte v-else>
+              <el-form-item v-bind="item?.props?.formItemProps">
+                <Render
+                  :components="[item]"
+                  v-on="{ updateModel }"
+                  v-bind="item.props"
+                  :value="formData[item?.props?.fieldKey]"
+                ></Render>
+              </el-form-item>
+            </templte>
+          </el-col>
         </el-row>
       </template>
     </el-form>
@@ -52,7 +51,7 @@ const rules = computed(() => {
   const children = props.children || []
   const _rules = {}
   children.forEach((child) => {
-    const childProps = child.props
+    const childProps = child.props || {}
     // eslint-disable-next-line array-callback-return
     const childRules = (childProps?.rules || []).map((rule) => {
       if (rule.validator) {
@@ -67,8 +66,11 @@ const rules = computed(() => {
       }
       return rule
     })
-    _rules[childProps.fieldKey] = childRules
+    if (childProps.fieldKey) {
+      _rules[childProps.fieldKey] = childRules
+    }
   })
+  console.log('rules :>', _rules)
   return _rules
 })
 

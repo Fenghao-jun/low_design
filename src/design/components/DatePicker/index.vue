@@ -1,15 +1,17 @@
 <template>
-  <el-date-picker
-    :editable="false"
-    :default-value="_defaultValue"
-    :default-time="_defaultTime"
-    type="date"
-    placeholder="请选择日期"
-    v-bind="datePickerAttrs"
-    v-model="_value"
-    @change="handleChange"
-  >
-  </el-date-picker>
+  <el-col v-bind="colProps">
+    <el-date-picker
+      :editable="false"
+      :default-value="_defaultValue"
+      :default-time="_defaultTime"
+      type="date"
+      placeholder="请选择日期"
+      v-bind="datePickerAttrs"
+      v-model="_value"
+      @change="handleChange"
+    >
+    </el-date-picker>
+  </el-col>
 </template>
 <script setup lang="ts" name="DatePicker">
 import { ref, useAttrs } from 'vue'
@@ -21,6 +23,7 @@ const {
   value = '',
   fieldKey,
   updateValueFormat = 'YYYY-MM-DD HH:mm:ss',
+  colProps = {},
   ...datePickerAttrs
 } = attrs as Record<string, any>
 

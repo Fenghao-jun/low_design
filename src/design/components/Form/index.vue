@@ -12,7 +12,7 @@
             v-for="item in props.children"
             :key="item.componentId"
             style="width: 100%"
-            v-bind="item.props.formItemProps"
+            v-bind="item?.props?.formItemProps"
           >
             <!-- <component
               :is="componentRegister.getComponent(item.key)"
@@ -25,7 +25,7 @@
               :components="[item]"
               v-on="{ updateModel }"
               v-bind="item.props"
-              :value="formData[item.props.fieldKey]"
+              :value="formData[item?.props?.fieldKey]"
             ></Render>
           </el-form-item>
         </el-row>
@@ -52,7 +52,7 @@ const rules = computed(() => {
   const children = props.children || []
   const _rules = {}
   children.forEach((child) => {
-    const childProps = child.props
+    const childProps = child.props || {}
     // eslint-disable-next-line array-callback-return
     const childRules = (childProps?.rules || []).map((rule) => {
       if (rule.validator) {
@@ -68,7 +68,9 @@ const rules = computed(() => {
       }
       return rule
     })
-    _rules[childProps.fieldKey] = childRules
+    if (childProps.fieldKey) {
+      _rules[childProps.fieldKey] = childRules
+    }
   })
   return _rules
 })

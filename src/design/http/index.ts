@@ -13,7 +13,12 @@ const request = requestAxios.createAxiosInstance({
     isTest: process.env.VUE_APP_HTTP_MODE === 'test',
     isProd: process.env.VUE_APP_HTTP_MODE === 'production'
   },
-  accessToken: getCookie('mp_token')
+  setAuthHeaders: () => {
+    return {
+      tokenType: 'mp_token',
+      accessToken: getCookie('mp_token')
+    }
+  }
 })
 
 export const get = request.get

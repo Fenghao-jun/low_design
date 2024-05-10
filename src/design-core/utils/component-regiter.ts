@@ -11,7 +11,8 @@ import {
   Cascader,
   Text,
   Radio,
-  Container
+  Container,
+  Switch
 } from '@design/components'
 /**
  * 组件注册中心类，用于管理组件的注册与引用。
@@ -66,5 +67,6 @@ ComponentRegisterCenter.register('Cascader', Cascader)
 ComponentRegisterCenter.register('Text', Text)
 ComponentRegisterCenter.register('Radio', Radio)
 ComponentRegisterCenter.register('Container', Container)
+ComponentRegisterCenter.register('Switch', Switch)
 // 导出组件注册中心实例
 export default componentRegister

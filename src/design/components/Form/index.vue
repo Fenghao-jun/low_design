@@ -30,9 +30,9 @@
         </el-row>
       </template>
     </el-form>
-    <!-- <div style="margin-top: 30px">
+    <div style="margin-top: 30px">
       🚀 {{ JSON.stringify(props, undefined, 2) }}
-    </div> -->
+    </div>
   </div>
 </template>
 

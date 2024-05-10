@@ -4,6 +4,7 @@ module.exports = {
     node: true,
     'vue/setup-compiler-macros': true
   },
+  ignorePatterns: ['package.json'],
   extends: [
     'plugin:vue/vue3-essential',
     '@vue/standard',

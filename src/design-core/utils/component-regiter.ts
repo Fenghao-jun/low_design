@@ -9,7 +9,11 @@ import {
   Title,
   DatePicker,
   Cascader,
-  Text
+  Text,
+  Radio,
+  Container,
+  Switch,
+  Checkbox
 } from '@design/components'
 /**
  * 组件注册中心类，用于管理组件的注册与引用。
@@ -62,5 +66,9 @@ ComponentRegisterCenter.register('Title', Title)
 ComponentRegisterCenter.register('DatePicker', DatePicker)
 ComponentRegisterCenter.register('Cascader', Cascader)
 ComponentRegisterCenter.register('Text', Text)
+ComponentRegisterCenter.register('Radio', Radio)
+ComponentRegisterCenter.register('Container', Container)
+ComponentRegisterCenter.register('Switch', Switch)
+ComponentRegisterCenter.register('Checkbox', Checkbox)
 // 导出组件注册中心实例
 export default componentRegister

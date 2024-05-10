@@ -1,5 +1,5 @@
 <template>
-  <div class="form-container" v-bind:style="props.wrapperStyle">
+  <div class="form-container">
     <el-form
       ref="formRef"
       v-bind="props.formProps"
@@ -13,7 +13,7 @@
             :key="item.componentId"
             v-bind="item?.props?.colProps"
           >
-            <template v-if="item.key === 'Title'">
+            <template v-if="item.key === 'Title' || item.key === 'Container'">
               <Render :components="[item]" v-bind="item.props"></Render>
             </template>
             <templte v-else>
@@ -43,6 +43,7 @@ import Render from '@core/render/RootRender/RootRender.vue'
 import { FormProps } from './type'
 
 const props = defineProps<FormProps>()
+
 const emits = defineEmits(['mounted'])
 
 const formData = ref({ ...(props.formProps?.model || {}) })
@@ -52,7 +53,6 @@ const rules = computed(() => {
   const _rules = {}
   children.forEach((child) => {
     const childProps = child.props || {}
-    // eslint-disable-next-line array-callback-return
     const childRules = (childProps?.rules || []).map((rule) => {
       if (rule.validator) {
         rule.validator =
@@ -66,7 +66,8 @@ const rules = computed(() => {
       }
       return rule
     })
-    if (childProps.fieldKey) {
+
+    if (childProps.fieldKey && childRules?.length) {
       _rules[childProps.fieldKey] = childRules
     }
   })
@@ -90,7 +91,7 @@ defineExpose({
   scrollToField,
   clearValidate,
   initData(data?: Record<string, any>) {
-    formData.value = { ...formData.value, ...(data || {}) }
+    formData.value = { ...formData.value, ...(data?.eventData || data || {}) }
   },
   async getData(): Promise<Record<string, any>> {
     return formData.value

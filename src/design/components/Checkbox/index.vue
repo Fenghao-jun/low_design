@@ -1,6 +1,9 @@
 <template>
   <el-checkbox-group v-bind="attrs" v-model="_value" @change="handleChange">
-    <template v-for="item in optionsList" :key="item.value">
+    <template
+      v-for="item in optionsList"
+      :key="item[optionProps?.valueKey || 'value']"
+    >
       <el-checkbox
         v-bind="item"
         :label="item[optionProps?.valueKey || 'value']"

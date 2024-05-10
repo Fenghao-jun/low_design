@@ -8,6 +8,7 @@ import {
   findStatusNode
 } from '@core/utils/event-flow'
 import { ElMessage, MessageOptions } from 'element-plus'
+import { checkArgs } from './common'
 
 // 确认弹窗
 interface IMessageAction extends ListenerAction {
@@ -19,12 +20,9 @@ interface IMessageAction extends ListenerAction {
 export class MessageAction implements RendererAction {
   async run(node: EventNode<IMessageAction>, render, eventData) {
     try {
-      if (!node.actionConfig) {
-        console.error('MessageAction 缺少actionConfig')
-        return
-      }
+      checkArgs(node, 'message')
 
-      const args = node.actionConfig.args || {}
+      const args = node.actionConfig!.args || {}
 
       ElMessage({
         type: args.type || 'success',

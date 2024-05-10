@@ -13,7 +13,8 @@
       v-if="
         Array.isArray(component.children) &&
         component.children.length > 0 &&
-        component.key !== 'Form'
+        component.key !== 'Form' &&
+        component.key !== 'Container'
       "
     >
       <RootRender :components="component.children" />
@@ -62,10 +63,21 @@ const handleEvent = (component: ComponentScheme) => {
 }
 
 const getComponentProps = (component: ComponentScheme) => {
+  console.log('component: ', {
+    ...component.props,
+    ...attrs,
+    children:
+      component.key === 'Form' || component.key === 'Container'
+        ? component.children
+        : undefined
+  })
   return {
     ...component.props,
     ...attrs,
-    children: component.key === 'Form' ? component.children : undefined
+    children:
+      component.key === 'Form' || component.key === 'Container'
+        ? component.children
+        : undefined
   }
 }
 

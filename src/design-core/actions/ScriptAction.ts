@@ -11,6 +11,8 @@ import {
   findStatusNode
 } from '@core/utils/event-flow'
 
+import { checkArgs } from './common'
+
 function getData(key: string) {
   return usePageDataStore().getData()[key]
 }
@@ -37,11 +39,9 @@ export interface IScriptAction extends ListenerAction {
 export class ScriptAction implements RendererAction {
   async run(node: EventNode<IScriptAction>, eventData, initEventData) {
     try {
-      if (!node.actionConfig) {
-        console.error('ScriptAction 缺少actionConfig')
-        return
-      }
-      const { script } = node.actionConfig.args
+      checkArgs(node, 'script')
+
+      const { script } = node.actionConfig!.args
       const res = await execScript(script, eventData, initEventData)
 
       excelEventFlow(findStatusNode(node.children), res, initEventData)

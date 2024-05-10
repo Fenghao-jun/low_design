@@ -16,7 +16,6 @@ console.log('switch attrs: ', useAttrs())
 const _value = ref(value)
 
 const handleChange = (value: any) => {
-  console.log('🚀 ~ handleChange ~ value:', value)
   if (fieldKey) {
     emits('updateModel', fieldKey, value)
   } else {

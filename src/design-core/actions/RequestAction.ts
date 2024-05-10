@@ -11,6 +11,7 @@ import { ApiConfig } from '../types'
 import { get } from 'lodash-es'
 import { evaluate } from 'amis-formula'
 import { useApi } from '@design/hooks/useApi'
+import { checkArgs } from './common'
 
 interface RequestParamsItem {
   key: string
@@ -32,14 +33,9 @@ interface IRequestAction extends ListenerAction {
 export class RequestAction implements RendererAction {
   async run(node: EventNode<IRequestAction>, eventData, initEventData) {
     try {
-      console.log('eventData: ', eventData)
-      if (!node.actionConfig) {
-        console.error('RequestAction 缺少actionConfig')
-        return
-      }
-      console.log('node.actionConfig.args: ', node.actionConfig.args)
+      checkArgs(node, 'request')
 
-      const { params = [] } = node.actionConfig.args
+      const { params = [] } = node.actionConfig!.args
       const requestParams = params.reduce(
         (prev, cur) => {
           if (cur.formula) {
@@ -54,14 +50,14 @@ export class RequestAction implements RendererAction {
         { ...eventData }
       )
 
-      const { requestAction } = useApi(node.actionConfig.args)
+      const { requestAction } = useApi(node.actionConfig!.args)
 
       const res = await requestAction({
-        url: node.actionConfig.args.url,
+        url: node.actionConfig!.args.url,
         data: requestParams
       })
 
-      excelEventFlow(findStatusNode(node.children), res, initEventData)
+      excelEventFlow(findStatusNode(node.children), res.data, initEventData)
     } catch (error) {
       excelEventFlow(
         findStatusNode(findStatusNode(node.children, 'error'), 'error'),

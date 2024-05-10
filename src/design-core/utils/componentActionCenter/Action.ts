@@ -1,4 +1,6 @@
-type ActionType =
+import { EventNode } from '../event-flow'
+
+export type ActionType =
   | 'link'
   | 'confirm'
   | 'message'
@@ -25,6 +27,13 @@ export interface ListenerAction {
 
 // 每个Action都需要实现的基类
 export interface RendererAction {
-  // TODO run函数的入参
-  run: (action: any, eventData?: any, initEventData?: any) => Promise<void>
+  /**
+   * 执行动作
+   *
+   */
+  run: (
+    action: EventNode<any>,
+    eventData?: any,
+    initEventData?: any
+  ) => Promise<void>
 }

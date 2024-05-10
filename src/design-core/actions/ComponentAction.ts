@@ -8,6 +8,7 @@ import {
   findStatusNode
 } from '@core/utils/event-flow'
 import { getComponentRef } from '@core/utils/component-ref'
+import { checkArgs } from './common'
 
 // 确认弹窗
 interface IComponentAction extends ListenerAction {
@@ -20,14 +21,10 @@ interface IComponentAction extends ListenerAction {
 }
 
 export class ComponentAction implements RendererAction {
-  async run(node: EventNode<IComponentAction>, render, eventData) {
-    console.log('321')
-    if (!node.actionConfig) {
-      console.error('componentAction node.actionConfig is null')
-      return
-    }
+  async run(node: EventNode<IComponentAction>, eventData, initEventData) {
+    checkArgs(node, 'component')
 
-    const { componentId, method } = node.actionConfig.args
+    const { componentId, method } = node.actionConfig!.args
 
     const componentRef = getComponentRef(componentId)
 
@@ -39,10 +36,14 @@ export class ComponentAction implements RendererAction {
     console.log('componentRef: ', componentRef)
 
     try {
-      const res = await componentRef[method]()
+      const res = await componentRef[method]({ eventData, initEventData })
       console.log('res: ', res)
       console.log('componentInstance: ', componentRef)
-      excelEventFlow(findStatusNode(node.children, 'success'), res)
+      excelEventFlow(
+        findStatusNode(node.children, 'success'),
+        res,
+        initEventData
+      )
     } catch (error) {
       console.log('error: ', error)
       excelEventFlow(findStatusNode(node.children, 'error'), null)

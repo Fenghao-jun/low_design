@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Render :components="pageConfig.components" />
+    <el-skeleton :rows="20" :loading="loadingPage" animated>
+      <template #default>
+        <Render :components="pageConfig.components" />
+      </template>
+    </el-skeleton>
   </div>
 </template>
 
@@ -19,12 +23,15 @@ const pageConfig = ref({
   components: []
 })
 
+const loadingPage = ref(true)
+
 const initPageConfig = async (pageId: string) => {
   const res = await getPageConfig(pageId)
 
   initializePageData(res.data.pageData)
 
   pageConfig.value = res.data as any
+  loadingPage.value = false
 }
 
 /**

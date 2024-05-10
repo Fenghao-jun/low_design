@@ -4,6 +4,7 @@ import {
 } from '@core/utils/componentActionCenter/Action'
 import { EventNode, excelEventFlow } from '@core/utils/event-flow'
 import { ElMessageBox } from 'element-plus'
+import { checkArgs } from './common'
 
 // 确认弹窗
 interface IConfirmAction extends ListenerAction {
@@ -16,10 +17,7 @@ interface IConfirmAction extends ListenerAction {
 
 export class ConfirmAction implements RendererAction {
   async run(node: EventNode<IConfirmAction>, eventData, initEventData) {
-    if (!node.actionConfig) {
-      console.error('confrimAction 缺少actionConfig')
-      return
-    }
+    checkArgs(node, 'confirm')
 
     const args = node.actionConfig?.args
     ElMessageBox({

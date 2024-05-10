@@ -38,6 +38,7 @@
 
 <script setup lang="ts" name="Form">
 import { computed, ref, onMounted } from 'vue'
+import { omit } from 'lodash-es'
 import type { FormInstance } from 'element-plus'
 import Render from '@core/render/RootRender/RootRender.vue'
 import { FormProps } from './type'
@@ -91,7 +92,10 @@ defineExpose({
   scrollToField,
   clearValidate,
   initData(data?: Record<string, any>) {
-    formData.value = { ...formData.value, ...(data?.eventData || data || {}) }
+    formData.value = omit(
+      { ...formData.value, ...(data?.eventData || data || {}) },
+      ['eventData', 'initEventData']
+    )
   },
   async getData(): Promise<Record<string, any>> {
     return formData.value

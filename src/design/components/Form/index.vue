@@ -18,11 +18,21 @@
             </template>
             <templte v-else>
               <el-form-item v-bind="item?.props?.formItemProps">
-                <Render
+                <!-- <Render
                   :components="[item]"
                   v-on="{ updateModel }"
                   v-bind="item.props"
                   :value="formData[item?.props?.fieldKey]"
+                ></Render> -->
+                <Render
+                  :components="[item]"
+                  v-on="{ updateModel }"
+                  v-bind="item.props"
+                  :value="
+                    Array.isArray(item?.props?.fieldKey)
+                      ? item?.props?.fieldKey.map((val) => formData[val])
+                      : formData[item?.props?.fieldKey]
+                  "
                 ></Render>
               </el-form-item>
             </templte>
@@ -68,8 +78,8 @@ const rules = computed(() => {
       return rule
     })
 
-    if (childProps.fieldKey && childRules?.length) {
-      _rules[childProps.fieldKey] = childRules
+    if (childProps?.formItemProps?.prop && childRules?.length) {
+      _rules[childProps?.formItemProps?.prop] = childRules
     }
   })
   console.log('rules :>', _rules)

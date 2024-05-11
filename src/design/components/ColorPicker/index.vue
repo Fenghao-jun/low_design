@@ -11,7 +11,7 @@ const emits = defineEmits(['updateModel', 'updateValue'])
 
 const { value = '', fieldKey, ...attrs } = useAttrs() as ColorPickerAttrs
 
-console.log('radio attrs: ', useAttrs())
+console.log('ColorPicker attrs: ', useAttrs())
 
 const _value = ref(value)
 

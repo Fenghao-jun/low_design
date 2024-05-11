@@ -68,7 +68,10 @@ const rules = computed(() => {
       if (rule.validator) {
         rule.validator =
           typeof rule.validator === 'string'
-            ? new Function('rule', 'value', 'callback', rule.validator).bind(
+            ? // 多值(fieldKey为数组的)情况下 value的值好像存在延迟
+              // 导致在triiger设置的时候会出现错乱 value是上一次的值
+              // FIXME: 等一个灵光一闪
+              new Function('rule', 'value', 'callback', rule.validator).bind(
                 formData.value
               )
             : rule.validator

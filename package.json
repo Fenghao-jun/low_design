@@ -10,6 +10,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@antv/g6": "^4.8.24",
     "@vueuse/core": "^10.9.0",
     "am-admin-component": "^0.2.5",
     "am-admin-http": "^6.2.0",

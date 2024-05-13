@@ -27,7 +27,8 @@ module.exports = defineConfig({
         '@': path.resolve(__dirname, 'src'),
         '@component': path.resolve(__dirname, 'src/design/component'),
         '@core': path.resolve(__dirname, 'src/design-core'),
-        '@design': path.resolve(__dirname, 'src/design')
+        '@design': path.resolve(__dirname, 'src/design'),
+        "@editor": path.resolve(__dirname, 'src/design-editor')
       }
     },
     output: {

@@ -12,7 +12,6 @@ import { get } from 'lodash-es'
 import { evaluate } from 'amis-formula'
 import { useApi } from '@design/hooks/useApi'
 import { checkArgs } from './common'
-import { useRoute } from 'vue-router'
 import { usePageDataStore } from '../store/page-data'
 
 interface RequestParamsItem {
@@ -30,12 +29,6 @@ interface IRequestAction extends ListenerAction {
   actionType: 'request'
 
   args: RequestActionArgs
-}
-
-function getPageData() {
-  const route = useRoute()
-  console.log('route: ', route)
-  return route
 }
 
 function getAllPageData() {

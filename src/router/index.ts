@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
       )
   },
   {
-    path: '/generator',
+    path: '/generator/:pageId?',
     name: 'generator',
     component: () =>
       import(

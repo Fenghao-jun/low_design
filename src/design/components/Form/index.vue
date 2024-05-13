@@ -17,7 +17,12 @@
               <Render :components="[item]" v-bind="item.props"></Render>
             </template>
             <templte v-else>
-              <el-form-item v-bind="item?.props?.formItemProps">
+              <el-form-item
+                v-bind="item?.props?.formItemProps"
+                v-bind:rules="
+                  formatCustomValidator(item?.props?.formItemProps?.rules || {})
+                "
+              >
                 <!-- <Render
                   :components="[item]"
                   v-on="{ updateModel }"
@@ -28,7 +33,7 @@
                   :components="[item]"
                   v-on="{ updateModel }"
                   v-bind="item.props"
-                  :value="
+                  v-bind:value="
                     Array.isArray(item?.props?.fieldKey)
                       ? item?.props?.fieldKey.map((val) => formData[val])
                       : formData[item?.props?.fieldKey]
@@ -121,6 +126,49 @@ onMounted(() => emits('mounted'))
 const updateModel = (fieldKey, newValue) => {
   formData.value[fieldKey] = newValue
   console.log('updateModel: ', formData.value)
+}
+
+const formatCustomValidator = (
+  rules: Record<string, any> | Record<string, any>[]
+) => {
+  console.log('formatCustomValidator: ', rules)
+  if (Array.isArray(rules)) {
+    const formatRules = rules.map((rule) => {
+      if (rule.validator) {
+        if (typeof rule.validator === 'string') {
+          return {
+            ...rule,
+            validator: new Function(
+              'rule',
+              'value',
+              'callback',
+              rule.validator
+            ).bind(formData.value)
+          }
+        } else {
+          return rule
+        }
+      }
+      return rules
+    })
+    return formatRules
+  } else {
+    if (rules.validator) {
+      if (typeof rules.validator === 'string') {
+        return {
+          ...rules,
+          validator: new Function(
+            'rule',
+            'value',
+            'callback',
+            rules.validator
+          ).bind(formData.value)
+        }
+      } else {
+        return rules
+      }
+    }
+  }
 }
 </script>
 

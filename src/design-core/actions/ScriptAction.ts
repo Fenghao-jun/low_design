@@ -22,10 +22,14 @@ function setData(key: string, value: any) {
 }
 
 function execScript(script: string, eventData: any, initEventData: any) {
-  const func = new Function('ctx', `return ${script}`)
+  try {
+    const func = new Function('ctx', `return ${script}`)
 
-  const ctx = { setData, getComponentRef, getData, eventData, initEventData }
-  return func(ctx)
+    const ctx = { setData, getComponentRef, getData, eventData, initEventData }
+    return func(ctx)
+  } catch (error) {
+    console.log('error: ', error)
+  }
 }
 
 export interface IScriptAction extends ListenerAction {
@@ -42,6 +46,7 @@ export class ScriptAction implements RendererAction {
       checkArgs(node, 'script')
 
       const { script } = node.actionConfig!.args
+      console.log('script: ', script)
       const res = await execScript(script, eventData, initEventData)
 
       excelEventFlow(findStatusNode(node.children), res, initEventData)

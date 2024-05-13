@@ -83,4 +83,9 @@ export interface ComponentScheme {
    * 待完成：组件的示例数据，用于展示如何使用组件。
    */
   examples: any[]
+
+  /**
+   * 用于控制显示隐藏组件
+   */
+  hidden?: HiddenConfig
 }

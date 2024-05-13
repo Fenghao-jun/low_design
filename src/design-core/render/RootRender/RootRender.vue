@@ -1,25 +1,26 @@
 <template>
-  <component
-    v-for="component in props.components"
-    :key="component.componentId"
-    :_id="component.componentId"
-    :_name="component.name"
-    :is="componentRegister.getComponent(component.key)"
-    :ref="(el) => setComponentRef(component.componentId, el)"
-    v-bind="getComponentProps(component)"
-    v-on="handleEvent(component)"
-  >
-    <template
-      v-if="
-        Array.isArray(component.children) &&
-        component.children.length > 0 &&
-        component.key !== 'Form' &&
-        component.key !== 'Container'
-      "
+  <template v-for="component in props.components" :key="component.componentId">
+    <component
+      v-if="!isHidden(component)"
+      :_id="component.componentId"
+      :_name="component.name"
+      :is="componentRegister.getComponent(component.key)"
+      :ref="(el) => setComponentRef(component.componentId, el)"
+      v-bind="getComponentProps(component)"
+      v-on="handleEvent(component)"
     >
-      <RootRender :components="component.children" />
-    </template>
-  </component>
+      <template
+        v-if="
+          Array.isArray(component.children) &&
+          component.children.length > 0 &&
+          component.key !== 'Form' &&
+          component.key !== 'Container'
+        "
+      >
+        <RootRender :components="component.children" />
+      </template>
+    </component>
+  </template>
 </template>
 <script setup lang="ts">
 // TODO 最外层的render
@@ -41,7 +42,6 @@ const handleEvent = (component: ComponentScheme) => {
   const events = component.events || {}
 
   const keys = Object.keys(events)
-  console.log('keys: ', keys)
 
   if (keys.length === 0) {
     return props
@@ -53,8 +53,6 @@ const handleEvent = (component: ComponentScheme) => {
       events[key].length && excelEventFlow(events[key], params, params)
     }
   })
-  console.log('props: ', props)
-  console.log('attrs: ', attrs)
 
   return {
     ...props,
@@ -63,14 +61,6 @@ const handleEvent = (component: ComponentScheme) => {
 }
 
 const getComponentProps = (component: ComponentScheme) => {
-  console.log('component: ', {
-    ...component.props,
-    ...attrs,
-    children:
-      component.key === 'Form' || component.key === 'Container'
-        ? component.children
-        : undefined
-  })
   return {
     ...component.props,
     ...attrs,
@@ -82,9 +72,23 @@ const getComponentProps = (component: ComponentScheme) => {
 }
 
 const store = usePageDataStore()
+console.log('store: ', store.pageData)
 
 const isHidden = (component: ComponentScheme) => {
-  return component.props?.hidden
+  let hidden = false
+
+  if (component.hidden) {
+    if (component.hidden.type === 'static') {
+      hidden = !!component.hidden.value
+    } else if (component.hidden.type === 'variable') {
+      console.log('store.pageData: ', store.pageData, component.hidden.value)
+
+      hidden = store.pageData[component.hidden.value]
+    }
+  }
+  console.log('hidden: ', hidden)
+
+  return hidden
 }
 </script>
 

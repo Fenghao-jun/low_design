@@ -13,6 +13,7 @@ import { evaluate } from 'amis-formula'
 import { useApi } from '@design/hooks/useApi'
 import { checkArgs } from './common'
 import { useRoute } from 'vue-router'
+import { usePageDataStore } from '../store/page-data'
 
 interface RequestParamsItem {
   key: string
@@ -37,6 +38,10 @@ function getPageData() {
   return route
 }
 
+function getAllPageData() {
+  return usePageDataStore().getData()
+}
+
 export class RequestAction implements RendererAction {
   async run(node: EventNode<IRequestAction>, eventData, initEventData) {
     try {
@@ -46,8 +51,10 @@ export class RequestAction implements RendererAction {
       const mergeData = {
         eventData,
         initEventData,
-        pageData: getPageData().params
+        pageData: getAllPageData()
       }
+      console.log('mergeData: ', mergeData)
+
       const requestParams = params.reduce(
         (prev, cur) => {
           if (cur.formula) {

@@ -37,6 +37,7 @@ const initPageConfig = async (pageId: string) => {
 /**
  * 初始化页面数据
  */
+const route = useRoute()
 const initializePageData = (pageData: Variable[] = []) => {
   console.log('pageData: ', pageData)
   const initializeData = (pageData || []).reduce((prev, variable) => {
@@ -44,10 +45,12 @@ const initializePageData = (pageData: Variable[] = []) => {
     return prev
   }, {})
 
-  store.mergeData(initializeData)
+  store.mergeData({
+    ...initializeData,
+    routeParams: route.params,
+    routeQuery: route.query
+  })
 }
-
-const route = useRoute()
 
 if (route.params.pageId) {
   initPageConfig(route.params.pageId as string)

@@ -37,8 +37,6 @@ export class ComponentAction implements RendererAction {
 
     try {
       const res = await componentRef[method]({ eventData, initEventData })
-      console.log('res: ', res)
-      console.log('componentInstance: ', componentRef)
       excelEventFlow(
         findStatusNode(node.children, 'success'),
         res,

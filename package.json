@@ -25,6 +25,7 @@
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
     "vue-demi": "^0.14.7",
+    "vue-draggable-plus": "^0.4.0",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {

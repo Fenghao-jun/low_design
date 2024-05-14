@@ -7479,6 +7479,11 @@ vue-demi@*, vue-demi@>=0.14.5, vue-demi@>=0.14.7, vue-demi@^0.14.7:
   resolved "https://npm.dataso.net/repository/npm/vue-demi/-/vue-demi-0.14.7.tgz"
   integrity sha512-EOG8KXDQNwkJILkx/gPcoL/7vH+hORoBaKgGe+6W7VFMvCYJfmF2dGbvgDroVnI8LU7/kTu8mbjRZGBU1z9NTA==
 
+vue-draggable-plus@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.npmmirror.com/vue-draggable-plus/-/vue-draggable-plus-0.4.0.tgz#97923a1b9a53d004889f7acb972d828eee6bcaa9"
+  integrity sha512-CcvSopMmSZY9McCdQ56QsAydT5cZilx9LzLU0UIz6KDYe9ll6QnmNHN80t6wnxN402ZECSXc5X1dm/myiMFi+A==
+
 vue-eslint-parser@^8.0.0, vue-eslint-parser@^8.0.1:
   version "8.3.0"
   resolved "https://registry.npmmirror.com/vue-eslint-parser/-/vue-eslint-parser-8.3.0.tgz"

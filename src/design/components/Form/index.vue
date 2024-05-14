@@ -23,12 +23,6 @@
                   formatCustomValidator(item?.props?.formItemProps?.rules || {})
                 "
               >
-                <!-- <Render
-                  :components="[item]"
-                  v-on="{ updateModel }"
-                  v-bind="item.props"
-                  :value="formData[item?.props?.fieldKey]"
-                ></Render> -->
                 <Render
                   :components="[item]"
                   v-on="{ updateModel }"
@@ -71,15 +65,14 @@ const rules = computed(() => {
     const childProps = child.props || {}
     const childRules = (childProps?.rules || []).map((rule) => {
       if (rule.validator) {
-        rule.validator =
-          typeof rule.validator === 'string'
-            ? // 多值(fieldKey为数组的)情况下 value的值好像存在延迟
-              // 导致在triiger设置的时候会出现错乱 value是上一次的值
-              // FIXME: 等一个灵光一闪
-              new Function('rule', 'value', 'callback', rule.validator).bind(
-                formData.value
-              )
-            : rule.validator
+        rule.validator = (_rule: any, value: any, callback: any) => {
+          // const fn = new Function('ctx', `return ${rule.validator}`).bind(
+          //   null,
+          //   { model: formData.value, rule: _rule, callback }
+          // )
+          const fn = new Function('ctx', `return ${rule.validator}`)
+          return fn({ model: formData.value, rule: _rule, callback })
+        }
       } else {
         return rule
       }
@@ -131,19 +124,16 @@ const updateModel = (fieldKey, newValue) => {
 const formatCustomValidator = (
   rules: Record<string, any> | Record<string, any>[]
 ) => {
-  console.log('formatCustomValidator: ', rules)
   if (Array.isArray(rules)) {
     const formatRules = rules.map((rule) => {
       if (rule.validator) {
         if (typeof rule.validator === 'string') {
           return {
             ...rule,
-            validator: new Function(
-              'rule',
-              'value',
-              'callback',
-              rule.validator
-            ).bind(formData.value)
+            validator: (_rule: any, value: any, callback: any) => {
+              const fn = new Function('ctx', `return ${rule.validator}`)
+              return fn({ model: formData.value, rule: _rule, callback })
+            }
           }
         } else {
           return rule
@@ -157,12 +147,10 @@ const formatCustomValidator = (
       if (typeof rules.validator === 'string') {
         return {
           ...rules,
-          validator: new Function(
-            'rule',
-            'value',
-            'callback',
-            rules.validator
-          ).bind(formData.value)
+          validator: (_rule: any, value: any, callback: any) => {
+            const fn = new Function('ctx', `return ${rules.validator}`)
+            return fn({ model: formData.value, rule: _rule, callback })
+          }
         }
       } else {
         return rules

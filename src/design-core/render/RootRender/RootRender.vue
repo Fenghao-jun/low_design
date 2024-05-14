@@ -4,7 +4,7 @@
       v-if="!isHidden(component)"
       :_id="component.componentId"
       :_name="component.name"
-      :is="componentRegister.getComponent(component.key)"
+      :is="componentRegister.getComponent(component.key).component"
       :ref="(el) => setComponentRef(component.componentId, el)"
       v-bind="getComponentProps(component)"
       v-on="handleEvent(component)"

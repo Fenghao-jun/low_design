@@ -1,7 +1,7 @@
 <template>
   <template v-if="show">
     <component
-      :is="componentRegister.getComponent(componentName)"
+      :is="componentRegister.getComponent(componentName).component"
       v-bind="$attrs"
       v-on="attr.events"
     ></component>
@@ -42,7 +42,7 @@ const registerBatch = (
       components[name]
     )
   }
-  show.value = componentRegister.getComponent(componentName.value)
+  show.value = componentRegister.getComponent(componentName.value).component
 }
 
 import('demo_components/components.vue')

@@ -1,22 +1,3 @@
-import {
-  Button,
-  CRUD,
-  RemoteComponent,
-  Form,
-  Input,
-  InputNumber,
-  Select,
-  Title,
-  DatePicker,
-  Cascader,
-  Text,
-  Radio,
-  Container,
-  Switch,
-  Checkbox,
-  ColorPicker,
-  TreeSelect
-} from '@design/components'
 /**
  * 组件注册中心类，用于管理组件的注册与引用。
  */
@@ -52,27 +33,37 @@ export class ComponentRegisterCenter {
   public static getRegisterComInfo() {
     return ComponentRegisterCenter._registerComponentMap
   }
+
+  public static loadAllLocalComponent() {
+    try {
+      const routerFilePath = require.context(
+        '@/design/components',
+        true,
+        /\.ts/
+      )
+      const indexTsFiles = routerFilePath
+        .keys()
+        .filter(
+          (filePath) =>
+            filePath.endsWith('/index.ts') && filePath !== './index.ts'
+        )
+
+      indexTsFiles.forEach((filePath) => {
+        const componentName = filePath.split('/')[1]
+        const path = require('@/design/components' + filePath.split('.')[1])
+
+        ComponentRegisterCenter.register(componentName, path.default)
+      })
+    } catch (error) {
+      console.log('error: ', error)
+    }
+  }
 }
 
 // 组件注册中心实例
 const componentRegister = new ComponentRegisterCenter()
 
-ComponentRegisterCenter.register('Button', Button)
-ComponentRegisterCenter.register('CRUD', CRUD)
-ComponentRegisterCenter.register('RemoteComponent', RemoteComponent)
-ComponentRegisterCenter.register('Form', Form)
-ComponentRegisterCenter.register('Input', Input)
-ComponentRegisterCenter.register('InputNumber', InputNumber)
-ComponentRegisterCenter.register('Select', Select)
-ComponentRegisterCenter.register('Title', Title)
-ComponentRegisterCenter.register('DatePicker', DatePicker)
-ComponentRegisterCenter.register('Cascader', Cascader)
-ComponentRegisterCenter.register('Text', Text)
-ComponentRegisterCenter.register('Radio', Radio)
-ComponentRegisterCenter.register('Container', Container)
-ComponentRegisterCenter.register('Switch', Switch)
-ComponentRegisterCenter.register('Checkbox', Checkbox)
-ComponentRegisterCenter.register('ColorPicker', ColorPicker)
-ComponentRegisterCenter.register('TreeSelect', TreeSelect)
+ComponentRegisterCenter.loadAllLocalComponent()
+
 // 导出组件注册中心实例
 export default componentRegister

@@ -1,10 +1,20 @@
 ## 如何规范的开发一个组件
 
-TODO:导出一份符合规范的组件基本`Scheme`给可视化用
-根据`index.ts`自动注册组件
-组件统一从开发文件中的`index.ts`中进行导出，然后去到`/design-core/utils/component-regiter.ts`将组件进行注册。
+### 1.组件目录
+
+组件应该放在`/design/components/`文件夹下面，**必须要有`index.ts`文件，文件中默认导出一个component(即组件本身)，一个componentConfig(需满足类型EditorComponentConfig)**
+
+```tsx
+export default {
+  component: Button,
+  componentConfig
+}
+```
+
+项目会自动根据组件中的`index.ts`自动注册组件，**注册的名字为存放组件的文件夹名字**
+
 
 ## 常见问题排查指南
 
 ### 组件没渲染出来
-`/design-core/utils/component-regiter.ts`下看看有没有注册对应的组件，并且`Scheme`中的`type`是否对上注册的组件名
+检查`Scheme`中的`type`是否对上注册的组件名(即组件文件夹名字)

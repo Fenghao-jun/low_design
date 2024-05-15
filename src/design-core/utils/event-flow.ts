@@ -54,7 +54,11 @@ export function excelEventFlow(
   nodes.forEach((node) => {
     if (node.key === 'action') {
       // 执行动作
-      console.log('action')
+      console.log('action', {
+        actionType: node.actionConfig?.actionType,
+        eventData,
+        initEventData
+      })
       if (!node.actionConfig?.actionType) {
         console.error('actionType is undefined')
         return

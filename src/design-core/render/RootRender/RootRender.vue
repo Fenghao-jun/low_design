@@ -31,6 +31,7 @@ import { computed, defineProps, useAttrs } from 'vue'
 import { RootRenderProps } from './RootRenderOptions'
 import { ComponentScheme } from '@/design-core/types'
 import { usePageDataStore } from '@/design-core/store/page-data'
+import { evaluate } from 'amis-formula'
 
 const props = defineProps<RootRenderProps>()
 
@@ -60,19 +61,22 @@ const handleEvent = (component: ComponentScheme) => {
   }
 }
 
+const fields = ['disabled']
+
+const store = usePageDataStore()
+console.log('store: ', store.pageData)
+
 const getComponentProps = (component: ComponentScheme) => {
   return {
     ...component.props,
     ...attrs,
-    children:
-      component.key === 'Form' || component.key === 'Container'
-        ? component.children
-        : undefined
+    children: component.children || []
+    // children:
+    //   component.key === 'Form' || component.key === 'Container'
+    //     ? component.children
+    //     : undefined
   }
 }
-
-const store = usePageDataStore()
-console.log('store: ', store.pageData)
 
 const isHidden = (component: ComponentScheme) => {
   let hidden = false

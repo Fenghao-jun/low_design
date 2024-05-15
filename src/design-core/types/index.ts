@@ -26,9 +26,11 @@ export interface Variable {
 }
 
 export interface HiddenConfig {
-  type: 'static' | 'variable'
+  type: 'static' | 'variable' | 'formula'
 
   value: string
+
+  formula?: string
 }
 
 /**

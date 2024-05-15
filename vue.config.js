@@ -42,6 +42,7 @@ module.exports = defineConfig({
           // 消费提供方的组件时
           // [当前使用的命名]: [消费方提供的name]@[域名]/[提供方定义的入口文件名称]
           demo_components: remoteUrl,
+          shop: "shop@http://localhost:3001/entry.js"
         },
         shared: {
           // vue必须两边都需要写

@@ -45,12 +45,19 @@ const registerBatch = (
   show.value = componentRegister.getComponent(componentName.value).component
 }
 
-import('demo_components/components.vue')
+// import('demo_components/components.vue')
+//   .then((res) => {
+//     registerBatch('demo', res.default)
+//   })
+//   .catch((err) => {
+//     console.log('[demo_components/components.vue]', err)
+//   })
+import('shop/components.vue')
   .then((res) => {
-    registerBatch('demo', res.default)
+    registerBatch('shop', res.default)
   })
   .catch((err) => {
-    console.log('[demo_components/components.vue]', err)
+    console.log('[shop/entry.vue]', err)
   })
 </script>
 

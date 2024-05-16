@@ -25,6 +25,17 @@ export interface Variable {
   remark: string
 }
 
+export interface VariablePropsItem {
+  /**
+   * 变量的类型，variable表示变量，formula表示公式
+   */
+  type: 'variable' | 'formula'
+  /**
+   * 变量的值
+   */
+  value: string
+}
+
 export interface HiddenConfig {
   type: 'static' | 'variable' | 'formula'
 
@@ -61,6 +72,11 @@ export interface ComponentScheme {
    * 一个记录，键为属性名，值为属性值，表示组件需要接收的自定义属性。
    */
   props: Record<string, any>
+
+  /**
+   * 组件的变量属性，用于存储变量的值。
+   */
+  variableProps: Record<string, VariablePropsItem>
 
   /**
    * 子组件数组，表示组件结构的嵌套层次。

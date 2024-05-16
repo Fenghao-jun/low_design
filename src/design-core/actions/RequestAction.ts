@@ -20,7 +20,7 @@ interface RequestParamsItem {
   formula?: string
 }
 
-interface RequestActionArgs extends ApiConfig {
+export interface RequestActionArgs extends ApiConfig {
   params?: RequestParamsItem[]
 }
 

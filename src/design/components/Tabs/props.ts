@@ -1,3 +1,9 @@
+interface TabsOptions {
+  label: string
+  name: any
+}
+
 export interface ITabsProps {
-  value: any
+  currentTab: any
+  options: TabsOptions[]
 }

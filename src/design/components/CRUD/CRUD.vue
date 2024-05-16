@@ -30,6 +30,10 @@ import { useApi } from '@design/hooks/useApi'
 import actionRegisterCenter from '@/design-core/utils/componentActionCenter/action-regiter'
 import RootRender from '@/design-core/render/RootRender/RootRender.vue'
 import { excelEventFlow } from '@/design-core/utils/event-flow'
+import { ElMessage } from 'element-plus'
+import { evaluate } from 'amis-formula'
+import { get } from 'lodash-es'
+import { usePageDataStore } from '@/design-core/store/page-data'
 
 const props = withDefaults(defineProps<CRUDProps>(), {
   columns: () => [],
@@ -52,9 +56,30 @@ const apiRequest = async (params) => {
   }
   const { requestAction } = useApi(props.api)
 
+  let otherParams = {}
+
+  if (props.api.params) {
+    const mergeData = {
+      pageData: usePageDataStore().getData()
+    }
+    otherParams = props.api.params.reduce((prev, cur) => {
+      if (cur.formula) {
+        // 执行公式
+        prev[cur.key] = evaluate(cur.formula, mergeData)
+
+        return prev
+      }
+      prev[cur.key] = get(mergeData, cur.value)
+      return prev
+    }, {})
+  }
+
   return requestAction({
     url: props.api.url,
-    data: params
+    data: {
+      ...params,
+      ...otherParams
+    }
   })
 }
 
@@ -66,7 +91,36 @@ const proTablePropsWrapper = computed(() => {
 })
 
 const columns = computed(() => {
-  const list = props.columns
+  const list = props.columns.map((item) => {
+    if (item.api) {
+      item.enum = async () => {
+        const { requestAction } = useApi(item.api)
+        const res = await requestAction({
+          url: item.api.url,
+          data: {}
+        })
+
+        const deep = (value: any) => {
+          value.value = value[item.fieldNames?.value || 'value']
+          value.label = value[item.fieldNames?.label || 'label']
+
+          if (value.child?.length) {
+            value.child.forEach(deep)
+          }
+        }
+
+        res.data?.forEach(deep)
+
+        return {
+          data: res.data
+        }
+      }
+    }
+
+    return {
+      ...item
+    }
+  })
 
   if (props.operations) {
     list.push({
@@ -76,6 +130,8 @@ const columns = computed(() => {
       width: 250
     })
   }
+
+  console.log('list: ', list)
 
   return list
 })
@@ -87,7 +143,13 @@ const handleActionClick = (operation: RowOperation, rowData: any) => {
 const tableRef = ref<InstanceType<typeof ProTable>>()
 
 const getSelectedRow = () => {
-  return tableRef.value?.selectedList
+  const selectRow = tableRef.value?.selectedList
+
+  if (!selectRow?.length) {
+    ElMessage.warning('请选择要操作的行')
+    throw Error('请选择要操作的行')
+  }
+  return selectRow
 }
 
 const clearSelectedRow = () => {

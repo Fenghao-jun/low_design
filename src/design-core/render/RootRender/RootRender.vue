@@ -66,17 +66,32 @@ const fields = ['disabled']
 const store = usePageDataStore()
 console.log('store: ', store.pageData)
 
-const getComponentProps = (component: ComponentScheme) => {
-  return {
-    ...component.props,
-    ...attrs,
-    children: component.children || []
-    // children:
-    //   component.key === 'Form' || component.key === 'Container'
-    //     ? component.children
-    //     : undefined
+const getComponentProps = computed(() => {
+  return (component: ComponentScheme) => {
+    let variableProps = {}
+
+    if (component.variableProps) {
+      const propsKeys = Object.keys(component.variableProps)
+
+      variableProps = propsKeys.reduce((prev, current) => {
+        return {
+          ...prev,
+          [current]: evaluate(
+            component.variableProps[current].value,
+            store.pageData
+          )
+        }
+      }, {})
+    }
+
+    return {
+      ...component.props,
+      ...attrs,
+      ...variableProps,
+      children: component.children || null
+    }
   }
-}
+})
 
 const isHidden = (component: ComponentScheme) => {
   let hidden = false

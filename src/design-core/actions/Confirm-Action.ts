@@ -27,7 +27,8 @@ export class ConfirmAction implements RendererAction {
       cancelButtonText: '取消',
       type: 'warning',
       center: true,
-      showCancelButton: true
+      showCancelButton: true,
+      ...args
     })
       .then((res) => {
         console.log('res: ', res)

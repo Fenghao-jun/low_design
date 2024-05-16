@@ -61,6 +61,12 @@ const proxyConfig = {
     changeOrigin: true,
     secure: false,
     wx: true
+  },
+  '/presale-api': {
+    target: javaGatewayLink,
+    changeOrigin: true,
+    secure: false,
+    wx: true
   }
 }
 

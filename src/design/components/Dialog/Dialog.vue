@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="showDialog" v-bind="props">
+  <el-dialog v-bind="props" v-model="showDialog">
     <template #default>
       <slot />
     </template>
@@ -13,10 +13,13 @@ import { IDialogProps } from './props'
 const props = withDefaults(defineProps<IDialogProps>(), {
   width: '500',
   destroyOnClose: true,
-  center: true
+  center: true,
+  showClose: true,
+  closeOnClickModal: true,
+  modal: true
 })
 
-const showDialog = ref(true)
+const showDialog = ref(false)
 
 const open = () => {
   showDialog.value = true

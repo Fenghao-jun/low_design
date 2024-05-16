@@ -64,10 +64,14 @@ const proxyConfig = {
   },
   '/presale-api': {
     target: javaGatewayLink,
+    changeOrigin: true,
+    secure: false,
+    wx: true
+  },
   // TODO: 待删除
   // 本地联调使用
   '/aiAPI': {
-    target: 'http://172.18.37.83:6017',
+    target: 'http://172.18.37.83:6015',
     changeOrigin: true,
     secure: false,
     wx: true

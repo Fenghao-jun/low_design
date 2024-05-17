@@ -48,19 +48,22 @@ export class RequestAction implements RendererAction {
       }
       console.log('mergeData: ', mergeData)
 
-      const requestParams = params.reduce(
-        (prev, cur) => {
-          if (cur.formula) {
-            // 执行公式
-            prev[cur.key] = evaluate(cur.formula, mergeData)
+      // 如果传进来是对象， 则帮他解构
+      const baseData =
+        Object.prototype.toString.call(eventData) === '[object Object]'
+          ? { ...eventData }
+          : {}
 
-            return prev
-          }
-          prev[cur.key] = get(mergeData, cur.value)
+      const requestParams = params.reduce((prev, cur) => {
+        if (cur.formula) {
+          // 执行公式
+          prev[cur.key] = evaluate(cur.formula, mergeData)
+
           return prev
-        },
-        { ...eventData }
-      )
+        }
+        prev[cur.key] = get(mergeData, cur.value)
+        return prev
+      }, baseData)
 
       const { requestAction } = useApi(node.actionConfig!.args)
 

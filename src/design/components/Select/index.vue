@@ -15,22 +15,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref, useAttrs, onMounted } from 'vue'
+import { ref, useAttrs, onMounted, watch } from 'vue'
 import { useApi } from '@design/hooks/useApi'
-
 const emits = defineEmits(['updateModel', 'updateValue'])
 
 const attrs = useAttrs()
+const props = defineProps<{ value: string; fieldKey: string }>()
 const {
-  value = '',
-  fieldKey = '',
   optionProps = {},
   api,
   enums = [], // option的遍历值
   ...attrsProps
 } = attrs as Record<string, any>
 
-const _value = ref(value)
+const _value = ref('')
+watch(props, (newValue) => {
+  _value.value = newValue.value
+})
 const optionsList = ref<Record<string, any>>([])
 
 // 处理 option 列表数据
@@ -48,8 +49,8 @@ onMounted(async () => {
 })
 
 const handleChange = (value: string | number | string[] | number[]) => {
-  if (fieldKey) {
-    emits('updateModel', fieldKey, value)
+  if (props.fieldKey) {
+    emits('updateModel', props.fieldKey, value)
   } else {
     emits('updateValue', value)
   }

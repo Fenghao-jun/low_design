@@ -1,6 +1,7 @@
 <template>
   <template v-if="show">
     <component
+      :ref="(el) => setComponentRef(($attrs as Record<string, any>)._id, el)"
       :is="componentRegister.getComponent(componentName).component"
       v-bind="$attrs"
       v-on="attr.events"
@@ -13,11 +14,13 @@ import { Component, computed, ref, onErrorCaptured, useAttrs } from 'vue'
 import componentRegister, {
   ComponentRegisterCenter
 } from '@core/utils/component-regiter'
+import { setComponentRef } from '@core/utils/component-ref'
+
 import { Props } from './type'
 
 const props = defineProps<Props>()
 const attr = useAttrs()
-
+console.log('hhhhhhh', attr)
 const emits = defineEmits(['error'])
 
 onErrorCaptured((...rest) => {

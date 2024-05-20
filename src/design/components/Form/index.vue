@@ -50,6 +50,7 @@ import { computed, ref, onMounted } from 'vue'
 import { omit } from 'lodash-es'
 import type { FormInstance } from 'element-plus'
 import Render from '@core/render/RootRender/RootRender.vue'
+import { makeRegexp } from '@/utils/regexp'
 import { FormProps } from './type'
 
 const props = defineProps<FormProps>()
@@ -73,6 +74,9 @@ const rules = computed(() => {
           const fn = new Function('ctx', `return ${rule.validator}`)
           return fn({ model: formData.value, rule: _rule, callback })
         }
+      } else if (rule.pattern) {
+        rule.pattern = makeRegexp(rule.pattern)
+        return rule
       } else {
         return rule
       }
@@ -135,6 +139,11 @@ const formatCustomValidator = (
               return fn({ model: formData.value, rule: _rule, callback })
             }
           }
+        } else if (rule.pattern) {
+          return {
+            ...rule,
+            pattern: makeRegexp(rule.pattern)
+          }
         } else {
           return rule
         }
@@ -151,6 +160,11 @@ const formatCustomValidator = (
             const fn = new Function('ctx', `return ${rules.validator}`)
             return fn({ model: formData.value, rule: _rule, callback })
           }
+        }
+      } else if (rules.pattern) {
+        return {
+          ...rules,
+          parttern: makeRegexp(rules.pattern)
         }
       } else {
         return rules

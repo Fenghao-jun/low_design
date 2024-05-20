@@ -1,6 +1,11 @@
 <template>
   <div>
-    <ProTable v-bind="proTablePropsWrapper" :columns="columns" ref="tableRef">
+    <ProTable
+      v-bind="proTablePropsWrapper"
+      :columns="columns"
+      ref="tableRef"
+      @sortChange="handleTableSortChange"
+    >
       <!-- 操作列 -->
       <template #operation="scope">
         <template v-for="(item, index) in operations" :key="index">
@@ -49,6 +54,28 @@ const props = withDefaults(defineProps<CRUDProps>(), {
   headerSlot: () => []
 })
 
+const sortField = ref({ field: '', order: 'asc' })
+
+const handleTableSortChange = (data: {
+  column: any
+  prop: string
+  order: any
+}) => {
+  if (data.order) {
+    sortField.value = {
+      field: data.prop,
+      order: data.order === 'descending' ? 'DESC' : 'ASC'
+    }
+  } else {
+    sortField.value = {
+      field: '',
+      order: ''
+    }
+  }
+
+  tableRef.value?.search()
+}
+
 const apiRequest = async (params) => {
   console.log('params: ', params)
   if (!props.api) {
@@ -58,6 +85,7 @@ const apiRequest = async (params) => {
 
   let otherParams = {}
 
+  // 处理Scheme额外参数
   if (props.api.params) {
     const mergeData = {
       pageData: usePageDataStore().getData()
@@ -74,11 +102,13 @@ const apiRequest = async (params) => {
     }, {})
   }
 
+  // 处理表格排序
   return requestAction({
     url: props.api.url,
     data: {
       ...params,
-      ...otherParams
+      ...otherParams,
+      sort: sortField.value.field ? sortField.value : ''
     }
   })
 }

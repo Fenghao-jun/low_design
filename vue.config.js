@@ -3,11 +3,7 @@ const path = require('path')
 const { name } = require('./package')
 const { defineConfig } = require('@vue/cli-service')
 const { ModuleFederationPlugin } = require('webpack').container
-const { demoRemoteUrl, shopRemoteUrl } = require('./remote-url.js')
-
-// const remoteUrl = process.env.NODE_ENV === 'production' ? 'demo@https://cdn.dataso.cn/static/remote-components/demo-vue-cli/demoComponentEntry.js' : 'demo@http://localhost:3001/demoComponentEntry.js'
-
-
+const { shopRemoteUrl } = require('./remote-url.js')
 
 module.exports = defineConfig({
   transpileDependencies: false,
@@ -41,7 +37,7 @@ module.exports = defineConfig({
         remotes: {
           // 消费提供方的组件时
           // [当前使用的命名]: [消费方提供的name]@[域名]/[提供方定义的入口文件名称]
-          demo_components: demoRemoteUrl,
+          // demo_components: demoRemoteUrl,
           shop: shopRemoteUrl
         },
         shared: {

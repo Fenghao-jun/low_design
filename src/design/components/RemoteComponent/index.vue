@@ -1,6 +1,7 @@
 <template>
   <template v-if="show">
     <component
+      :ref="(el) => handleRef(el)"
       :is="componentRegister.getComponent(componentName).component"
       v-bind="$attrs"
       v-on="attr.events"
@@ -13,17 +14,22 @@ import { Component, computed, ref, onErrorCaptured, useAttrs } from 'vue'
 import componentRegister, {
   ComponentRegisterCenter
 } from '@core/utils/component-regiter'
+import { setComponentRef } from '@core/utils/component-ref'
+
 import { Props } from './type'
 
 const props = defineProps<Props>()
 const attr = useAttrs()
-
 const emits = defineEmits(['error'])
 
 onErrorCaptured((...rest) => {
   console.log('[onErrorCaptured] ', ...rest)
   emits('error', { ...rest })
 })
+
+const handleRef = (el: any) => {
+  setComponentRef((attr as Record<string, any>)._id, el)
+}
 
 const componentName = computed(() => {
   return `${props.remote.scope.toLowerCase()}-${props.remote.name.toLowerCase()}`
@@ -45,13 +51,6 @@ const registerBatch = (
   show.value = componentRegister.getComponent(componentName.value).component
 }
 
-// import('demo_components/components.vue')
-//   .then((res) => {
-//     registerBatch('demo', res.default)
-//   })
-//   .catch((err) => {
-//     console.log('[demo_components/components.vue]', err)
-//   })
 import('shop/components.vue')
   .then((res) => {
     registerBatch('shop', res.default)

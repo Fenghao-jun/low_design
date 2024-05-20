@@ -5,7 +5,7 @@
       :_id="component.componentId"
       :_name="component.name"
       :is="componentRegister.getComponent(component.key).component"
-      :ref="(el) => setComponentRef(component.componentId, el)"
+      :ref="(el) => handleRef(component, el)"
       v-bind="getComponentProps(component)"
       v-on="handleEvent(component)"
     >
@@ -36,7 +36,12 @@ import { evaluate } from 'amis-formula'
 const props = defineProps<RootRenderProps>()
 
 const attrs = useAttrs()
-
+const handleRef = (component: any, el: any) => {
+  // 远程组件的Ref在自身内部注册
+  if (component.key !== 'RemoteComponent') {
+    setComponentRef(component.componentId, el)
+  }
+}
 const handleEvent = (component: ComponentScheme) => {
   const props: Record<string, any> = {}
   // TODO 可视化之后来处理这里的事件，不要让所有的事件都注册到 RootRender 中

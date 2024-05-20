@@ -4,20 +4,24 @@
 </template>
 
 <script setup lang="ts" name="Switch">
-import { ref, useAttrs } from 'vue'
+import { ref, useAttrs, watch } from 'vue'
 import { SwitchAttrs } from './type'
 
 const emits = defineEmits(['updateModel', 'updateValue'])
+const props = withDefaults(defineProps<{ value: string; fieldKey: string }>(), {
+  value: '',
+  fieldKey: ''
+})
+const attrs = useAttrs() as SwitchAttrs
 
-const { value = false, fieldKey, ...attrs } = useAttrs() as SwitchAttrs
-
-console.log('switch attrs: ', useAttrs())
-
-const _value = ref(value)
-
+const _value = ref(props.value)
+console.log('switch attrs: ', useAttrs(), _value)
+watch(props, (newValue) => {
+  _value.value = newValue.value
+})
 const handleChange = (value: any) => {
-  if (fieldKey) {
-    emits('updateModel', fieldKey, value)
+  if (props.fieldKey) {
+    emits('updateModel', props.fieldKey, value)
   } else {
     emits('updateValue', value)
   }

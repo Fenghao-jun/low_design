@@ -5,7 +5,9 @@ import {
 import { EventNode, excelEventFlow } from '@core/utils/event-flow'
 import { ElMessageBox } from 'element-plus'
 import { checkArgs } from './common'
-
+import { usePageDataStore } from '@/design-core/store/page-data'
+import { evaluate } from 'amis-formula'
+const store = usePageDataStore()
 // 确认弹窗
 interface IConfirmAction extends ListenerAction {
   actionType: 'confirm'
@@ -22,7 +24,12 @@ export class ConfirmAction implements RendererAction {
     const args = node.actionConfig?.args
     ElMessageBox({
       title: '提示',
-      message: args?.text || '内容',
+      message:
+        evaluate(args!.text!, {
+          eventData,
+          initEventData,
+          ...store.pageData
+        }) || '内容',
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning',

@@ -28,7 +28,7 @@ export class ConfirmAction implements RendererAction {
         evaluate(args!.text!, {
           eventData,
           initEventData,
-          ...store.pageData
+          pageData: store.pageData
         }) || '内容',
       confirmButtonText: '确定',
       cancelButtonText: '取消',

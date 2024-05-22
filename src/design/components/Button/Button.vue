@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   content: 'hello',
   type: 'primary'
 })
-
+console.log('wocaonima:>>', props)
 const emit = defineEmits(['click'])
 
 const handleClick = () => {

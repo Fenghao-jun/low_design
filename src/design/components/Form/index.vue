@@ -1,48 +1,48 @@
 <template>
-  <div class="form-container">
-    <el-form
-      ref="formRef"
-      v-bind="props.formProps"
-      :model="formData"
-      :rules="rules"
-    >
-      <template v-if="props.children?.length">
-        <el-row v-bind="props.rowProps">
-          <el-col
-            v-for="item in props.children"
-            :key="item.componentId"
-            v-bind="item?.props?.colProps"
-          >
-            <template v-if="item.key === 'Title' || item.key === 'Container'">
-              <Render :components="[item]" v-bind="item.props"></Render>
-            </template>
-            <templte v-else>
-              <el-form-item
-                v-bind="item?.props?.formItemProps"
-                v-bind:rules="
-                  formatCustomValidator(item?.props?.formItemProps?.rules || {})
+  <!-- <div class="form-container"> -->
+  <el-form
+    ref="formRef"
+    v-bind="props.formProps"
+    :model="formData"
+    :rules="rules"
+  >
+    <template v-if="props.children?.length">
+      <el-row v-bind="props.rowProps">
+        <el-col
+          v-for="item in props.children"
+          :key="item.componentId"
+          v-bind="item?.props?.colProps"
+        >
+          <template v-if="item.key === 'Title' || item.key === 'Container'">
+            <Render :components="[item]" v-bind="item.props"></Render>
+          </template>
+          <templte v-else>
+            <el-form-item
+              v-bind="item?.props?.formItemProps"
+              v-bind:rules="
+                formatCustomValidator(item?.props?.formItemProps?.rules || {})
+              "
+            >
+              <Render
+                :components="[item]"
+                v-on="{ updateModel }"
+                v-bind="item.props"
+                v-bind:value="
+                  Array.isArray(item?.props?.fieldKey)
+                    ? item?.props?.fieldKey.map((val) => formData[val])
+                    : formData[item?.props?.fieldKey]
                 "
-              >
-                <Render
-                  :components="[item]"
-                  v-on="{ updateModel }"
-                  v-bind="item.props"
-                  v-bind:value="
-                    Array.isArray(item?.props?.fieldKey)
-                      ? item?.props?.fieldKey.map((val) => formData[val])
-                      : formData[item?.props?.fieldKey]
-                  "
-                ></Render>
-              </el-form-item>
-            </templte>
-          </el-col>
-        </el-row>
-      </template>
-    </el-form>
-    <!-- <div style="margin-top: 30px">
+              ></Render>
+            </el-form-item>
+          </templte>
+        </el-col>
+      </el-row>
+    </template>
+  </el-form>
+  <!-- <div style="margin-top: 30px">
       🚀 {{ JSON.stringify(props, undefined, 2) }}
     </div> -->
-  </div>
+  <!-- </div> -->
 </template>
 
 <script setup lang="ts" name="Form">
@@ -174,8 +174,4 @@ const formatCustomValidator = (
 }
 </script>
 
-<style lang="scss" scoped>
-.form-container {
-  padding-top: 22px;
-}
-</style>
+<style lang="scss" scoped></style>

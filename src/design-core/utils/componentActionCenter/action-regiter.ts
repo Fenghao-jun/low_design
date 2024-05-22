@@ -5,7 +5,8 @@ import {
   ComponentAction,
   RequestAction,
   CpoyAction,
-  ScriptAction
+  ScriptAction,
+  ExportAction
 } from '@core/actions'
 import { RendererAction } from './Action'
 
@@ -61,6 +62,7 @@ ActionRegisterCenter.register('component', new ComponentAction())
 ActionRegisterCenter.register('request', new RequestAction())
 ActionRegisterCenter.register('copy', new CpoyAction())
 ActionRegisterCenter.register('script', new ScriptAction())
+ActionRegisterCenter.register('export', new ExportAction())
 
 // 导出该实例以便于全局访问和使用。
 export default actionRegisterCenter

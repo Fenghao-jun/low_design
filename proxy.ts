@@ -39,7 +39,7 @@ const proxyConfig = {
     wx: true
   },
   '/franchisee-api': {
-    target: gatewayLink,
+    target: 'http://192.168.81.11:6018',
     changeOrigin: true,
     secure: false,
     wx: true

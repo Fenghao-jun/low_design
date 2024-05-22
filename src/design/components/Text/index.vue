@@ -1,5 +1,5 @@
 <template>
-  <span v-bind:style="style">{{ value }}</span>
+  <div class="default" v-bind:style="style">{{ value }}</div>
 </template>
 
 <script setup lang="ts" name="Text">
@@ -9,3 +9,13 @@ defineProps<{
   value?: string
 }>()
 </script>
+<style lang="scss" scoped>
+.default {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: #817b7b;
+  font-size: 14px;
+}
+</style>

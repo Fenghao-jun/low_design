@@ -47,7 +47,8 @@ const props = withDefaults(
     }
   }
   .is-maintitle {
-    font-size: 18px;
+    font-size: 24px;
+    font-weight: bold;
   }
 }
 </style>

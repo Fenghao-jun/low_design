@@ -11,10 +11,7 @@
     >
       <template
         v-if="
-          Array.isArray(component.children) &&
-          component.children.length > 0 &&
-          component.key !== 'Form' &&
-          component.key !== 'Container'
+          Array.isArray(component.children) && component.children.length > 0
         "
       >
         <RootRender :components="component.children" />

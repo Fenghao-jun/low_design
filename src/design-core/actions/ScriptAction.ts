@@ -21,7 +21,7 @@ function setData(key: string, value: any) {
   return usePageDataStore().setData(key, value)
 }
 
-function execScript(script: string, eventData: any, initEventData: any) {
+export function execScript(script: string, eventData: any, initEventData: any) {
   try {
     const func = new Function('ctx', `return ${script}`)
 

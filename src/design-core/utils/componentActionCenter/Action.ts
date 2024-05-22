@@ -8,6 +8,8 @@ export type ActionType =
   | 'request'
   | 'script'
   | 'copy'
+  | 'export'
+  | 'import'
 // 事件
 export interface ListenerAction {
   // 动作类型 逻辑动作  TODO:自定义（脚本支撑）|reload|url|ajax|dialog|drawer 其他扩充的组件动作

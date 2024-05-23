@@ -67,6 +67,12 @@ const proxyConfig = {
     changeOrigin: true,
     secure: false,
     wx: true
+  },
+  '/activity-api': {
+    target: javaGatewayLink,
+    changeOrigin: true,
+    secure: false,
+    wx: true
   }
 }
 

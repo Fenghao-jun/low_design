@@ -56,12 +56,12 @@ export class ExportAction implements RendererAction {
           data: {
             ...eventData,
             ...initEventData,
-            requestParams
+            ...requestParams
           },
           params: {
             ...eventData,
             ...initEventData,
-            requestParams
+            ...requestParams
           }
         })
       } else {
@@ -72,12 +72,12 @@ export class ExportAction implements RendererAction {
           data: {
             ...eventData,
             ...initEventData,
-            requestParams
+            ...requestParams
           },
           params: {
             ...eventData,
             ...initEventData,
-            requestParams
+            ...requestParams
           }
         })
       }

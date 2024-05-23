@@ -38,6 +38,7 @@ import { ElMessage } from 'element-plus'
 import { useApi } from '@/design/hooks/useApi'
 
 const props = defineProps<ImportProps>()
+const emit = defineEmits<{ success: [] }>()
 
 const dialogVisible = ref(false)
 const open = () => {
@@ -80,9 +81,24 @@ const handleConfirmClick = async () => {
 
   const { requestAction } = useApi(props.api)
   loading.value = true
-  requestAction({ url: props.api.url }).finally(() => {
-    loading.value = false
+  requestAction({
+    url: props.api.url,
+    data: { file: selectedFile.value },
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
   })
+    .catch((res) => {
+      ElMessage({ type: 'success', message: '导入成功' })
+      emit('success')
+      close()
+    })
+    .catch((err) => {
+      console.log('err: ', err)
+    })
+    .finally(() => {
+      loading.value = false
+    })
 }
 
 const handleDownClick = () => {

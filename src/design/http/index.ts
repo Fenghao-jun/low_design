@@ -26,6 +26,7 @@ const request = requestAxios.createAxiosInstance({
         console.log('response: ', response)
 
         const desc = response.headers['content-disposition']
+        console.log('desc: ', desc)
 
         const decodeFilename = (filename) => {
           // 提取文件名部分并解码

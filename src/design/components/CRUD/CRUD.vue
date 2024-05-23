@@ -108,7 +108,7 @@ const apiRequest = async (params) => {
     data: {
       ...params,
       ...otherParams,
-      sort: sortField.value.field ? sortField.value : ''
+      sort: sortField.value.field ? sortField.value : {}
     }
   })
 }
@@ -191,7 +191,10 @@ const search = () => {
 }
 
 const getSearchData = () => {
-  const params = tableRef.value?.searchParam || {}
+  const params = {
+    sort: sortField.value.field ? sortField.value : {},
+    ...(tableRef.value?.searchParam || {})
+  }
   return params
 }
 

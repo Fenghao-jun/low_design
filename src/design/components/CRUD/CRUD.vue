@@ -210,13 +210,20 @@ const search = () => {
   tableRef.value?.search()
 }
 
+const getSearchData = () => {
+  const params = tableRef.value?.searchParam || {}
+  return params
+}
+
 defineExpose({
   // 获取当前选中的行
   getSelectedRow,
   // 清空选中
   clearSelectedRow,
   // 搜索
-  search
+  search,
+  // 获取搜索参数
+  getSearchData
 })
 </script>
 

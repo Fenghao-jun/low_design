@@ -10,6 +10,7 @@
       <template #operation="scope">
         <template v-for="(item, index) in operations" :key="index">
           <ElButton
+            v-if="handleOperationItemHidden(item, scope.row)"
             text
             type="primary"
             @click="handleActionClick(item, scope.row)"
@@ -56,6 +57,8 @@ const props = withDefaults(defineProps<CRUDProps>(), {
 
 const sortField = ref({ field: '', order: 'asc' })
 
+const store = usePageDataStore()
+
 const handleTableSortChange = (data: {
   column: any
   prop: string
@@ -88,7 +91,7 @@ const apiRequest = async (params) => {
   // 处理Scheme额外参数
   if (props.api.params) {
     const mergeData = {
-      pageData: usePageDataStore().getData()
+      pageData: store.getData()
     }
     otherParams = props.api.params.reduce((prev, cur) => {
       if (cur.formula) {
@@ -180,6 +183,23 @@ const getSelectedRow = () => {
     throw Error('请选择要操作的行')
   }
   return selectRow
+}
+
+const handleOperationItemHidden = (
+  item: RowOperation,
+  row: Record<string, any>
+) => {
+  if (!item.hidden) {
+    return true
+  }
+
+  if (item.hidden?.type === 'formula') {
+    return item.hidden.formula ? evaluate(item.hidden.formula, row) : true
+  } else if (item.hidden.type === 'variable') {
+    return store.pageData[item.hidden.value]
+  } else {
+    return !!item.hidden.value
+  }
 }
 
 const clearSelectedRow = () => {

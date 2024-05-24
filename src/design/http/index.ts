@@ -1,5 +1,6 @@
 import requestAxios from 'am-admin-http'
 import { getCookie } from 'am-polyfill'
+import { ElNotification } from 'element-plus'
 console.log(
   'process.env: ',
   process.env.VUE_APP_HTTP_MODE,
@@ -22,6 +23,7 @@ const request = requestAxios.createAxiosInstance({
   interceptors: {
     responseInterceptors(response) {
       if (response?.config?.responseType === 'blob') {
+        // 如果是文件流，直接过
         // 如果是文件流，直接过
         console.log('response: ', response)
 
@@ -54,10 +56,22 @@ const request = requestAxios.createAxiosInstance({
           document.body.removeChild(link)
           window.URL.revokeObjectURL(url)
         }
-
         return response
+      } else if (response.data.code * 1 === (0 as number) * 1) {
+        return response
+      } else if (response.data.status * 1 === (1000 as number) * 1) {
+        return response
+      } else {
+        if (response.REJECTERRORCONFIG || response.config.REJECTERRORCONFIG) {
+          return Promise.reject(response)
+        }
+        ElNotification({
+          title: 'Error',
+          message: response.data.message || response?.data?.msg || '系统异常',
+          type: 'error'
+        })
+        return Promise.reject(response)
       }
-      return response
     }
   }
 })

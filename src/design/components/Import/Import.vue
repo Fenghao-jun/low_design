@@ -2,7 +2,7 @@
   <el-dialog
     v-model="dialogVisible"
     title="批量导入"
-    width="500"
+    width="800"
     @close="handleCloseClick"
   >
     <div class="import-dialog">

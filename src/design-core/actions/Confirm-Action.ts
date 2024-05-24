@@ -3,18 +3,21 @@ import {
   RendererAction
 } from '@core/utils/componentActionCenter/Action'
 import { EventNode, excelEventFlow } from '@core/utils/event-flow'
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox, ElMessageBoxOptions } from 'element-plus'
 import { checkArgs } from './common'
 import { usePageDataStore } from '@/design-core/store/page-data'
 import { evaluate } from 'amis-formula'
 const store = usePageDataStore()
 // 确认弹窗
+
+interface ConfirmActionArgs extends ElMessageBoxOptions {
+  text?: string
+}
+
 interface IConfirmAction extends ListenerAction {
   actionType: 'confirm'
 
-  args: {
-    text?: string
-  }
+  args: ConfirmActionArgs
 }
 
 export class ConfirmAction implements RendererAction {

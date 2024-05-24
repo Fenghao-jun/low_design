@@ -26,4 +26,6 @@ export interface CRUDProps extends ProTableProps {
   operations?: RowOperation[]
   headerSlot?: ComponentScheme[]
   columns: ColumnsProps[]
+
+  operationColumnWidth?: string | number
 }

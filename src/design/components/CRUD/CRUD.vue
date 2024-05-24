@@ -97,7 +97,6 @@ const apiRequest = async (params) => {
       if (cur.formula) {
         // 执行公式
         prev[cur.key] = evaluate(cur.formula, mergeData)
-
         return prev
       }
       prev[cur.key] = get(mergeData, cur.value)
@@ -128,9 +127,25 @@ const columns = computed(() => {
     if (item.api) {
       item.enum = async () => {
         const { requestAction } = useApi(item.api)
+
+        let otherParams = {}
+        if (props.api.params) {
+          const mergeData = {
+            pageData: store.getData()
+          }
+          otherParams = item.api.params.reduce((prev, cur) => {
+            if (cur.formula) {
+              // 执行公式
+              prev[cur.key] = evaluate(cur.formula, mergeData)
+              return prev
+            }
+            prev[cur.key] = get(mergeData, cur.value)
+            return prev
+          }, {})
+        }
         const res = await requestAction({
           url: item.api.url,
-          data: {}
+          data: otherParams
         })
 
         const deep = (value: any) => {
@@ -160,7 +175,7 @@ const columns = computed(() => {
       prop: 'operation',
       fixed: 'right',
       label: '操作',
-      width: 250
+      width: props.operationColumnWidth || 250
     })
   }
 

@@ -5,6 +5,11 @@
 <script setup lang="ts">
 import { Graph } from '@antv/g6'
 import { onMounted, ref } from 'vue'
+import { registerLines } from './lines'
+import { registerNodes } from './nodes'
+
+registerLines()
+registerNodes()
 
 const containerRef = ref()
 

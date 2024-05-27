@@ -129,7 +129,7 @@ const columns = computed(() => {
         const { requestAction } = useApi(item.api)
 
         let otherParams = {}
-        if (props.api.params) {
+        if (item.api.params) {
           const mergeData = {
             pageData: store.getData()
           }
@@ -143,6 +143,7 @@ const columns = computed(() => {
             return prev
           }, {})
         }
+
         const res = await requestAction({
           url: item.api.url,
           data: otherParams

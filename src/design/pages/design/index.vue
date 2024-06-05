@@ -52,6 +52,12 @@ const initializePageData = (pageData: Variable[] = []) => {
   })
 }
 
+window.addEventListener('pageshow', (event) => {
+  // event.persisted属性为true时，表示当前文档是从往返缓存中获取
+  if (event.persisted) {
+    location.reload()
+  }
+})
 if (route.params.pageId) {
   initPageConfig(route.params.pageId as string)
 } else {

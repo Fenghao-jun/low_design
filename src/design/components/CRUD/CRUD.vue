@@ -5,6 +5,7 @@
       :columns="columns"
       ref="tableRef"
       @sortChange="handleTableSortChange"
+      :key="proTableKey"
     >
       <!-- 操作列 -->
       <template #operation="scope">
@@ -122,7 +123,11 @@ const proTablePropsWrapper = computed(() => {
   }
 })
 
+const proTableKey = ref(0)
+
 const columns = computed(() => {
+  console.log('proTableKey: ', proTableKey)
+
   const list = props.columns.map((item) => {
     if (item.api) {
       item.enum = async () => {
@@ -223,6 +228,7 @@ const clearSelectedRow = () => {
 }
 
 const search = () => {
+  proTableKey.value = proTableKey.value + 1
   tableRef.value?.search()
 }
 

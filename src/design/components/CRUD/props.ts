@@ -17,7 +17,7 @@ type TableRowOperation = {
   [key in RowOperationType]: RowOperation
 }
 
-interface ColumnsProps extends ColumnProps {
+export interface ColumnsProps extends ColumnProps {
   api?: any
 }
 

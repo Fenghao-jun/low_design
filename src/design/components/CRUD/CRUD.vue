@@ -5,7 +5,6 @@
       :columns="columns"
       ref="tableRef"
       @sortChange="handleTableSortChange"
-      :key="proTableKey"
     >
       <!-- 操作列 -->
       <template #operation="scope">
@@ -31,7 +30,7 @@
 
 <script setup lang="ts">
 import { ProTable } from 'am-admin-component'
-import { computed, withDefaults, defineExpose, ref } from 'vue'
+import { computed, withDefaults, defineExpose, ref, watch } from 'vue'
 import { CRUDProps, RowOperation } from './props'
 import { useApi } from '@design/hooks/useApi'
 import actionRegisterCenter from '@/design-core/utils/componentActionCenter/action-regiter'
@@ -41,6 +40,7 @@ import { ElMessage } from 'element-plus'
 import { evaluate } from 'amis-formula'
 import { get } from 'lodash-es'
 import { usePageDataStore } from '@/design-core/store/page-data'
+import { useTableEnum } from '@/design/hooks/useTableEnum'
 
 const props = withDefaults(defineProps<CRUDProps>(), {
   columns: () => [],
@@ -59,6 +59,8 @@ const props = withDefaults(defineProps<CRUDProps>(), {
 const sortField = ref({ field: '', order: 'asc' })
 
 const store = usePageDataStore()
+
+const tableRef = ref<InstanceType<typeof ProTable>>()
 
 const handleTableSortChange = (data: {
   column: any
@@ -125,55 +127,32 @@ const proTablePropsWrapper = computed(() => {
 
 const proTableKey = ref(0)
 
-const columns = computed(() => {
-  console.log('proTableKey: ', proTableKey)
+const tableSeachParams = computed(() => tableRef.value?.searchParam)
 
+const pageData = computed(() => {
+  return store.pageData
+})
+
+const mergeData = computed(() => {
+  return {
+    pageData: pageData.value,
+    eventData: tableSeachParams.value
+  }
+})
+
+const { enumProp } = useTableEnum(props.columns, mergeData as any)
+
+const columns = computed(() => {
   const list = props.columns.map((item) => {
     if (item.api) {
-      item.enum = async () => {
-        const { requestAction } = useApi(item.api)
-
-        let otherParams = {}
-        if (item.api.params) {
-          const mergeData = {
-            pageData: store.getData()
-          }
-          otherParams = item.api.params.reduce((prev, cur) => {
-            if (cur.formula) {
-              // 执行公式
-              prev[cur.key] = evaluate(cur.formula, mergeData)
-              return prev
-            }
-            prev[cur.key] = get(mergeData, cur.value)
-            return prev
-          }, {})
-        }
-
-        const res = await requestAction({
-          url: item.api.url,
-          data: otherParams
-        })
-
-        const deep = (value: any) => {
-          value.value = value[item.fieldNames?.value || 'value']
-          value.label = value[item.fieldNames?.label || 'label']
-
-          if (value.child?.length) {
-            value.child.forEach(deep)
-          }
-        }
-
-        res.data?.forEach(deep)
-
-        return {
-          data: res.data
-        }
-      }
+      item.enum = enumProp.value[item.prop!]
     }
 
-    return {
-      ...item
-    }
+    // return {
+    //   ...item
+    // }
+    // TODO component包中直接使用对象作为key，这里不能进行任何拷贝
+    return item
   })
 
   if (props.operations) {
@@ -193,8 +172,6 @@ const columns = computed(() => {
 const handleActionClick = (operation: RowOperation, rowData: any) => {
   operation.events && excelEventFlow(operation.events, rowData, rowData)
 }
-
-const tableRef = ref<InstanceType<typeof ProTable>>()
 
 const getSelectedRow = () => {
   const selectRow = tableRef.value?.selectedList

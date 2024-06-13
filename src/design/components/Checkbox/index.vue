@@ -6,8 +6,8 @@
     >
       <el-checkbox
         v-bind="item"
-        :label="item[optionProps?.valueKey || 'value']"
-        :value="item[optionProps?.labelKey || 'label']"
+        :label="item[optionProps?.valueKey || 'label']"
+        :value="item[optionProps?.labelKey || 'value']"
       >
       </el-checkbox>
     </template>

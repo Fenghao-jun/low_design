@@ -16,7 +16,7 @@
           <template v-if="item.key === 'Title' || item.key === 'Container'">
             <Render :components="[item]" v-bind="item.props"></Render>
           </template>
-          <templte v-else>
+          <template v-else>
             <el-form-item
               v-bind="item?.props?.formItemProps"
               v-bind:rules="
@@ -34,7 +34,7 @@
                 "
               ></Render>
             </el-form-item>
-          </templte>
+          </template>
         </el-col>
       </el-row>
     </template>

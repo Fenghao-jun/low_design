@@ -107,6 +107,7 @@ defineExpose({
   scrollToField,
   clearValidate,
   initData(data?: Record<string, any>) {
+    console.log('data hahah: ', data)
     formData.value = omit(
       { ...formData.value, ...(data?.eventData || data || {}) },
       ['eventData', 'initEventData']
@@ -114,6 +115,10 @@ defineExpose({
   },
   async getData(): Promise<Record<string, any>> {
     return formData.value
+  },
+  setFieldKeyValue(key: string, value: any) {
+    console.log('setFieldKeyValue', key, value)
+    formData.value[key] = value
   }
 })
 

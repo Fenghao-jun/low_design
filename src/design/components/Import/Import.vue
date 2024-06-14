@@ -4,6 +4,7 @@
     title="批量导入"
     width="800"
     @close="handleCloseClick"
+    destroy-on-close
   >
     <div class="import-dialog">
       <template v-if="uploadSuccess">
@@ -96,6 +97,7 @@ const chooseFile = () => {
 }
 
 const handleFileChange = (event: Event) => {
+  console.log('event: ', event)
   const input = event.target as HTMLInputElement
   const file = input.files && input.files[0]
   if (file) {

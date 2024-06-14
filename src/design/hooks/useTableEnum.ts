@@ -4,11 +4,21 @@ import { computed, Ref, ref, unref } from 'vue'
 import { ColumnsProps, CRUDProps } from '../components/CRUD/props'
 import { useApi } from './useApi'
 import { watchThrottled } from '@vueuse/core'
+import { ProTable } from 'am-admin-component'
 
 export interface ITableEnumParams {
   pageData: Record<string, any>
   eventData: Record<string, any>
 }
+
+function areArraysEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length) return false
+  for (let i = 0; i < arr1.length; i++) {
+    if (!areObjectsEqual(arr1[i], arr2[i])) return false
+  }
+  return true
+}
+
 /**
  * 判断两个对象是否完全相等。
  *
@@ -98,7 +108,8 @@ const getRequestParams = (
 
 export const useTableEnum = (
   tableColumns: CRUDProps['columns'],
-  params: Ref<ITableEnumParams>
+  params: Ref<ITableEnumParams>,
+  tableRef: Ref<InstanceType<typeof ProTable>>
 ) => {
   // 需要api的列
   const _apiColumns = tableColumns.filter((item) => item.api)
@@ -144,6 +155,7 @@ export const useTableEnum = (
 
       // 判断当前参数与之前参数是否相同
       const isSameParams = areObjectsEqual(params, oldParams)
+      console.log('isSameParams: ', isSameParams, item.prop, params, oldParams)
 
       // 如果参数不同或者prop中没值，生成请求函数
       if (!isSameParams || !enumProp.value[item.prop!]) {
@@ -173,12 +185,19 @@ export const useTableEnum = (
     const res = await Promise.allSettled(enumQueue.map((item) => item.fn))
     console.log('tableEnums队列请求结果: ', res)
 
+    const fields: string[] = []
     res.forEach((element, index) => {
       if (element.status === 'fulfilled') {
         const prop = enumQueue[index].prop || ''
+        const currentColumns = tableColumns.find((item) => item.prop === prop)
+
+        // 那些搜索的key枚举值是有变化的
+        fields.push(currentColumns?.search?.key || '')
 
         enumProp.value[prop] = element.value.data
       }
+      // 更新search表单的字段，以防残留
+      tableRef.value.updatedSearch(fields)
     })
   }
 

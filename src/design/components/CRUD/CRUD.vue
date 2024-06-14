@@ -33,7 +33,6 @@ import { ProTable } from 'am-admin-component'
 import { computed, withDefaults, defineExpose, ref, watch } from 'vue'
 import { CRUDProps, RowOperation } from './props'
 import { useApi } from '@design/hooks/useApi'
-import actionRegisterCenter from '@/design-core/utils/componentActionCenter/action-regiter'
 import RootRender from '@/design-core/render/RootRender/RootRender.vue'
 import { excelEventFlow } from '@/design-core/utils/event-flow'
 import { ElMessage } from 'element-plus'
@@ -139,8 +138,9 @@ const mergeData = computed(() => {
     eventData: tableSeachParams.value
   }
 })
-
-const { enumProp } = useTableEnum(props.columns, mergeData as any)
+// 忽略检测ref的类型
+// @ts-ignore
+const { enumProp } = useTableEnum(props.columns, mergeData as any, tableRef)
 
 const columns = computed(() => {
   const list = props.columns.map((item) => {

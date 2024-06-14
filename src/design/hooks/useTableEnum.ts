@@ -11,14 +11,6 @@ export interface ITableEnumParams {
   eventData: Record<string, any>
 }
 
-function areArraysEqual(arr1, arr2) {
-  if (arr1.length !== arr2.length) return false
-  for (let i = 0; i < arr1.length; i++) {
-    if (!areObjectsEqual(arr1[i], arr2[i])) return false
-  }
-  return true
-}
-
 /**
  * 判断两个对象是否完全相等。
  *
@@ -63,6 +55,7 @@ const _requestQueueFn = async (
   item: ColumnsProps,
   data: Record<string, any>
 ) => {
+  if (!item.api) return
   const { requestAction } = useApi(item.api)
 
   const res = await requestAction({
@@ -91,7 +84,7 @@ const getRequestParams = (
   mergeData: Record<string, any>
 ) => {
   let otherParams = {}
-  if (item.api.params) {
+  if (item?.api?.params) {
     otherParams = item.api.params.reduce((prev, cur) => {
       if (cur.formula) {
         // 执行公式
@@ -106,6 +99,13 @@ const getRequestParams = (
   return otherParams
 }
 
+/**
+ * @description 处理CRUD组件搜索区域的枚举值，监听依赖参数变化进行枚举值刷新和联动
+ * @param tableColumns 表格列
+ * @param params
+ * @param tableRef
+ * @returns
+ */
 export const useTableEnum = (
   tableColumns: CRUDProps['columns'],
   params: Ref<ITableEnumParams>,
@@ -118,7 +118,7 @@ export const useTableEnum = (
   const _apiParams = {}
 
   // 存储枚举值
-  const enumProp = ref({})
+  const enumProp = ref<Record<string, any[]>>({})
 
   const paramsWrapper = computed(() => {
     const key = Object.keys(params.value)
@@ -155,7 +155,7 @@ export const useTableEnum = (
 
       // 判断当前参数与之前参数是否相同
       const isSameParams = areObjectsEqual(params, oldParams)
-      console.log('isSameParams: ', isSameParams, item.prop, params, oldParams)
+      // console.log('isSameParams: ', isSameParams, item.prop, params, oldParams)
 
       // 如果参数不同或者prop中没值，生成请求函数
       if (!isSameParams || !enumProp.value[item.prop!]) {
@@ -185,7 +185,7 @@ export const useTableEnum = (
     }
 
     const res = await Promise.allSettled(enumQueue.map((item) => item.fn))
-    console.log('tableEnums队列请求结果: ', res)
+    // console.log('tableEnums队列请求结果: ', res)
 
     const fields: string[] = []
     res.forEach((element, index) => {
@@ -211,8 +211,8 @@ export const useTableEnum = (
 
   watchThrottled(
     params,
-    (nvalue) => {
-      console.log('nvalue: ', nvalue)
+    () => {
+      // console.log('nvalue: ', nvalue)
       executeEnumQueue()
     },
     { throttle: 500, deep: true }

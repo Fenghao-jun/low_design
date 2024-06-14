@@ -4,7 +4,7 @@ type ApiType = 'normal' | 'custom'
 export interface ApiConfig {
   url: string
   method: 'get' | 'post'
-  type: ApiType
+  type?: ApiType
 }
 
 /**

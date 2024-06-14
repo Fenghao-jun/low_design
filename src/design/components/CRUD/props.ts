@@ -6,6 +6,9 @@ import { EventNode } from '@core/utils/event-flow'
 
 type RowOperationType = 'edit' | 'delete' | 'custom'
 
+/**
+ * 操作列
+ */
 export interface RowOperation {
   desc?: string
   text: string
@@ -18,14 +21,25 @@ type TableRowOperation = {
 }
 
 export interface ColumnsProps extends ColumnProps {
-  api?: any
+  api?: RequestActionArgs
 }
 
 export interface CRUDProps extends ProTableProps {
+  /**
+   * 请求的数据
+   */
   api: RequestActionArgs
   operations?: RowOperation[]
+  /**
+   * 自定义头部插槽
+   */
   headerSlot?: ComponentScheme[]
+  /**
+   * 列配置
+   */
   columns: ColumnsProps[]
-
+  /**
+   * 操作列宽度
+   */
   operationColumnWidth?: string | number
 }

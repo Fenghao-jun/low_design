@@ -2472,18 +2472,29 @@ ajv@^8.0.0, ajv@^8.0.1, ajv@^8.9.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-am-admin-component@^0.2.5:
-  version "0.2.5"
-  resolved "https://npm.dataso.net/repository/npm/am-admin-component/-/am-admin-component-0.2.5.tgz#e79f3380cb6cf2f608178d1073fc6871d485c69c"
-  integrity sha512-wreZQnwde3+1tvvs3zeQDQ5Z4VBRKr25nrbMdWyoCSv1iDqlSrKPdPRnZoKhY+2OITzHdvBu9SbjV2UuzHehxQ==
+am-admin-component@^6.0.1:
+  version "6.0.1"
+  resolved "https://npm.dataso.net/repository/npm/am-admin-component/-/am-admin-component-6.0.1.tgz#6660e52d71321bcdf21cc428adb2c8164e74ab1e"
+  integrity sha512-b26Fxc+EiCfxeC2PgzsaKKw7SYQ8sgPf6rZi2QWKvxy1OV9ZOlT8bIAmGsQv6yDSFTUcBA6YT7jKGf9CewylMg==
   dependencies:
-    am-admin-hooks "^0.2.3"
+    am-admin-hooks "^5.1.1"
+    am-admin-http "^10.0.0"
     am-polyfill "^0.2.3"
+    vue-cropper "^1.1.2"
 
-am-admin-hooks@^0.2.3:
-  version "0.2.3"
-  resolved "https://npm.dataso.net/repository/npm/am-admin-hooks/-/am-admin-hooks-0.2.3.tgz#e98633c077b7a0f2a98b254a1aec9ffbd7b182e2"
-  integrity sha512-mr9gfb8BC8m0SgZ6inEPNUYrHo8+dSxySOJXIqlKLZPPS3RhagDqIvsZ3jPCXWMur4blmyBrIrZ8oRMcRxPE3w==
+am-admin-hooks@^5.1.1:
+  version "5.1.1"
+  resolved "https://npm.dataso.net/repository/npm/am-admin-hooks/-/am-admin-hooks-5.1.1.tgz#5b925f2f3ffd9d16861f64ccfcbed65e9f8a4926"
+  integrity sha512-yKADskvknYhe7OYBSBPtsDdPHsZF+q7DVYoFuzvFtHsHKKjKicovls3vwbFPZml9HMZcvFTJXTA1ThPDqrDCHQ==
+  dependencies:
+    am-admin-http "^10.0.0"
+
+am-admin-http@^10.0.0:
+  version "10.0.0"
+  resolved "https://npm.dataso.net/repository/npm/am-admin-http/-/am-admin-http-10.0.0.tgz#9dde4d2e730efaf51448e7a4abc7af931bae8023"
+  integrity sha512-Lcb+8FCDSSLEh5nBij9ghufGd8g5hZqHLQw6Zy/Q3hQi0lIbnziSBeVWpOvWvBhkqxVUUK2TnhTiczNcasVElw==
+  dependencies:
+    axios "1.6.8"
 
 am-admin-http@^7.0.0:
   version "7.0.0"
@@ -7473,6 +7484,11 @@ vue-class-component@^8.0.0-0:
   version "8.0.0-rc.1"
   resolved "https://registry.npmmirror.com/vue-class-component/-/vue-class-component-8.0.0-rc.1.tgz"
   integrity sha512-w1nMzsT/UdbDAXKqhwTmSoyuJzUXKrxLE77PCFVuC6syr8acdFDAq116xgvZh9UCuV0h+rlCtxXolr3Hi3HyPQ==
+
+vue-cropper@^1.1.2:
+  version "1.1.3"
+  resolved "https://npm.dataso.net/repository/npm/vue-cropper/-/vue-cropper-1.1.3.tgz#0664fc115138ee60afcbb4f72419f116ef68c19b"
+  integrity sha512-U1vBk/9M9Chp6iDWaDhC32SX7c5ndJrIzYgXndJH7wjejdriE0bzJsh6waQz9CRM94savFAw8FK1Q3r+I71Xgw==
 
 vue-demi@*, vue-demi@>=0.14.5, vue-demi@>=0.14.7, vue-demi@^0.14.7:
   version "0.14.7"

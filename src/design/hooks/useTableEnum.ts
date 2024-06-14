@@ -162,6 +162,8 @@ export const useTableEnum = (
         queueItem.fn = _requestQueueFn(item, params)
       }
 
+      // if(!){}
+
       // 更新_apiParams中的参数
       _apiParams[item.prop!] = params
 
@@ -191,19 +193,26 @@ export const useTableEnum = (
         const prop = enumQueue[index].prop || ''
         const currentColumns = tableColumns.find((item) => item.prop === prop)
 
-        // 那些搜索的key枚举值是有变化的
-        fields.push(currentColumns?.search?.key || '')
+        // 枚举里面有值，代表不是初次请求
+        if (enumProp.value[prop]) {
+          // 那些搜索的key枚举值是有变化的
+          fields.push(currentColumns?.search?.key || '')
+        }
 
         enumProp.value[prop] = element.value.data
       }
+    })
+
+    if (fields.length > 0) {
       // 更新search表单的字段，以防残留
       tableRef.value.updatedSearch(fields)
-    })
+    }
   }
 
   watchThrottled(
     params,
-    () => {
+    (nvalue) => {
+      console.log('nvalue: ', nvalue)
       executeEnumQueue()
     },
     { throttle: 500, deep: true }

@@ -28,6 +28,7 @@ module.exports = {
     "no-template-curly-in-string": "warn",
     "@typescript-eslint/ban-ts-comment": "off",
     "no-new-func": "off",
-    "@typescript-eslint/no-var-requires": "off"
+    "@typescript-eslint/no-var-requires": "off",
+    "vue/no-mutating-props": "warn"
   }
 }

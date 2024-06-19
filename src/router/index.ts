@@ -16,6 +16,11 @@ const routes: Array<RouteRecordRaw> = [
       import(
         /* webpackChunkName: "generator" */ '../design/pages/generator/index.vue'
       )
+  },
+  {
+    path: '/work-flow',
+    name: 'workFlow',
+    component: () => import('../work-flow/pages/design/index.vue')
   }
 ]
 

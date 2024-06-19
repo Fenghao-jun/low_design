@@ -1,0 +1,88 @@
+<template>
+  <div>
+    <ProcessDesigner :data="mockData" />
+  </div>
+</template>
+
+<script setup lang="ts">
+import ProcessDesigner from '@/work-flow/components/Process/ProcessDesigner.vue'
+import { ref } from 'vue'
+
+const mockData = ref({
+  processId: '10001',
+  processName: '请假审批',
+  nodeConfig: {
+    nodeName: '发起人',
+    nodeType: 'start',
+    config: {
+      name: null
+    },
+    childNode: {
+      nodeName: '审批人',
+      nodeType: 'approver',
+      config: {
+        name: null
+      },
+      childNode: {
+        nodeName: '路由',
+        nodeType: 'router',
+        conditionNodes: [
+          {
+            nodeName: '条件',
+            nodeType: 'condition',
+            isLastCondition: false,
+            config: {
+              days: 1
+            },
+            childNode: {
+              nodeName: '审批人',
+              nodeType: 'approver',
+              config: {
+                name: '赵六'
+              }
+            }
+          },
+          {
+            nodeName: '条件',
+            nodeType: 'condition',
+            isLastCondition: false,
+            config: {
+              days: 3
+            },
+            childNode: {
+              nodeName: '审批人',
+              nodeType: 'approver',
+              config: {
+                name: '老王'
+              }
+            }
+          },
+          {
+            nodeName: '条件',
+            nodeType: 'condition',
+            isLastCondition: true,
+            config: {},
+            childNode: {}
+          }
+        ],
+        childNode: {
+          nodeName: '审批人',
+          nodeType: 'approver',
+          config: {
+            name: '李四'
+          },
+          childNode: {
+            nodeName: '抄送人',
+            nodeType: 'notify',
+            config: {
+              name: '王五'
+            }
+          }
+        }
+      }
+    }
+  }
+})
+</script>
+
+<style lang="scss" scoped></style>

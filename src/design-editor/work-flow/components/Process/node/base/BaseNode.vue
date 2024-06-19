@@ -293,7 +293,7 @@ const moveNode = (direction) => {
 
 // 更新节点配置属性
 const updateConfig = (data) => {
-  // props.node.config = data
+  props.node.config = data
   emit('updateNode', props.node.config, data)
   validator.validate()
 }

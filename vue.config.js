@@ -65,6 +65,22 @@ module.exports = defineConfig({
       config.plugins.delete('fork-ts-checker')
       config.plugins.delete('eslint')
     }
+
+    config.module
+      .rule('svg')
+      .exclude.add(path.resolve('src/assets/icons/svg'))
+      .end()
+
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include.add(path.resolve('src/assets/icons/svg'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
+      })
   },
 
   // 关闭多线程打包

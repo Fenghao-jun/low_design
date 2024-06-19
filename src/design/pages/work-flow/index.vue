@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import ProcessDesigner from '@/work-flow/components/Process/ProcessDesigner.vue'
+import ProcessDesigner from '@editor/work-flow/components/Process/ProcessDesigner.vue'
 import { ref } from 'vue'
 
 const mockData = ref({

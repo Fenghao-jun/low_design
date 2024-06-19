@@ -15,7 +15,7 @@ const props = defineProps({
   node: {
     // 传入的流程配置数据
     type: Object,
-    default: {}
+    default: () => ({})
   }
 })
 
@@ -29,7 +29,7 @@ const validator = inject(KEY_VALIDATOR)
 // 注册验证器
 validator.register(props.tempNodeId, () => {
   return {
-    valid: props.node.config.name ? true : false,
+    valid: !!props.node.config.name,
     message: '请选择抄送人'
   }
 })

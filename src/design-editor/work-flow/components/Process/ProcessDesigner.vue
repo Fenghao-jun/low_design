@@ -43,6 +43,7 @@ import { copy } from './utils/tools'
 import { createValidator } from './utils/validator'
 import { KEY_VALIDATOR, KEY_PROCESS_DATA } from './config/keys'
 import { BaseNodeConfig } from './config/nodeConfig'
+import SvgIcon from '../SvgIcon/index.vue'
 
 const props = defineProps({
   data: {

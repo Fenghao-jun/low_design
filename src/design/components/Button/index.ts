@@ -1,4 +1,4 @@
-import { EditorComponentConfig } from '@/design-editor/types'
+import { EditorComponentConfig } from '@/design-editor/flow-event/types'
 import Button from './Button.vue'
 
 const componentConfig: EditorComponentConfig = {

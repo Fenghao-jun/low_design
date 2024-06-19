@@ -23,7 +23,7 @@
 // import Button from '@/components/Button/Button'
 import { ref, shallowRef, getCurrentInstance, defineAsyncComponent } from 'vue'
 import { nodeConfig } from '../../config/nodeConfig'
-import { copy } from '../../utils/tools'
+import { copy, loadDrawerComp } from '../../utils/tools'
 
 const props = defineProps({})
 
@@ -37,17 +37,18 @@ const config = ref(null)
 const isShow = ref(false)
 
 // 加载节点抽屉组件
-// const modules = import.meta.glob('../*/*Drawer.vue')
+
 const drawerComponents = shallowRef({})
+// loadDrawerComp()
+const modules = require.context('../', true, /.*\/.*Drawer\.vue$/)
+
 const loadComponent = async (key) => {
   if (nodeConfig[key] && nodeConfig[key].hasDrawer) {
     try {
-      const modulePath = `../${key}/${key}Drawer.vue`
-      const module = await import(/* webpackMode: "eager" */ `${modulePath}`)
-      const component = defineAsyncComponent(() =>
-        Promise.resolve(module.default)
-      )
-      drawerComponents.value[key] = component
+      const modulePath = `./${key}/${key}Drawer.vue`
+
+      drawerComponents.value[key] = modules(modulePath).default
+      console.log('drawerComponents: ', drawerComponents)
     } catch (error) {
       console.error(`Failed to load component for ${key}: `, error)
     }

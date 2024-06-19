@@ -1,11 +1,11 @@
 <template>
-  <!-- 审批人节点 -->
-  <div>审批人: {{ node.config.name }}</div>
+  <!-- 发起人节点 -->
+  <div>发起人: {{ node.config.name }}</div>
 </template>
 
-<script setup name="ApproverNode">
+<script setup name="StartNode">
 import { getCurrentInstance, inject } from 'vue'
-import { KEY_VALIDATOR, KEY_PROCESS_DATA } from '../../config/keys'
+import { KEY_PROCESS_DATA, KEY_VALIDATOR } from '../../config/keys'
 
 const props = defineProps({
   tempNodeId: {
@@ -15,7 +15,7 @@ const props = defineProps({
   node: {
     // 传入的流程配置数据
     type: Object,
-    default: {}
+    default: () => ({})
   }
 })
 
@@ -29,8 +29,8 @@ const validator = inject(KEY_VALIDATOR)
 // 注册验证器
 validator.register(props.tempNodeId, () => {
   return {
-    valid: props.node.config.name ? true : false,
-    message: '请选择审批人'
+    valid: !!props.node.config.name,
+    message: '请选择发起人'
   }
 })
 </script>

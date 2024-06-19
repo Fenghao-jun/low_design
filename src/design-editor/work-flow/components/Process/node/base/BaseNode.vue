@@ -100,6 +100,7 @@ import { nodeConfig } from '../../config/nodeConfig'
 import { copy, getUUID } from '../../utils/tools'
 import { START, CONDITION } from '../../config/nodeType'
 import { KEY_VALIDATOR } from '../../config/keys'
+import SvgIcon from '../../../SvgIcon/index.vue'
 
 const props = defineProps({
   node: {
@@ -142,20 +143,18 @@ watch(
 
 // const modules = import.meta.glob('../*/*Node.vue')
 const nodeComponents = shallowRef({})
+const modules = require.context('../', true, /.*\/.*Node\.vue$/)
 
 const loadComponent = async (key) => {
-  if (nodeConfig[key] && nodeConfig[key].hasDrawer) {
-    try {
-      const modulePath = `../${key}/${key}Node.vue`
-      const module = await import(/* webpackMode: "eager" */ `${modulePath}`)
-      const component = defineAsyncComponent(() =>
-        Promise.resolve(module.default)
-      )
-      nodeComponents.value[key] = component
-    } catch (error) {
-      console.error(`Failed to load component for ${key}: `, error)
-    }
+  // if (nodeConfig[key] && nodeConfig[key].hasDrawer) {
+  try {
+    const modulePath = `./${key}/${key}Node.vue`
+
+    nodeComponents.value[key] = modules(modulePath).default
+  } catch (error) {
+    // console.error(`Failed to load component for ${key}: `, error)
   }
+  // }
 }
 
 // 初始化加载所有组件

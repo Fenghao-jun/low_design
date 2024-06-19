@@ -17,7 +17,7 @@ const props = defineProps({
   config: {
     // 传入的流程配置数据
     type: Object,
-    default: {}
+    default: () => ({})
   }
 })
 

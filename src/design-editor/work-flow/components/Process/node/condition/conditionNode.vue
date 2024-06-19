@@ -20,7 +20,7 @@ const props = defineProps({
   node: {
     // 传入的流程配置数据
     type: Object,
-    default: {}
+    default: () => ({})
   }
 })
 

@@ -37,6 +37,14 @@ function render(props: any | undefined) {
   instance.use(router)
   instance.use(createPinia())
   instance.mount(container ? container.querySelector('#app') : '#app')
+
+  // 遍历require.context的返回模块，并导入
+  const requireAll = (requireContext) =>
+    requireContext.keys().map(requireContext)
+
+  // import所有符合条件的svg 三个参数：文件夹、是否使用子文件夹、正则
+  const req = require.context('@/assets/icons/svg', true, /\.svg$/)
+  requireAll(req)
 }
 
 if (!window.__POWERED_BY_QIANKUN__) {

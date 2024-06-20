@@ -13,6 +13,7 @@
     "@antv/g6": "^4.8.24",
     "@vueuse/core": "^10.9.0",
     "am-admin-component": "^6.0.1",
+    "am-admin-hooks": "^5.1.1",
     "am-admin-http": "^7.0.0",
     "am-polyfill": "^0.2.3",
     "amis-formula": "^6.3.0",

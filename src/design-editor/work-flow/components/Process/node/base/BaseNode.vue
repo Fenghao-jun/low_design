@@ -22,7 +22,7 @@
           class="ep-node-close"
           color="#FFFFFF"
           v-if="canRemoved"
-          @click="removeNode"
+          @click.stop="removeNode"
         />
       </div>
       <!-- body -->

@@ -19,82 +19,33 @@ import { ref } from 'vue'
 
 const mockData = ref({
   processId: '10001',
-  processName: '请假审批',
+  processName: '流程设计',
   nodeConfig: {
-    nodeName: '发起人',
+    nodeName: '发起加盟邀请',
     nodeType: 'start',
     config: {
       name: null
     },
     childNode: {
-      nodeName: '审批人',
-      nodeType: 'approver',
+      nodeName: '加盟商确认加盟邀请',
+      nodeType: 'confirm',
       config: {
-        name: null
+        name: '确认人'
       },
-      // childNode: {
-      //   nodeName: '路由',
-      //   nodeType: 'router',
-      //   conditionNodes: [
-      //     {
-      //       nodeName: '条件',
-      //       nodeType: 'condition',
-      //       isLastCondition: false,
-      //       config: {
-      //         days: 1
-      //       },
-      //       childNode: {
-      //         nodeName: '审批人',
-      //         nodeType: 'approver',
-      //         config: {
-      //           name: '赵六'
-      //         }
-      //       }
-      //     },
-      //     {
-      //       nodeName: '条件',
-      //       nodeType: 'condition',
-      //       isLastCondition: false,
-      //       config: {
-      //         days: 3
-      //       },
-      //       childNode: {
-      //         nodeName: '审批人',
-      //         nodeType: 'approver',
-      //         config: {
-      //           name: '老王'
-      //         }
-      //       }
-      //     },
-      //     {
-      //       nodeName: '条件',
-      //       nodeType: 'condition',
-      //       isLastCondition: true,
-      //       config: {},
-      //       childNode: {}
-      //     }
-      //   ],
-      //   childNode: {
-      //     nodeName: '审批人',
-      //     nodeType: 'approver',
-      //     config: {
-      //       name: '李四'
-      //     },
-      //     childNode: {
-      //       nodeName: '抄送人',
-      //       nodeType: 'notify',
-      //       config: {
-      //         name: '王五'
-      //       }
-      //     }
-      //   }
-      // }
+      childNode: {
+        nodeName: '审批人',
+        nodeType: 'approver',
+        config: {
+          name: '李四2'
+        }
+      }
     }
   }
 })
 const active = ref(1)
 </script>
-
+<style>
+</style>
 <style lang="scss" scoped>
 .flow-container {
   padding: 16px 0;

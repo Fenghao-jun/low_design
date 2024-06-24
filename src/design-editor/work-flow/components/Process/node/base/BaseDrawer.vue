@@ -2,16 +2,36 @@
   <div v-if="node" class="ep-node-drawer-container">
     <ElDrawer
       v-model="isShow"
-      title="节点设置"
       icon="setting"
-      width="600px"
+      title="节点设置"
+      size="38%"
       append-to-body
     >
       <template #default>
-        <component
-          :is="drawerComponents[ node.nodeType ]"
-          :config="node.config"
-        />
+        <CustomForm
+          ref="formRef"
+          :from-items="useEditFormItem"
+          v-model="formData"
+          label-width="130"
+          :itemStyle="{
+            padding: 0
+          }"
+          label-position="top"
+          :col-layout="{
+            xl: 24,
+            lg: 24,
+            md: 24,
+            sm: 24,
+            xs: 24
+          }">
+          <template #launch>
+            <component
+              :is="drawerComponents[ node.nodeType ]"
+              :config="node.config"
+              :formData="formData"
+            />
+          </template>
+        </CustomForm>
       </template>
       <template #footer>
         <ElButton @click="cancelUpdateConfig">取消</ElButton>
@@ -22,13 +42,12 @@
 </template>
 <script setup name="BaseDrawer">
 // import Button from '@/components/Button/Button'
-import { ref, shallowRef, getCurrentInstance, defineAsyncComponent } from 'vue'
+import { ref, shallowRef } from 'vue'
 import { nodeConfig } from '../../config/nodeConfig'
-import { copy, loadDrawerComp } from '../../utils/tools'
-
+import { copy } from '../../utils/tools'
+import { useEditForm } from '../../config/formConfig.ts'
+import { CustomForm } from 'am-admin-component'
 const props = defineProps({})
-
-const { proxy } = getCurrentInstance()
 
 // 节点数据的副本
 const node = ref(null)
@@ -37,10 +56,17 @@ const config = ref(null)
 // 是否显示配置界面
 const isShow = ref(false)
 
+const formData = ref({
+  name: '',
+  type: '',
+  launch: ''
+})
+const { useEditFormItem } = useEditForm(
+  formData
+)
 // 加载节点抽屉组件
 
 const drawerComponents = shallowRef({})
-// loadDrawerComp()
 const modules = require.context('../', true, /.*\/.*Drawer\.vue$/)
 
 const loadComponent = async (key) => {
@@ -49,7 +75,6 @@ const loadComponent = async (key) => {
       const modulePath = `./${key}/${key}Drawer.vue`
 
       drawerComponents.value[key] = modules(modulePath).default
-      console.log('drawerComponents: ', drawerComponents)
     } catch (error) {
       console.error(`Failed to load component for ${key}: `, error)
     }
@@ -95,7 +120,6 @@ defineExpose({
 })
 </script>
 
-<style scoped>
-.ep-node-drawer {
-}
+<style scoped lang="scss">
+
 </style>

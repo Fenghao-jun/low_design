@@ -99,7 +99,7 @@ const init = () => {
   if (props.data && props.data.nodeConfig) {
     processData.value = copy(props.data)
   } else {
-    processData.value = copy(defaultConfig)
+    // processData.value = copy(defaultConfig)
   }
 }
 

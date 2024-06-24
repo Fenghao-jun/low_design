@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts" name="AddNode">
-import { ref, onMounted, getCurrentInstance, nextTick } from 'vue'
+import { ref, nextTick } from 'vue'
 import { nodeConfig, Icon } from '../../config/nodeConfig'
 import { copy } from '../../utils/tools'
 import SvgIcon from '../../../SvgIcon/index.vue'

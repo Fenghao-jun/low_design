@@ -1,11 +1,11 @@
 <template>
-  <!-- 发起人节点 -->
-  <div>发起人: {{ node.config.name }}</div>
+  <!-- 确认人节点 -->
+  <div>{{ node.config.name }}</div>
 </template>
 
-<script setup name="StartNode">
+<script setup name="ApproverNode">
 import { getCurrentInstance, inject } from 'vue'
-import { KEY_PROCESS_DATA, KEY_VALIDATOR } from '../../config/keys'
+import { KEY_VALIDATOR, KEY_PROCESS_DATA } from '../../config/keys'
 
 const props = defineProps({
   tempNodeId: {
@@ -30,7 +30,7 @@ const validator = inject(KEY_VALIDATOR)
 validator.register(props.tempNodeId, () => {
   return {
     valid: !!props.node.config.name,
-    message: '请选择发起人'
+    message: '请选择审批人'
   }
 })
 </script>

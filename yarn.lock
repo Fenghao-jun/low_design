@@ -2472,10 +2472,10 @@ ajv@^8.0.0, ajv@^8.0.1, ajv@^8.9.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-am-admin-component@^6.0.1:
-  version "6.0.1"
-  resolved "https://npm.dataso.net/repository/npm/am-admin-component/-/am-admin-component-6.0.1.tgz#6660e52d71321bcdf21cc428adb2c8164e74ab1e"
-  integrity sha512-b26Fxc+EiCfxeC2PgzsaKKw7SYQ8sgPf6rZi2QWKvxy1OV9ZOlT8bIAmGsQv6yDSFTUcBA6YT7jKGf9CewylMg==
+am-admin-component@^6.0.2:
+  version "6.0.2"
+  resolved "https://npm.dataso.net/repository/npm/am-admin-component/-/am-admin-component-6.0.2.tgz#0ff643dd1000166bead93a47f628ba4ea4cb1379"
+  integrity sha512-AT1p4OM7zhHGg1YAzOAl5TfwRAgqxS7YkqKFTm+fuAaZ+QUAbyCKlDHn5z1brQk/PcW/HTUGbywTu0VESXI3kw==
   dependencies:
     am-admin-hooks "^5.1.1"
     am-admin-http "^10.0.0"

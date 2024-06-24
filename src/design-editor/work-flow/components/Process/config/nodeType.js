@@ -8,3 +8,5 @@ export const START = 'start'
 export const APPROVER = 'approver'
 // 抄送人
 export const NOTIFY = 'notify'
+// 确认人
+export const CONFIRM = 'confirm'

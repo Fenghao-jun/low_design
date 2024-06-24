@@ -1,4 +1,4 @@
-import { ROUTER, CONDITION, START, APPROVER, NOTIFY } from './nodeType'
+import { ROUTER, CONFIRM, CONDITION, START, APPROVER, NOTIFY } from './nodeType'
 
 // 定义图标接口
 export interface Icon {
@@ -35,7 +35,30 @@ interface NodeConfigDictionary {
 }
 
 // 节点配置
+// TODO：需求一期无抄送、条件、路由节点
 export const nodeConfig: NodeConfigDictionary = {}
+
+// 确认人节点配置
+nodeConfig[CONFIRM] = {
+  title: '确认人', // 节点标题
+  color: '#FFFFFF', // 节点标题颜色
+  bgColor: '#52C1F5', // 节点标题背景颜色
+  canAdd: true, // 节点是否可以增加
+  canRemoved: true, // 节点是否能够移除
+  hasDrawer: true, // 节点是否可以进行配置
+  icon: {
+    // 图标
+    name: 'router', // 图标名
+    color: '#52C1F5' // 颜色
+  },
+  defaultNode: {
+    // 默认节点结构，用于添加节点时
+    nodeName: '确认人',
+    nodeType: 'conform',
+    config: {},
+    childNode: null
+  }
+}
 
 // 路由节点配置
 // nodeConfig[ROUTER] = {
@@ -66,32 +89,32 @@ export const nodeConfig: NodeConfigDictionary = {}
 // }
 
 // 条件节点配置
-nodeConfig[CONDITION] = {
-  title: '条件', // 节点标题
-  color: '#FFFFFF', // 节点标题颜色
-  bgColor: '#3CB371', // 节点标题背景颜色
-  canAdd: false, // 节点是否可以增加
-  canRemoved: true, // 节点是否能够移除
-  hasDrawer: true, // 节点是否可以进行配置
-  icon: {
-    // 图标
-    name: 'condition', // 图标名
-    color: '#3CB371' // 颜色
-  },
-  defaultNode: {
-    nodeName: '条件',
-    nodeType: 'condition',
-    isLastCondition: false,
-    config: {},
-    childNode: {}
-  }
-}
+// nodeConfig[CONDITION] = {
+//   title: '条件', // 节点标题
+//   color: '#FFFFFF', // 节点标题颜色
+//   bgColor: '#3CB371', // 节点标题背景颜色
+//   canAdd: false, // 节点是否可以增加
+//   canRemoved: true, // 节点是否能够移除
+//   hasDrawer: true, // 节点是否可以进行配置
+//   icon: {
+//     // 图标
+//     name: 'condition', // 图标名
+//     color: '#3CB371' // 颜色
+//   },
+//   defaultNode: {
+//     nodeName: '条件',
+//     nodeType: 'condition',
+//     isLastCondition: false,
+//     config: {},
+//     childNode: {}
+//   }
+// }
 
 // 发起人节点配置
 nodeConfig[START] = {
   title: '发起人', // 节点标题
   color: '#FFFFFF', // 节点标题颜色
-  bgColor: '#1e83e9', // 节点标题背景颜色
+  bgColor: '#3F9EFF', // 节点标题背景颜色
   canAdd: false, // 节点是否可以增加
   canRemoved: false, // 节点是否能够移除
   hasDrawer: true, // 节点是否可以进行配置
@@ -113,7 +136,7 @@ nodeConfig[START] = {
 nodeConfig[APPROVER] = {
   title: '审核人', // 节点标题
   color: '#FFFFFF', // 节点标题颜色
-  bgColor: '#FF8C00', // 节点标题背景颜色
+  bgColor: '#FE943E', // 节点标题背景颜色
   canAdd: true, // 节点是否可以增加
   canRemoved: true, // 节点是否能够移除
   hasDrawer: true, // 节点是否可以进行配置

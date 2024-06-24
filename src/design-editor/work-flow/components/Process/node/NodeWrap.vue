@@ -27,7 +27,7 @@
 <script lang="ts" setup name="NodeWrap">
 import BaseNode from './base/BaseNode.vue'
 import RouterNode from './router/RouterNode.vue'
-import { ref, onMounted, getCurrentInstance } from 'vue'
+import { ref } from 'vue'
 import { ROUTER } from '../config/nodeType'
 
 const props = defineProps({

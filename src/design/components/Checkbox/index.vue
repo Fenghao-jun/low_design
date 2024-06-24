@@ -17,10 +17,11 @@
 <script setup lang="ts" name="Checkbox">
 import { ref, useAttrs, onMounted } from 'vue'
 import { useApi } from '@design/hooks/useApi'
+import useValue from '@design/hooks/useValue'
 import { CheckboxAttrs } from './type'
 
 const emits = defineEmits(['updateModel', 'updateValue'])
-
+const props = defineProps<{ value: string[] }>()
 const {
   value = [],
   fieldKey = '',
@@ -32,7 +33,8 @@ const {
 
 console.log('checkbox attrs: ', useAttrs())
 
-const _value = ref(value)
+const _value = useValue(props)
+
 const optionsList = ref<Record<string, any>[]>([])
 
 // 处理 option 列表数据

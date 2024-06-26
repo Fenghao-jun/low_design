@@ -44,7 +44,7 @@ nodeConfig[CONFIRM] = {
   color: '#FFFFFF', // 节点标题颜色
   bgColor: '#52C1F5', // 节点标题背景颜色
   canAdd: true, // 节点是否可以增加
-  canRemoved: true, // 节点是否能够移除
+  canRemoved: false, // 节点是否能够移除
   hasDrawer: true, // 节点是否可以进行配置
   icon: {
     // 图标
@@ -54,7 +54,7 @@ nodeConfig[CONFIRM] = {
   defaultNode: {
     // 默认节点结构，用于添加节点时
     nodeName: '确认人',
-    nodeType: 'conform',
+    nodeType: 'confirm',
     config: {},
     childNode: null
   }
@@ -138,7 +138,7 @@ nodeConfig[APPROVER] = {
   color: '#FFFFFF', // 节点标题颜色
   bgColor: '#FE943E', // 节点标题背景颜色
   canAdd: true, // 节点是否可以增加
-  canRemoved: true, // 节点是否能够移除
+  canRemoved: false, // 节点是否能够移除
   hasDrawer: true, // 节点是否可以进行配置
   icon: {
     // 图标

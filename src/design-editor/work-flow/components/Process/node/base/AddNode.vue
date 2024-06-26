@@ -128,6 +128,7 @@ const addNode = (nodeType) => {
 
     emit('addNode', props.node.childNode, addNode)
     props.node.childNode = addNode
+    console.log('props.node.childNode: ', props.node.childNode);
   }
   showAddSelect(false)
 }

@@ -35,10 +35,7 @@
 <script setup lang="ts" name="ProcessDesigner">
 import NodeWrap from './node/NodeWrap.vue'
 import EndNode from './node/end/endNode.vue'
-
-import { ref, onMounted, getCurrentInstance, watch, provide } from 'vue'
-import { defaultConfig } from './config/defaultConfig'
-// import {  } from './config/nodeConfig'
+import { ref, onMounted, watch, provide } from 'vue'
 import { copy } from './utils/tools'
 import { createValidator } from './utils/validator'
 import { KEY_VALIDATOR, KEY_PROCESS_DATA } from './config/keys'
@@ -98,8 +95,6 @@ const setZoom = (type: number) => {
 const init = () => {
   if (props.data && props.data.nodeConfig) {
     processData.value = copy(props.data)
-  } else {
-    // processData.value = copy(defaultConfig)
   }
 }
 
@@ -135,6 +130,7 @@ defineExpose({
   overflow-x: auto;
   overflow-y: auto;
   padding: 16px 0;
+  height: calc(100vh - 90px);
 }
 
 .ep-process {
@@ -155,9 +151,10 @@ defineExpose({
 }
 
 .ep-zoom-icon {
-  width: 25px;
-  height: 25px;
+  width: 22px;
+  height: 22px;
   cursor: pointer;
-  border: 1px solid #5a5e66;
+  padding: 4px;
+  border: 1px solid #cacaca;
 }
 </style>

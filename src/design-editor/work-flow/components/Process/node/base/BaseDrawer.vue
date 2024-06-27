@@ -23,10 +23,11 @@
             md: 24,
             sm: 24,
             xs: 24
-          }">
+          }"
+        >
           <template #launch>
             <component
-              :is="drawerComponents[ node.nodeType ]"
+              :is="drawerComponents[node.nodeType]"
               :config="node.config"
               :formData="formData"
             />
@@ -40,19 +41,19 @@
     </ElDrawer>
   </div>
 </template>
-<script setup name="BaseDrawer">
+<script lang="tsx" setup name="BaseDrawer">
 // import Button from '@/components/Button/Button'
 import { ref, shallowRef } from 'vue'
-import { nodeConfig } from '../../config/nodeConfig'
+import { BaseNodeConfig, nodeConfig } from '../../config/nodeConfig'
 import { copy } from '../../utils/tools'
-import { useEditForm } from '../../config/formConfig.ts'
+import { useEditForm } from '../../config/formConfig'
 import { CustomForm } from 'am-admin-component'
 const props = defineProps({})
 
 // 节点数据的副本
-const node = ref(null)
+const node = ref()
 // 节点配置数据
-const config = ref(null)
+const config = ref<BaseNodeConfig>()
 // 是否显示配置界面
 const isShow = ref(false)
 
@@ -61,9 +62,7 @@ const formData = ref({
   type: '',
   launch: ''
 })
-const { useEditFormItem } = useEditForm(
-  formData
-)
+const { useEditFormItem } = useEditForm(formData)
 // 加载节点抽屉组件
 
 const drawerComponents = shallowRef({})
@@ -84,19 +83,14 @@ const loadComponent = async (key) => {
 // 初始化加载所有组件
 Object.keys(nodeConfig).forEach((key) => loadComponent(key))
 
-// Object.keys(nodeConfig).forEach(key => {
-//   let item = nodeConfig[key]
-//   if(item.hasDrawer) {
-//     let component = defineAsyncComponent(modules[`../${key}/${key}Drawer.vue`])
-//     drawerComponents.value[key] = component
-//   }
-// })
-
 // 显示节点配置组件
 const show = (data) => {
+  console.log('data: ', data)
   // 复制数据
+  formData.value = copy(data.config)
   node.value = copy(data)
   config.value = nodeConfig[node.value.nodeType]
+  console.log('nodeConfig: ', nodeConfig)
 
   isShow.value = true
 }
@@ -106,7 +100,7 @@ const emit = defineEmits(['updateConfig', 'cancelUpdateConfig'])
 // 更新节点配置数据
 const updateConfig = () => {
   isShow.value = false
-  emit('updateConfig', copy(node.value.config))
+  emit('updateConfig', copy(formData.value))
 }
 
 // 取消更新节点配置数据
@@ -120,6 +114,4 @@ defineExpose({
 })
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

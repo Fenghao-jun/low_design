@@ -53,12 +53,8 @@ const props = defineProps({
   }
 })
 
-// const { proxy } = getCurrentInstance()
-
 // 流程配置数据
 const config = ref({})
-
-// onMounted(async () => {})
 
 // 移除当前节点
 const emit = defineEmits(['removeNode', 'removeChildNode'])
@@ -69,9 +65,7 @@ const removeNode = () => {
 // 移除子节点
 const removeChildNode = () => {
   const nextChildNode = props.node.childNode.childNode
-  emit('removeChildNode', props.node.childNode, nextChildNode)
-
-  // props.node.childNode = nextChildNode
+  props.node.childNode = nextChildNode
 }
 
 const handleUpdateNode = (config, data) => {

@@ -16,7 +16,9 @@
           class="ep-node-icon"
           color="#FFFFFF"
         />
-        <div class="ep-node-header-title">{{ config.title }}</div>
+        <div class="ep-node-header-title">
+          {{ node.config.name || config.title }}
+        </div>
         <svg-icon
           icon-class="close"
           class="ep-node-close"
@@ -137,12 +139,12 @@ const errorTips = ref(false)
 watch(
   () => props.node,
   (val) => {
+    console.log('val: ', val)
     config.value = nodeConfig[props.node.nodeType]
     validator.validate()
   }
 )
 
-// const modules = import.meta.glob('../*/*Node.vue')
 const nodeComponents = shallowRef({})
 const modules = require.context('../', true, /.*\/.*Node\.vue$/)
 
@@ -160,13 +162,6 @@ const loadComponent = async (key) => {
 
 // 初始化加载所有组件
 Object.keys(nodeConfig).forEach((key) => loadComponent(key))
-
-// Object.keys(nodeConfig).forEach(key => {
-//   let item = nodeConfig[key]
-//   // 加载节点组件
-//   let component = defineAsyncComponent(modules[`../${key}/${key}Node.vue`])
-//   nodeComponents.value[key] = component
-// })
 
 // 节点左右移动按钮状态
 const isShowLeftMoveBtn = ref(false)
@@ -294,6 +289,7 @@ const moveNode = (direction) => {
 
 // 更新节点配置属性
 const updateConfig = (data) => {
+  console.log('data: ', data)
   props.node.config = data
   emit('updateNode', props.node.config, data)
   validator.validate()

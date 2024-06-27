@@ -1,17 +1,25 @@
 <template>
   <!-- 发起人配置 -->
   <div>
-    <org-select ref="start-copy-user-org" v-model="formData.launch"
-                title="选择用户" class="mb-5" />
-    <org-select ref="start-copy-user-org" v-model="formData.launch"
-                title="选择部门" class="mb-5" />
+    <org-select
+      ref="start-copy-user-org"
+      v-model="formData.launch"
+      title="选择用户"
+      class="mb-5"
+    />
+    <org-select
+      ref="start-copy-user-org"
+      v-model="formData.launch"
+      title="选择部门"
+      class="mb-5"
+    />
   </div>
 </template>
 
-<script setup name="StartDrawer">
-import { getCurrentInstance, inject, ref } from 'vue'
-import { KEY_PROCESS_DATA } from '../../config/keys'
-import OrgSelect from '../../components/OrgSelect'
+<script lang="ts" setup name="StartDrawer">
+import { inject } from 'vue'
+import { KEY_PROCESS_DATA } from '@editor/work-flow/components/Process/config/keys'
+// import OrgSelect from '../../components/OrgSelect'
 
 const props = defineProps({
   config: {
@@ -26,9 +34,7 @@ const props = defineProps({
   }
 })
 
-
-
-const { proxy } = getCurrentInstance()
+// const { proxy } = getCurrentInstance()
 
 // 获取流程数据
 const processData = inject(KEY_PROCESS_DATA)

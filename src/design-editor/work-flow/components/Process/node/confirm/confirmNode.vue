@@ -1,33 +1,35 @@
 <template>
   <!-- 确认人节点 -->
-  <div>{{ node.config.name }}</div>
+  <div class="node-row">确认对象：{{ node.config.name }}</div>
 </template>
 
-<script setup name="ApproverNode">
-import { getCurrentInstance, inject } from 'vue'
+<script lang="ts" setup name="ApproverNode">
+import { inject } from 'vue'
 import { KEY_VALIDATOR, KEY_PROCESS_DATA } from '../../config/keys'
+import { Validator } from '../../utils/validator'
+import { DefaultNode } from '../../config/nodeConfig'
 
-const props = defineProps({
-  tempNodeId: {
-    // 临时节点ID
-    type: String
-  },
-  node: {
-    // 传入的流程配置数据
-    type: Object,
-    default: () => ({})
-  }
+interface NodeProps {
+  tempNodeId: string
+  node: DefaultNode
+}
+
+const props = withDefaults(defineProps<NodeProps>(), {
+  tempNodeId: '',
+  node: () => ({
+    config: {},
+    nodeName: '',
+    nodeType: ''
+  })
 })
 
-const { proxy } = getCurrentInstance()
-
 // 获取流程数据
-const processData = inject(KEY_PROCESS_DATA)
+// const processData = inject(KEY_PROCESS_DATA)
 // 获取流程验证器实例
-const validator = inject(KEY_VALIDATOR)
+const validator = inject<Validator>(KEY_VALIDATOR)
 
 // 注册验证器
-validator.register(props.tempNodeId, () => {
+validator?.register(props.tempNodeId || '', () => {
   return {
     valid: !!props.node.config.name,
     message: '请选择审批人'
@@ -35,4 +37,10 @@ validator.register(props.tempNodeId, () => {
 })
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.node-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+</style>

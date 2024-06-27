@@ -1,17 +1,20 @@
 <template>
   <!-- 审核人配置 -->
   <div>
-    <el-form :model="props.config" label-width="80px">
+    <!-- <el-form :model="props.config" label-width="80px">
       <el-form-item label="审核人">
         <el-input v-model="props.config.name" />
       </el-form-item>
-    </el-form>
+    </el-form> -->
+
+    <SelectObject></SelectObject>
   </div>
 </template>
 
-<script setup name="ApproverDrawer">
+<script lang="ts" setup name="ApproverDrawer">
 import { getCurrentInstance, inject } from 'vue'
 import { KEY_PROCESS_DATA } from '../../config/keys'
+import SelectObject from '../../components/selectObject/index.vue'
 
 const props = defineProps({
   config: {
@@ -21,7 +24,7 @@ const props = defineProps({
   }
 })
 
-const { proxy } = getCurrentInstance()
+// const { proxy } = getCurrentInstance()
 
 // 获取流程数据
 const processData = inject(KEY_PROCESS_DATA)

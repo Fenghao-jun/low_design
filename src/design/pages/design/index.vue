@@ -48,7 +48,7 @@ const initializePageData = (pageData: Variable[] = []) => {
   store.mergeData({
     ...initializeData,
     routeParams: route.params,
-  routeQuery: route.query
+    routeQuery: route.query
   })
 }
 

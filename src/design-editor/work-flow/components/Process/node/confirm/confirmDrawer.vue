@@ -7,7 +7,8 @@
       </el-form-item>
     </el-form> -->
 
-    <SelectObject></SelectObject>
+    <SelectObject v-model="formData.userId"></SelectObject>
+    <SelectObject v-model="formData.departId" type="department"></SelectObject>
   </div>
 </template>
 
@@ -19,6 +20,10 @@ import SelectObject from '../../components/selectObject/index.vue'
 const props = defineProps({
   config: {
     // 传入的流程配置数据
+    type: Object,
+    default: () => ({})
+  },
+  formData: {
     type: Object,
     default: () => ({})
   }

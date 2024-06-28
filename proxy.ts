@@ -1,5 +1,5 @@
 const gatewayLink = 'https://mp-gateway.dataso.net'
-const javaGatewayLink = 'https://dev-dts-gateway.dataso.net'
+const javaGatewayLink = 'http://192.168.81.11:6018/'
 
 const proxyConfig = {
   '/pos-api': {
@@ -69,6 +69,12 @@ const proxyConfig = {
     wx: true
   },
   '/activity-api': {
+    target: javaGatewayLink,
+    changeOrigin: true,
+    secure: false,
+    wx: true
+  },
+  '/approval-api': {
     target: javaGatewayLink,
     changeOrigin: true,
     secure: false,

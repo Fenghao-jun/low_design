@@ -1,4 +1,4 @@
 export interface SelectObjectProps {
-  type: 'person' | 'depr'
+  type: 'person' | 'department' | 'inCharge'
   modelValue: any[]
 }

@@ -24,7 +24,7 @@ export const useEditForm = (formData, type: Ref<any[]>, scene: Ref<any[]>) => {
       {
         label: '流程类型:',
         type: 'select',
-        field: 'flowtype',
+        field: 'flowType',
         options: type.value,
         optionsKey: 'code',
         optionsValueKey: 'desc',

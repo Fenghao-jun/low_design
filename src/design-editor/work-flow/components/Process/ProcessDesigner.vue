@@ -100,6 +100,7 @@ const init = () => {
 
 const validate = (callback) => {
   const result = validator.validate()
+  console.log('result: ', result)
   callback(result.valid, result.messages)
 }
 

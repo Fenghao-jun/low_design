@@ -25,14 +25,13 @@
             xs: 24
           }"
         >
-          <template #launch>
-            <component
-              :is="drawerComponents[node.nodeType]"
-              :config="node.config"
-              :formData="formData"
-            />
-          </template>
+          <template #launch> </template>
         </CustomForm>
+        <component
+          :is="drawerComponents[node.nodeType]"
+          :config="node.config"
+          :formData="formData"
+        />
       </template>
       <template #footer>
         <ElButton @click="cancelUpdateConfig">取消</ElButton>
@@ -48,6 +47,8 @@ import { BaseNodeConfig, nodeConfig } from '../../config/nodeConfig'
 import { copy } from '../../utils/tools'
 import { useEditForm } from '../../config/formConfig'
 import { CustomForm } from 'am-admin-component'
+import { getDesignTemplateList } from '@editor/api/workFlow'
+
 const props = defineProps({})
 
 // 节点数据的副本
@@ -63,6 +64,14 @@ const formData = ref({
   launch: ''
 })
 const templateList = ref([])
+const templateListRequest = async () => {
+  const res = await getDesignTemplateList()
+  console.log('res: ', res)
+  templateList.value = res.data
+}
+
+templateListRequest()
+
 const { useEditFormItem } = useEditForm(formData, templateList)
 // 加载节点抽屉组件
 

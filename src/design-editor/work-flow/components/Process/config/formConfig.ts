@@ -28,21 +28,21 @@ export const useEditForm = (formData, templateList: Ref<any[]>) => {
         options: templateList.value,
         optionsKey: 'templateId',
         optionsValueKey: 'templateName',
-        placeholder: '请选择关联表单',
-        rules: [
-          {
-            required: true,
-            message: '请选择关联表单',
-            trigger: ['blur', 'change']
-          }
-        ]
-      },
-      {
-        label: '发起对象:',
-        type: 'customSlot',
-        slotName: 'launch',
-        field: 'launch'
+        placeholder: '请选择关联表单'
+        // rules: [
+        //   {
+        //     required: true,
+        //     message: '请选择关联表单',
+        //     trigger: ['blur', 'change']
+        //   }
+        // ]
       }
+      // {
+      //   label: '发起对象:',
+      //   type: 'customSlot',
+      //   slotName: 'launch',
+      //   field: 'launch'
+      // }
     ]
   })
 

@@ -28,9 +28,10 @@ const props = defineProps({
 })
 
 const userNum = computed(() => {
-  return props.node.config.userId
-    ? `人员：${props.node.config.userId.length}人 `
-    : ''
+  const userId = props.node.config?.userId?.length || 0
+  // const customId = props.node.config?.customId?.length || 0
+  const num = userId
+  return num ? `人员：${num}人 ` : ''
 })
 
 const departNum = computed(() => {
@@ -44,9 +45,21 @@ const validator = inject<Validator>(KEY_VALIDATOR)
 
 // 注册验证器
 validator?.register(props.tempNodeId || '', () => {
+  let valid = false
+  let message = ''
+  if (!userNum.value && !departNum.value) {
+    message = '请选择发起对象'
+  } else if (!props.node.config.name) {
+    message = '请输入节点标题'
+  } else {
+    valid = true
+  }
+
+  console.log(valid, message, 'hhhh')
+
   return {
-    valid: !!props.node.config.name,
-    message: '请选择发起人'
+    valid,
+    message
   }
 })
 </script>

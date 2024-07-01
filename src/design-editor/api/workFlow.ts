@@ -34,3 +34,42 @@ export const getDesignTemplateList = () =>
   request.get({
     url: APPROVAL_API + '/mp/flow/getDesignTemplateList'
   })
+
+// 新增流程
+export interface NodeTarget {
+  approvalType: string
+  targetItem: string
+  targetType: string
+}
+
+export interface FlowNode {
+  nodeDesignFormId: string
+  nodeName: string
+  nodeTarget: NodeTarget[]
+  nodeType: string
+  approvalType?: string
+}
+
+export interface SaveApprovalFlowParams {
+  flowDesc: string
+  flowName: string
+  flowNode: FlowNode[]
+  flowScene: string
+  flowType: string
+  id?: number
+}
+
+export const saveApprovalFlow = (data: SaveApprovalFlowParams) =>
+  request.post({
+    url: APPROVAL_API + '/mp/flow/saveApprovalFlow',
+    data
+  })
+
+export const getApprovalFlowDetail = (id: string | number) =>
+  request.get<{ id: string | number }, SaveApprovalFlowParams>({
+    url: APPROVAL_API + '/mp/flow/getApprovalFlowInfo',
+    data: { id }
+  })
+
+export const getFLowRelationTarget = () =>
+  request.get({ url: APPROVAL_API + '/mp/flow/getFLowRelationTarget' })

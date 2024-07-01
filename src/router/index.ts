@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
       )
   },
   {
-    path: '/work-flow',
+    path: '/work-flow/:id?',
     name: 'workFlow',
     component: () =>
       import(

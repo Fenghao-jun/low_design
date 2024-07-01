@@ -1,12 +1,22 @@
 <template>
   <!-- 审核人配置 -->
   <div>
-    <!-- <el-form :model="props.config" label-width="80px">
-      <el-form-item label="审核人">
-        <el-input v-model="props.config.name" />
+    <el-form :model="formData" label-width="130px">
+      <el-form-item label="发起对象:">
+        <SelectObject type="inCharge" v-model="formData.userId"></SelectObject>
       </el-form-item>
-    </el-form> -->
-    <SelectObject type="inCharge" v-model="formData.userId"></SelectObject>
+
+      <el-form-item label="多人审批方式:" prop="approvalType">
+        <el-radio-group v-model="formData.approvalType">
+          <el-radio value="COUNTER_SIGN" size="large"
+            >会签（须所有审批人同意）</el-radio
+          >
+          <el-radio value="OR_SIGN" size="large"
+            >或签（一名审批人同意或拒绝即可）</el-radio
+          >
+        </el-radio-group>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 

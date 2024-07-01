@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup name="ApproverNode">
-import { computed, getCurrentInstance, inject } from 'vue'
+import { computed, getCurrentInstance, inject, watch } from 'vue'
 import { KEY_VALIDATOR, KEY_PROCESS_DATA } from '../../config/keys'
 import { Validator } from '@editor/work-flow/components/Process/utils/validator'
 
@@ -48,12 +48,35 @@ const departNum = computed(() => {
 const validator = inject<Validator>(KEY_VALIDATOR)
 
 // 注册验证器
-validator?.register(props.tempNodeId || '', () => {
-  return {
-    valid: !!props.node.config.name,
-    message: '请选择审批人'
+watch(
+  () => props.node,
+  () => {
+    validator?.register(props.tempNodeId || '', () => {
+      let valid = false
+      let message = ''
+      if (!userNum.value && !departNum.value) {
+        message = '请选择发起对象'
+      } else if (!props.node.config.name) {
+        message = '请输入节点标题'
+      } else if (!props.node.config.approvalType) {
+        message = '请选择审批方式'
+      } else {
+        valid = true
+      }
+
+      console.log(valid, message, 'hhhh')
+
+      return {
+        valid,
+        message
+      }
+    })
+  },
+  {
+    // deep: true,
+    immediate: true
   }
-})
+)
 </script>
 
 <style lang="scss" scoped>

@@ -15,7 +15,7 @@
       <ElButton type="primary" @click="handleNextClick()" v-if="active === 0"
         >下一步</ElButton
       >
-      <ElButton type="primary" v-else>发布</ElButton>
+      <ElButton type="primary" @click="handleSubmit" v-else>发布</ElButton>
     </div>
     <div class="form-container" v-show="active === 0">
       <CustomForm
@@ -34,7 +34,7 @@
       >
       </CustomForm>
     </div>
-    <ProcessDesigner v-show="active === 1" :data="mockData" />
+    <ProcessDesigner v-show="active === 1" :data="mockData" ref="processRef" />
   </div>
 </template>
 
@@ -43,8 +43,24 @@ import { useEditForm } from './config/index'
 
 import { CustomForm } from 'am-admin-component'
 import ProcessDesigner from '@editor/work-flow/components/Process/ProcessDesigner.vue'
-import { getFlowType, getFlowScene } from '@editor/api/workFlow'
+import {
+  DefaultNode,
+  nodeConfig
+} from '@editor/work-flow/components/Process/config/nodeConfig'
+import {
+  getFlowType,
+  getFlowScene,
+  SaveApprovalFlowParams,
+  FlowNode,
+  NodeTarget,
+  getApprovalFlowDetail,
+  saveApprovalFlow
+} from '@editor/api/workFlow'
 import { ref } from 'vue'
+import { AnyObject } from '@/types'
+import { ElMessage } from 'element-plus'
+import { useRoute } from 'vue-router'
+import { omit } from 'lodash-es'
 
 const mockData = ref({
   processId: '10001',
@@ -73,9 +89,9 @@ const mockData = ref({
 })
 const active = ref(0)
 
-const formData = ref({
+const formData = ref<Omit<SaveApprovalFlowParams, 'flowNode'>>({
   flowName: '',
-  flowtype: '',
+  flowType: '',
   flowScene: '',
   flowDesc: ''
 })
@@ -115,12 +131,217 @@ const handleNextClick = (num?: number) => {
       active.value = active.value + 1
     })
     .catch(() => {
-      if (active.value === 1) {
-        return
-      }
-      active.value = active.value + 1
+      // if (active.value === 1) {
+      //   return
+      // }
+      // active.value = active.value + 1
     })
 }
+
+// 新增
+const processRef = ref<InstanceType<typeof ProcessDesigner>>()
+
+// 节点配置表单枚举值
+enum NODE_TARGET_KEYS {
+  userId = 'STAFF',
+  departId = 'DEPART',
+  custom = 'CUSTOM',
+  CUSTOM = 'custom',
+  STAFF = 'userId',
+  DEPART = 'departId'
+  // CUSTOM = ''
+}
+
+// 节点类型枚举值
+enum NODE_TYPE {
+  start = 'START',
+  confirm = 'CONFIRM',
+  approver = 'APPROVAL',
+  START = 'start',
+  CONFIRM = 'confirm',
+  APPROVAL = 'approver'
+}
+
+const dataToAddParams = (data: DefaultNode) => {
+  // 转换的队列
+  const flowNode: SaveApprovalFlowParams['flowNode'] = []
+
+  // 把每个节点的config转成后端需要的NodeTarget
+  const nodeConfigToNodeTarget = (config: AnyObject) => {
+    const keys = Object.keys(config).filter((item) => NODE_TARGET_KEYS[item])
+    console.log('config: ', config)
+
+    console.log('keys: ', keys)
+
+    const nodeTarget = keys.map((item) => ({
+      targetType: NODE_TARGET_KEYS[item],
+      targetItem: config[item].join(',')
+    })) as NodeTarget[]
+
+    return nodeTarget
+  }
+
+  // 每个节点转成node
+  const changeToFlowNode = (nodeData: DefaultNode) => {
+    console.log('nodeData: ', nodeData)
+    const task: FlowNode = {
+      nodeDesignFormId: nodeData.config.type,
+      nodeName: nodeData.config.name,
+      nodeType: NODE_TYPE[nodeData.nodeType],
+      nodeTarget: nodeConfigToNodeTarget(nodeData.config),
+      approvalType: nodeData.config.approvalType || 'NONE'
+    }
+    if (nodeData.childNode) {
+      changeToFlowNode(nodeData.childNode)
+    }
+    // return task
+    flowNode.push(task)
+  }
+
+  changeToFlowNode(data)
+
+  return flowNode
+}
+
+const handleSubmit = () => {
+  console.log('submit!')
+  processRef.value?.validate((validate, messages) => {
+    if (!validate) {
+      messages.forEach((element) => {
+        ElMessage.error(element)
+      })
+      return
+    }
+    console.log('validate,messages: ', validate, messages)
+    const processData = processRef.value?.getResult()
+    console.log('processData: ', processData)
+
+    console.log('32131231', dataToAddParams(processData.nodeConfig))
+
+    const params = {
+      ...formData.value,
+      flowNode: dataToAddParams(processData.nodeConfig).reverse()
+    } as SaveApprovalFlowParams
+
+    saveApprovalFlow(params).then((res) => {
+      console.log('res: ', res)
+    })
+    // console.log('params: ', JSON.stringify(params))
+  })
+}
+
+// 获取详情 转换数据格式
+const route = useRoute()
+const getDetail = async () => {
+  const searchParams = route.params
+  console.log('searchParams: ', searchParams)
+  if (!searchParams.id) {
+    return
+  }
+  const res = await getApprovalFlowDetail(searchParams.id as string)
+  // const res = {
+  //   flowName: '流程名称',
+  //   flowType: 'APPROVAL',
+  //   flowScene: 'INVITE_JOIN',
+  //   flowDesc: '流程说明',
+  //   flowNode: [
+  //     {
+  //       nodeDesignFormId: 6666,
+  //       nodeName: '审核节点',
+  //       nodeType: 'APPROVAL',
+  //       nodeTarget: [
+  //         {
+  //           targetType: 'CUSTOM',
+  //           targetItem: '21184'
+  //         }
+  //       ],
+  //       approvalType: 'COUNTER_SIGN'
+  //     },
+  //     {
+  //       nodeDesignFormId: 6666,
+  //       nodeName: '确认节点',
+  //       nodeType: 'CONFIRM',
+  //       nodeTarget: [
+  //         {
+  //           targetType: 'STAFF',
+  //           targetItem: '21182'
+  //         },
+  //         {
+  //           targetType: 'DEPART',
+  //           targetItem: '22'
+  //         }
+  //       ],
+  //       approvalType: 'COUNTER_SIGN'
+  //     },
+  //     {
+  //       nodeDesignFormId: 6666,
+  //       nodeName: '发起节点',
+  //       nodeType: 'START',
+  //       nodeTarget: [
+  //         {
+  //           targetType: 'STAFF',
+  //           targetItem: '21153'
+  //         },
+  //         {
+  //           targetType: 'DEPART',
+  //           targetItem: '22'
+  //         }
+  //       ],
+  //       approvalType: 'COUNTER_SIGN'
+  //     }
+  //   ]
+  // }
+  console.log('res: ', res)
+
+  formData.value = omit(res.data, 'flowNode')
+
+  const flowNodeToData = (data: FlowNode[]) => {
+    const toData = (index = 0) => {
+      const nodeData = data[index]
+      console.log('nodeData: ', nodeData)
+      const nodeType = NODE_TYPE[nodeData.nodeType]
+
+      const defaultNodeConfig = nodeConfig[nodeType].defaultNode
+      console.log('defaultNodeConfig: ', defaultNodeConfig)
+
+      // const nodeDataToNodeConfig = ()=>{}
+
+      if (defaultNodeConfig?.config) {
+        // 转换配置
+        defaultNodeConfig.config = {
+          ...nodeData.nodeTarget
+            .filter((item) => NODE_TARGET_KEYS[item.targetType])
+            .reduce((pre, current) => {
+              // 获取当前的key
+              const key = NODE_TARGET_KEYS[current.targetType]
+              pre[key] = current.targetItem.split(',')
+              return pre
+            }, {}),
+
+          name: nodeData.nodeName,
+          type: nodeData.nodeDesignFormId,
+          approvalType: nodeData.approvalType
+        }
+      }
+
+      return {
+        ...defaultNodeConfig,
+        childNode: data[index + 1] ? toData(index + 1) : null
+      }
+    }
+
+    return toData()
+  }
+
+  // console.log(flowNodeToData(res..data.flowNode as any), '33333333')
+  mockData.value = {
+    nodeConfig: flowNodeToData(res.data.flowNode as any)
+    // lineConfig: res.flowLine as any,
+    // data: res.flowData as any
+  } as any
+}
+
+getDetail()
 </script>
 <style lang="scss" scoped>
 .flow-container {

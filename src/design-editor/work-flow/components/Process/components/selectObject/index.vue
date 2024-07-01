@@ -1,4 +1,5 @@
 <template>
+  <div>指定{{ type === 'department' ? '部门' : '人员' }}</div>
   <div class="select-object">
     <el-button type="primary" icon="plus" @click="openDialog"
       >选择{{ type === 'department' ? '部门' : '人员' }}</el-button
@@ -24,7 +25,7 @@
 
   <el-dialog
     v-model="showDialog"
-    title="Tips"
+    :title="`${type === 'department' ? '选择部门' : '选择人员'}`"
     width="500"
     @opened="handleDialogOpened"
   >
@@ -73,7 +74,11 @@
 
 <script setup lang="ts">
 import { SelectObjectProps } from './props'
-import { getDepartStaff, getDepartTree } from '@editor/api/workFlow'
+import {
+  getDepartStaff,
+  getDepartTree,
+  getFLowRelationTarget
+} from '@editor/api/workFlow'
 import {
   ref,
   watch,
@@ -237,8 +242,6 @@ onMounted(() => {
 <style lang="scss" scoped>
 .select-object {
   width: 100%;
-  height: 100%;
-  padding: 10px;
   // box-sizing: border-box;
   display: flex;
   align-items: center;

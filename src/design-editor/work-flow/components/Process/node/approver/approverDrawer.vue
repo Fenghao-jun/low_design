@@ -6,7 +6,7 @@
         <el-input v-model="props.config.name" />
       </el-form-item>
     </el-form> -->
-    <SelectObject type="inCharge" v-model="formData.inCharge"></SelectObject>
+    <SelectObject type="inCharge" v-model="formData.userId"></SelectObject>
   </div>
 </template>
 
@@ -26,8 +26,6 @@ const props = defineProps({
     default: () => ({})
   }
 })
-
-// const { proxy } = getCurrentInstance()
 
 // 获取流程数据
 const processData = inject(KEY_PROCESS_DATA)

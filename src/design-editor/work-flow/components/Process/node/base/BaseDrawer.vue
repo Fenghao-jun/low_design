@@ -62,7 +62,8 @@ const formData = ref({
   type: '',
   launch: ''
 })
-const { useEditFormItem } = useEditForm(formData)
+const templateList = ref([])
+const { useEditFormItem } = useEditForm(formData, templateList)
 // 加载节点抽屉组件
 
 const drawerComponents = shallowRef({})

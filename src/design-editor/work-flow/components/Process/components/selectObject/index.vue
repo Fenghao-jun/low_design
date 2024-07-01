@@ -12,6 +12,14 @@
     >
       {{ type === 'department' ? tag.departName : tag.realName }}
     </el-tag>
+
+    <el-button
+      v-if="selectObjectList.length !== 0"
+      link
+      type="primary"
+      @click="handleClearClick"
+      >清除</el-button
+    >
   </div>
 
   <el-dialog
@@ -215,6 +223,10 @@ const handleTagDeleted = (node) => {
       (item) => item !== node[props.type === 'department' ? 'id' : 'userId']
     )
   )
+}
+
+const handleClearClick = () => {
+  emit('update:modelValue', [])
 }
 
 onMounted(() => {

@@ -1,7 +1,7 @@
 <template>
   <!-- 发起人配置 -->
   <div>
-    <org-select
+    <!-- <org-select
       ref="start-copy-user-org"
       v-model="formData.launch"
       title="选择用户"
@@ -12,13 +12,16 @@
       v-model="formData.launch"
       title="选择部门"
       class="mb-5"
-    />
+    /> -->
+    <SelectObject v-model="formData.userId"></SelectObject>
+    <SelectObject v-model="formData.departId" type="department"></SelectObject>
   </div>
 </template>
 
 <script lang="ts" setup name="StartDrawer">
 import { inject } from 'vue'
 import { KEY_PROCESS_DATA } from '@editor/work-flow/components/Process/config/keys'
+import SelectObject from '@editor/work-flow/components/Process/components/selectObject/index.vue'
 // import OrgSelect from '../../components/OrgSelect'
 
 const props = defineProps({

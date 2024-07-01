@@ -1,13 +1,22 @@
 <template>
   <!-- 确认人节点 -->
-  <div class="node-row">确认对象：{{ node.config.name }}</div>
+  <div class="node-row">
+    确认对象：
+
+    <div class="node-row_content">
+      <div v-if="userNum">{{ userNum }}</div>
+      <div v-if="departNum">{{ departNum }}</div>
+    </div>
+    <el-icon><ArrowRight /></el-icon>
+  </div>
 </template>
 
 <script lang="ts" setup name="ApproverNode">
-import { inject } from 'vue'
+import { computed, inject } from 'vue'
 import { KEY_VALIDATOR, KEY_PROCESS_DATA } from '../../config/keys'
 import { Validator } from '../../utils/validator'
 import { DefaultNode } from '../../config/nodeConfig'
+import { useSelectObject } from '@editor/work-flow/components/Process/hooks/useSelectObject'
 
 interface NodeProps {
   tempNodeId: string
@@ -22,6 +31,20 @@ const props = withDefaults(defineProps<NodeProps>(), {
     nodeType: ''
   })
 })
+
+const userNum = computed(() => {
+  return props.node.config.userId
+    ? `人员：${props.node.config.userId.length}人 `
+    : ''
+})
+
+const departNum = computed(() => {
+  return props.node.config.departId
+    ? `部门：${props.node.config.departId.length}个`
+    : ''
+})
+
+// const {  } = useSelectObject(props.node.config)
 
 // 获取流程数据
 // const processData = inject(KEY_PROCESS_DATA)

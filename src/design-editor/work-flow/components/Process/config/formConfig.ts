@@ -1,9 +1,7 @@
-import { computed } from 'vue'
+import { computed, Ref } from 'vue'
 import { IFromItem } from 'am-admin-component'
 
-export const useEditForm = (
-  formData
-) => {
+export const useEditForm = (formData, templateList: Ref<any[]>) => {
   const useEditFormItem = computed<IFromItem[]>(() => {
     return [
       {
@@ -16,17 +14,27 @@ export const useEditForm = (
         },
         placeholder: '请输入流程节点标题',
         rules: [
-          { required: true, message: '请输入流程节点标题', trigger: ['blur', 'change'] }
+          {
+            required: true,
+            message: '请输入流程节点标题',
+            trigger: ['blur', 'change']
+          }
         ]
       },
       {
         label: '关联表单:',
         type: 'select',
         field: 'type',
-        options: [],
+        options: templateList.value,
+        optionsKey: 'templateId',
+        optionsValueKey: 'templateName',
         placeholder: '请选择关联表单',
         rules: [
-          { required: true, message: '请选择关联表单', trigger: ['blur', 'change'] }
+          {
+            required: true,
+            message: '请选择关联表单',
+            trigger: ['blur', 'change']
+          }
         ]
       },
       {

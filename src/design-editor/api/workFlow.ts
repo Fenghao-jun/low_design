@@ -6,7 +6,7 @@ const APPROVAL_API = '/approval-api'
  * @description 获取组织架构树+员工
  */
 export const getDepartStaff = (data = {}) =>
-  request.post({
+  request.get({
     url: APPROVAL_API + '/mp/flow/getDepartStaff',
     data
   })
@@ -15,7 +15,22 @@ export const getDepartStaff = (data = {}) =>
  * @description 获取组织架构树
  */
 export const getDepartTree = (data = {}) =>
-  request.post({
+  request.get({
     url: APPROVAL_API + '/mp/flow/getDepartTree',
     data
+  })
+
+export const getFlowType = () =>
+  request.get({
+    url: APPROVAL_API + '/mp/flow/getFlowType'
+  })
+
+export const getFlowScene = () =>
+  request.get({
+    url: APPROVAL_API + '/mp/flow/getFlowScene'
+  })
+
+export const getDesignTemplateList = () =>
+  request.get({
+    url: APPROVAL_API + '/mp/flow/getDesignTemplateList'
   })

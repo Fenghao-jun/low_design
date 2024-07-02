@@ -128,13 +128,13 @@ const addNode = (nodeType) => {
 
     emit('addNode', props.node.childNode, addNode)
     props.node.childNode = addNode
-    console.log('props.node.childNode: ', props.node.childNode);
+    console.log('props.node.childNode: ', props.node.childNode)
   }
   showAddSelect(false)
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .ep-node-add {
   position: relative;
   display: flex;

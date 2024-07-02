@@ -306,7 +306,7 @@ const showErrorTips = (flag) => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .ep-node {
   display: flex;
   flex-direction: column;

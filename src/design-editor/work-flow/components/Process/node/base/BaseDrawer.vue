@@ -40,7 +40,7 @@
     </ElDrawer>
   </div>
 </template>
-<script lang="tsx" setup name="BaseDrawer">
+<script lang="ts" setup name="BaseDrawer">
 // import Button from '@/components/Button/Button'
 import { ref, shallowRef } from 'vue'
 import { BaseNodeConfig, nodeConfig } from '../../config/nodeConfig'

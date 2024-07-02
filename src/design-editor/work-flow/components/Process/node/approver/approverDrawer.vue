@@ -41,4 +41,4 @@ const props = defineProps({
 const processData = inject(KEY_PROCESS_DATA)
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped></style>

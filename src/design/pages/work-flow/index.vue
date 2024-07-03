@@ -88,7 +88,7 @@ const mockData = ref({
     }
   }
 })
-const active = ref(1)
+const active = ref(0)
 
 const formData = ref<Omit<SaveApprovalFlowParams, 'flowNode'>>({
   flowName: '',

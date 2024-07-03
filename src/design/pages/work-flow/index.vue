@@ -1,7 +1,7 @@
 <template>
   <div class="flow-container" id="flow-container">
     <div class="flow-container__tabs">
-      <ElButton v-if="active === 0">返回</ElButton>
+      <ElButton v-if="active === 0" @click="router.back()">返回</ElButton>
       <ElButton v-if="active === 1" @click="active = 0">上一步</ElButton>
 
       <el-steps

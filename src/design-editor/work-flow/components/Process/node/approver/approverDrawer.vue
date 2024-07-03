@@ -3,6 +3,7 @@
   <div>
     <el-form :model="formData" label-width="130px">
       <el-form-item label="发起对象:">
+        <SelectObject v-model="formData.userId"></SelectObject>
         <SelectObject
           type="inCharge"
           v-model="formData.departId"

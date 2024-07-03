@@ -360,7 +360,8 @@ getDetail()
 <style lang="scss" scoped>
 .flow-container {
   padding: 16px 0;
-  min-height: 100vh;
+  // min-height: 100vh;
+  height: calc(100vh - 116px);
   box-sizing: border-box;
 
   &__tabs {

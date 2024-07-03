@@ -131,7 +131,7 @@ defineExpose({
   overflow-x: auto;
   overflow-y: auto;
   padding: 16px 0;
-  height: calc(100vh - 90px);
+  height: calc(100vh - 216px);
 }
 
 .ep-process {

@@ -1,44 +1,35 @@
 <template>
-  <div v-if="node" class="ep-node-drawer-container">
-    <ElDrawer
-      v-model="isShow"
-      icon="setting"
-      title="节点设置"
-      size="38%"
-      append-to-body
-    >
-      <template #default>
-        <CustomForm
-          ref="formRef"
-          :from-items="useEditFormItem"
-          v-model="formData"
-          label-width="130"
-          :itemStyle="{
-            padding: 0
-          }"
-          label-position="top"
-          :col-layout="{
-            xl: 24,
-            lg: 24,
-            md: 24,
-            sm: 24,
-            xs: 24
-          }"
-        >
-          <template #launch> </template>
-        </CustomForm>
-        <component
-          :is="drawerComponents[node.nodeType]"
-          :config="node.config"
-          :formData="formData"
-        />
-      </template>
-      <template #footer>
-        <ElButton @click="cancelUpdateConfig">取消</ElButton>
-        <ElButton type="primary" @click="updateConfig">确定</ElButton>
-      </template>
-    </ElDrawer>
-  </div>
+  <ElDrawer v-model="isShow" icon="setting" title="节点设置" size="38%">
+    <template #default>
+      <CustomForm
+        ref="formRef"
+        :from-items="useEditFormItem"
+        v-model="formData"
+        label-width="130"
+        :itemStyle="{
+          padding: 0
+        }"
+        label-position="top"
+        :col-layout="{
+          xl: 24,
+          lg: 24,
+          md: 24,
+          sm: 24,
+          xs: 24
+        }"
+      >
+      </CustomForm>
+      <component
+        :is="drawerComponents[node.nodeType]"
+        :config="node.config"
+        :formData="formData"
+      />
+    </template>
+    <template #footer>
+      <ElButton @click="cancelUpdateConfig">取消</ElButton>
+      <ElButton type="primary" @click="updateConfig">确定</ElButton>
+    </template>
+  </ElDrawer>
 </template>
 <script lang="ts" setup name="BaseDrawer">
 // import Button from '@/components/Button/Button'

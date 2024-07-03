@@ -54,7 +54,8 @@ import {
   FlowNode,
   NodeTarget,
   getApprovalFlowDetail,
-  saveApprovalFlow
+  saveApprovalFlow,
+  getBusinessType
 } from '@editor/api/workFlow'
 import { ref } from 'vue'
 import { AnyObject } from '@/types'
@@ -87,19 +88,26 @@ const mockData = ref({
     }
   }
 })
-const active = ref(0)
+const active = ref(1)
 
 const formData = ref<Omit<SaveApprovalFlowParams, 'flowNode'>>({
   flowName: '',
-  flowType: '',
+  flowType: 'APPROVAL',
   flowScene: '',
-  flowDesc: ''
+  flowDesc: '',
+  businessType: ''
 })
 
 const flowType = ref([])
 const flowScene = ref([])
+const flowBusinessType = ref([])
 
-const { useEditFormItem } = useEditForm(formData, flowType, flowScene)
+const { useEditFormItem } = useEditForm(
+  formData,
+  flowType,
+  flowScene,
+  flowBusinessType
+)
 
 const getFlowTypeRequest = async () => {
   const res = await getFlowType()
@@ -113,8 +121,14 @@ const getFlowSceneRequest = async () => {
   flowScene.value = res.data
 }
 
+const getBusinessTypeRequest = async () => {
+  const res = await getBusinessType()
+  flowBusinessType.value = res.data
+}
+
 getFlowSceneRequest()
 getFlowTypeRequest()
+getBusinessTypeRequest()
 
 const formRef = ref<InstanceType<typeof CustomForm>>()
 const handleNextClick = (num?: number) => {

@@ -76,18 +76,20 @@
     </div>
     <AddNode :node="props.node" />
 
+    <Teleport to="body">
+      <BaseDrawer
+        ref="nodeDrawer"
+        @updateConfig="updateConfig"
+        @cancelUpdateConfig="cancelUpdateConfig"
+      /> </Teleport
+    >">
     <!-- 节点配置Drawer -->
-    <BaseDrawer
-      ref="nodeDrawer"
-      @updateConfig="updateConfig"
-      @cancelUpdateConfig="cancelUpdateConfig"
-    />
   </div>
 </template>
 
-<script setup name="BaseNode">
-import BaseDrawer from './BaseDrawer'
-import AddNode from './AddNode'
+<script lang="ts" setup name="BaseNode">
+import BaseDrawer from './BaseDrawer.vue'
+import AddNode from './AddNode.vue'
 import {
   ref,
   shallowRef,

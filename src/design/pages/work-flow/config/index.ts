@@ -1,7 +1,12 @@
 import { computed, Ref } from 'vue'
 import { IFromItem } from 'am-admin-component'
 
-export const useEditForm = (formData, type: Ref<any[]>, scene: Ref<any[]>) => {
+export const useEditForm = (
+  formData,
+  type: Ref<any[]>,
+  scene: Ref<any[]>,
+  business: Ref<any[]>
+) => {
   const useEditFormItem = computed<IFromItem[]>(() => {
     return [
       {
@@ -29,6 +34,9 @@ export const useEditForm = (formData, type: Ref<any[]>, scene: Ref<any[]>) => {
         optionsKey: 'code',
         optionsValueKey: 'desc',
         placeholder: '请选择流程类型',
+        otherOptions: {
+          disabled: true
+        },
         rules: [
           {
             required: true,
@@ -40,11 +48,27 @@ export const useEditForm = (formData, type: Ref<any[]>, scene: Ref<any[]>) => {
       {
         label: '流程应用:',
         type: 'select',
+        field: 'businessType',
+        options: business.value,
+        optionsKey: 'code',
+        optionsValueKey: 'desc',
+        placeholder: '请选择流程应用',
+        rules: [
+          {
+            required: true,
+            message: '请选择流程应用',
+            trigger: ['blur', 'change']
+          }
+        ]
+      },
+      {
+        label: '关联功能模块:',
+        type: 'select',
         field: 'flowScene',
         options: scene.value,
         optionsKey: 'code',
         optionsValueKey: 'desc',
-        placeholder: '请选择流程应用',
+        placeholder: '请选择关联流程模块',
         rules: [
           {
             required: true,

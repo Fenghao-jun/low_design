@@ -5,7 +5,7 @@
       <el-form-item label="发起对象：" required>
         <!-- <SelectObject v-model="formData.userId" />
         <SelectObject v-model="formData.departId" type="department" /> -->
-        <div>
+        <div class="custom-box">
           项目关联成员
           <div>
             <el-select
@@ -64,4 +64,10 @@ const getFLowRelationTargetRequest = async () => {
 getFLowRelationTargetRequest()
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.custom-box {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="flow-container">
+  <div class="flow-container" id="flow-container">
     <div class="flow-container__tabs">
       <ElButton v-if="active === 0">返回</ElButton>
 
@@ -88,7 +88,7 @@ const mockData = ref({
     }
   }
 })
-const active = ref(0)
+const active = ref(1)
 
 const formData = ref<Omit<SaveApprovalFlowParams, 'flowNode'>>({
   flowName: '',

@@ -76,13 +76,12 @@
     </div>
     <AddNode :node="props.node" />
 
-    <Teleport to="body">
-      <BaseDrawer
-        ref="nodeDrawer"
-        @updateConfig="updateConfig"
-        @cancelUpdateConfig="cancelUpdateConfig"
-      /> </Teleport
-    >">
+    <!-- <Teleport to="#"></Teleport> -->
+    <BaseDrawer
+      ref="nodeDrawer"
+      @updateConfig="updateConfig"
+      @cancelUpdateConfig="cancelUpdateConfig"
+    />
     <!-- 节点配置Drawer -->
   </div>
 </template>

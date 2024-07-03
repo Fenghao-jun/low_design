@@ -1,26 +1,29 @@
 <template>
-  <div>指定{{ type === 'department' ? '部门' : '人员' }}</div>
+  <div v-if="type === 'inCharge'">部门负责人</div>
+  <div v-else>指定{{ type === 'department' ? '部门' : '人员' }}</div>
   <div class="select-object">
     <el-button type="primary" icon="plus" @click="openDialog"
       >选择{{ type === 'department' ? '部门' : '人员' }}</el-button
     >
-    <el-tag
-      v-for="tag in selectObjectList"
-      :key="tag.id"
-      closable
-      type="success"
-      @close="handleTagDeleted(tag)"
-    >
-      {{ type === 'department' ? tag.departName : tag.realName }}
-    </el-tag>
+    <div class="select-object_tag">
+      <el-tag
+        v-for="tag in selectObjectList"
+        :key="tag.id"
+        closable
+        type="success"
+        @close="handleTagDeleted(tag)"
+      >
+        {{ getTagValue(tag) }}
+      </el-tag>
 
-    <el-button
-      v-if="selectObjectList.length !== 0"
-      link
-      type="primary"
-      @click="handleClearClick"
-      >清除</el-button
-    >
+      <el-button
+        v-if="selectObjectList.length !== 0"
+        link
+        type="primary"
+        @click="handleClearClick"
+        >清除</el-button
+      >
+    </div>
   </div>
 
   <el-dialog
@@ -38,7 +41,9 @@
           show-checkbox
           accordion
           ref="treeRef"
-          :node-key="type === 'department' ? 'id' : 'userId'"
+          :node-key="
+            type === 'department' || type === 'inCharge' ? 'id' : 'userId'
+          "
           check-strictly
           @check="handleTreeCheck"
         />
@@ -46,7 +51,11 @@
       <el-col :span="12">
         <div v-for="tag in selectObject" :key="tag.id">
           <el-tag closable type="success" @close="handleTagDeleted(tag)">
-            {{ type === 'department' ? tag.departName : tag.realName }}
+            {{
+              type === 'department' || type === 'inCharge'
+                ? tag.departName
+                : tag.realName
+            }}
           </el-tag>
         </div>
       </el-col>
@@ -101,7 +110,6 @@ const props = withDefaults(defineProps<SelectObjectProps>(), {
 const emit = defineEmits(['update:modelValue'])
 
 const treeRef = ref<TreeInstance>()
-const treeRefWrapper = ref<TreeInstance>()
 
 const treeData = ref<any[]>([])
 
@@ -127,9 +135,6 @@ const getData = () => {
   } else {
     getDepartStaff().then((res) => {
       mergeStaffWithChildren(res.data)
-
-      // console.log('321')
-
       if (props.type === 'inCharge') {
         function findChargeStaff(node) {
           node.forEach((element) => {
@@ -160,14 +165,19 @@ const selectObjectList = computed(() => {
       if (element.children && element.children.length > 0) {
         findObject(element.children)
       }
-      const nodeKey = props.type === 'department' ? 'id' : 'userId'
+      const nodeKey =
+        props.type === 'department' || props.type === 'inCharge'
+          ? 'id'
+          : 'userId'
+
+      console.log('element: ', props.modelValue, element[nodeKey], node)
 
       if (props.modelValue.includes(element[nodeKey])) {
-        console.log('element: ', element, node)
         objs.push(element)
       }
     })
   }
+  console.log('treeData.value: ', props.modelValue)
 
   findObject(treeData.value)
 
@@ -179,6 +189,10 @@ const treeProps = {
     return data.realName || data.departName
   },
   disabled(data, node) {
+    if (props.type === 'inCharge') {
+      // 部门负责人
+      return data.realName
+    }
     return data.children && data.departName && props.type !== 'department'
   }
 }
@@ -187,7 +201,7 @@ const selectIds = ref([])
 const selectObject = ref<any[]>([])
 const handleTreeCheck: TreeInstance['onCheck'] = (node, selectTreeData) => {
   console.log('selectTreeData: ', selectTreeData)
-  if (props.type === 'department') {
+  if (props.type === 'department' || props.type === 'inCharge') {
     selectIds.value = selectTreeData.checkedKeys.filter((item) => item)
     selectObject.value = selectTreeData.checkedNodes.filter((item) => item.id)
     return
@@ -225,9 +239,28 @@ const handleTagDeleted = (node) => {
   emit(
     'update:modelValue',
     props.modelValue.filter(
-      (item) => item !== node[props.type === 'department' ? 'id' : 'userId']
+      (item) =>
+        item !==
+        node[
+          props.type === 'department' || props.type === 'inCharge'
+            ? 'id'
+            : 'userId'
+        ]
     )
   )
+}
+
+const getTagValue = (node: any) => {
+  if (props.type === 'inCharge') {
+    const owners = node.staff.filter((item) => item.isOwner === 0)
+    return (
+      node.departName + ' : ' + owners.map((item) => item.realName).join(',')
+    )
+  } else if (props.type === 'department') {
+    return node.departName
+  } else if (props.type === 'person') {
+    return node.realName
+  }
 }
 
 const handleClearClick = () => {
@@ -250,5 +283,12 @@ onMounted(() => {
 }
 :deep(.el-checkbox__input.is-disabled) {
   display: none !important;
+}
+.select-object_tag {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 600px;
+  flex-wrap: wrap;
 }
 </style>

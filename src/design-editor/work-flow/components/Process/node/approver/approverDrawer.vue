@@ -3,7 +3,10 @@
   <div>
     <el-form :model="formData" label-width="130px">
       <el-form-item label="发起对象:">
-        <SelectObject type="inCharge" v-model="formData.userId"></SelectObject>
+        <SelectObject
+          type="inCharge"
+          v-model="formData.departId"
+        ></SelectObject>
       </el-form-item>
 
       <el-form-item label="多人审批方式:" prop="approvalType">

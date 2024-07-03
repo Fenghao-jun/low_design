@@ -12,7 +12,7 @@
       <EndNode />
     </div>
     <!-- 缩放 -->
-    <div class="ep-zoom">
+    <!-- <div class="ep-zoom">
       <svg-icon
         icon-class="subtract"
         class="ep-zoom-icon"
@@ -28,7 +28,7 @@
         :class="zoom == 300 && 'disabled'"
         @click="setZoom(2)"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -135,8 +135,9 @@ defineExpose({
 }
 
 .ep-process {
-  position: relative;
+  // position: relative;
   height: 100%;
+  width: 100%;
 }
 
 .ep-zoom {

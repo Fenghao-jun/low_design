@@ -54,7 +54,7 @@ watch(
     validator?.register(props.tempNodeId || '', () => {
       let valid = false
       let message = ''
-      if (!userNum.value && !departNum.value) {
+      if (!departNum.value) {
         message = '请选择发起对象'
       } else if (!props.node.config.name) {
         message = '请输入节点标题'

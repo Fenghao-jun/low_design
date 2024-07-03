@@ -2,6 +2,7 @@
   <div class="flow-container" id="flow-container">
     <div class="flow-container__tabs">
       <ElButton v-if="active === 0">返回</ElButton>
+      <ElButton v-if="active === 1" @click="active = 0">上一步</ElButton>
 
       <el-steps
         :active="active"
@@ -60,7 +61,7 @@ import {
 import { ref } from 'vue'
 import { AnyObject } from '@/types'
 import { ElMessage } from 'element-plus'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { omit } from 'lodash-es'
 
 const mockData = ref({
@@ -203,7 +204,8 @@ const dataToAddParams = (data: DefaultNode) => {
       nodeName: nodeData.config.name,
       nodeType: NODE_TYPE[nodeData.nodeType],
       nodeTarget: nodeConfigToNodeTarget(nodeData.config),
-      approvalType: nodeData.config.approvalType || 'NONE'
+      approvalType: nodeData.config.approvalType || 'NONE',
+      nodeId: nodeData.config.nodeId || ''
     }
     if (nodeData.childNode) {
       changeToFlowNode(nodeData.childNode)
@@ -217,6 +219,7 @@ const dataToAddParams = (data: DefaultNode) => {
   return flowNode
 }
 
+const router = useRouter()
 const handleSubmit = () => {
   console.log('submit!')
   processRef.value?.validate((validate, messages) => {
@@ -239,6 +242,8 @@ const handleSubmit = () => {
 
     saveApprovalFlow(params).then((res) => {
       console.log('res: ', res)
+      ElMessage.success('发布成功')
+      router.back()
     })
     // console.log('params: ', JSON.stringify(params))
   })
@@ -334,7 +339,8 @@ const getDetail = async () => {
 
           name: nodeData.nodeName,
           type: nodeData.nodeDesignFormId,
-          approvalType: nodeData.approvalType
+          approvalType: nodeData.approvalType,
+          nodeId: nodeData.nodeId || ''
         }
       }
 

@@ -172,7 +172,9 @@ const selectObjectList = computed(() => {
 
       console.log('element: ', props.modelValue, element[nodeKey], node)
 
-      if (props.modelValue.includes(element[nodeKey])) {
+      // 人员和部门id数据类型不统一，转一下
+      const values = props.modelValue.map((item) => Number(item))
+      if (values.includes(Number(element[nodeKey]))) {
         objs.push(element)
       }
     })

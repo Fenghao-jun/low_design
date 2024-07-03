@@ -48,6 +48,7 @@ export interface FlowNode {
   nodeTarget: NodeTarget[]
   nodeType: string
   approvalType?: string
+  nodeId?: number | string
 }
 
 export interface SaveApprovalFlowParams {

@@ -46,9 +46,11 @@
 
 <script setup lang="ts" name="AddNode">
 import { ref, nextTick } from 'vue'
-import { nodeConfig, Icon } from '../../config/nodeConfig'
+import { nodeConfig as configMap, Icon } from '../../config/nodeConfig'
 import { copy } from '../../utils/tools'
 import SvgIcon from '../../../SvgIcon/index.vue'
+
+const nodeConfig = JSON.parse(JSON.stringify(configMap))
 
 const props = defineProps({
   node: {

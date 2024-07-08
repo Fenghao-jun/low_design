@@ -29,13 +29,13 @@ const props = defineProps({
 })
 
 const userNum = computed(() => {
-  return props.node.config.userId
+  return props.node.config.userId && props.node.config.userId.length
     ? `人员：${props.node.config.userId.length}人 `
     : ''
 })
 
 const departNum = computed(() => {
-  return props.node.config.departId
+  return props.node.config.departId && props.node.config.departId.length
     ? `部门：${props.node.config.departId.length}个`
     : ''
 })
@@ -57,10 +57,6 @@ validator?.register(props.tempNodeId || '', () => {
     props.node.config?.userId?.length === 0 &&
     props.node.config?.departId?.length === 0
   ) {
-    console.log(
-      '!departNum.value && !userNum.value: ',
-      !departNum.value && !userNum.value
-    )
     message = '请选择发起对象'
   } else if (!props.node?.config?.name) {
     message = '请输入节点标题'

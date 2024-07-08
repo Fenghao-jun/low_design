@@ -50,7 +50,7 @@
       </el-col>
       <el-col :span="12">
         <div v-for="tag in selectObject" :key="tag.id">
-          <el-tag closable type="success" @close="handleTagDeleted(tag)">
+          <el-tag type="success" @close="handleTagDeleted(tag)">
             {{
               type === 'department' || type === 'inCharge'
                 ? tag.departName

@@ -35,7 +35,7 @@ const userNum = computed(() => {
 })
 
 const departNum = computed(() => {
-  return props.node.config.departId
+  return props.node.config.departId && props.node.config.departId.length
     ? `部门：${props.node.config.departId.length}个`
     : ''
 })

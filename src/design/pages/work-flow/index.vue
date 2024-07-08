@@ -200,7 +200,7 @@ const dataToAddParams = (data: DefaultNode) => {
   const changeToFlowNode = (nodeData: DefaultNode) => {
     console.log('nodeData: ', nodeData)
     const task: FlowNode = {
-      nodeDesignFormId: nodeData.config.type,
+      nodeDesignFormId: nodeData.config.type || '',
       nodeName: nodeData.config.name,
       nodeType: NODE_TYPE[nodeData.nodeType],
       nodeTarget: nodeConfigToNodeTarget(nodeData.config),

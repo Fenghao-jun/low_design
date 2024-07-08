@@ -34,6 +34,12 @@
   >
     <el-row>
       <el-col :span="12">
+        <el-input
+          v-model="keyword"
+          placeholder="输入搜索"
+          style="margin-bottom: 10px"
+          size="small"
+        />
         <el-tree
           style="max-width: 600px"
           :data="treeData"
@@ -46,6 +52,7 @@
           "
           check-strictly
           @check="handleTreeCheck"
+          :filter-node-method="filterNode"
         />
       </el-col>
       <el-col :span="12">
@@ -101,6 +108,7 @@ import {
   watchEffect
 } from 'vue'
 import { TreeInstance } from 'element-plus'
+import { watchThrottled } from '@vueuse/core'
 
 const props = withDefaults(defineProps<SelectObjectProps>(), {
   type: 'person',
@@ -269,6 +277,24 @@ const getTagValue = (node: any) => {
 const handleClearClick = () => {
   emit('update:modelValue', [])
 }
+
+// 搜索
+const keyword = ref('')
+const filterNode = (value: string, data: any) => {
+  if (!value) return true
+  console.log('data: ', data)
+
+  const field =
+    props.type === 'department' || props.type === 'inCharge'
+      ? 'departName'
+      : 'realName'
+
+  return data[field].includes(value)
+}
+
+watchThrottled(keyword, (nValue) => {
+  treeRef.value?.filter(nValue)
+})
 
 onMounted(() => {
   getData()

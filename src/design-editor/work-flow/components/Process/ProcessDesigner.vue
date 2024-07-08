@@ -1,7 +1,7 @@
 <template>
   <div class="ep-container">
     <!-- 流程 -->
-    <div class="ep-process" :style="`transform: scale(${zoom / 100});`">
+    <div class="ep-process">
       <!-- 递归节点 -->
       <NodeWrap
         v-if="processData && processData.nodeConfig"

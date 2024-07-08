@@ -143,6 +143,9 @@ const addNode = (nodeType) => {
   justify-content: center;
   align-items: center;
   padding: 40px 0px;
+  height: 80px;
+  width: 2px;
+  background-color: #cacaca;
 
   .ep-node-add-btn {
     position: absolute;

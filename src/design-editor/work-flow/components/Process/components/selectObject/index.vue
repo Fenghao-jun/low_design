@@ -144,7 +144,7 @@ const getData = () => {
             // console.log('element: ', element)
 
             element.children = (element.children || []).filter(
-              (item) => item.isOwner === 0 || !item.userId
+              (item) => item.isOwner === 1 || !item.userId
             )
           })
         }
@@ -254,7 +254,7 @@ const handleTagDeleted = (node) => {
 
 const getTagValue = (node: any) => {
   if (props.type === 'inCharge') {
-    const owners = node.staff.filter((item) => item.isOwner === 0)
+    const owners = node.staff.filter((item) => item.isOwner === 1)
     return (
       node.departName + ' : ' + owners.map((item) => item.realName).join(',') ||
       ' '

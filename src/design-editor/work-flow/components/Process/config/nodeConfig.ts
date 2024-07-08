@@ -56,8 +56,8 @@ nodeConfig[CONFIRM] = {
     nodeName: '确认人',
     nodeType: 'confirm',
     config: {
-      name: '确认人',
-      foo: ''
+      // name: '确认人',
+      // foo: ''
     },
     childNode: null
   }

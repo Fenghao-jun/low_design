@@ -219,6 +219,7 @@ const dataToAddParams = (data: DefaultNode) => {
   return flowNode
 }
 
+// 提交
 const router = useRouter()
 const handleSubmit = () => {
   console.log('submit!')
@@ -258,59 +259,6 @@ const getDetail = async () => {
     return
   }
   const res = await getApprovalFlowDetail(searchParams.id as string)
-  // const res = {
-  //   flowName: '流程名称',
-  //   flowType: 'APPROVAL',
-  //   flowScene: 'INVITE_JOIN',
-  //   flowDesc: '流程说明',
-  //   flowNode: [
-  //     {
-  //       nodeDesignFormId: 6666,
-  //       nodeName: '审核节点',
-  //       nodeType: 'APPROVAL',
-  //       nodeTarget: [
-  //         {
-  //           targetType: 'CUSTOM',
-  //           targetItem: '21184'
-  //         }
-  //       ],
-  //       approvalType: 'COUNTER_SIGN'
-  //     },
-  //     {
-  //       nodeDesignFormId: 6666,
-  //       nodeName: '确认节点',
-  //       nodeType: 'CONFIRM',
-  //       nodeTarget: [
-  //         {
-  //           targetType: 'STAFF',
-  //           targetItem: '21182'
-  //         },
-  //         {
-  //           targetType: 'DEPART',
-  //           targetItem: '22'
-  //         }
-  //       ],
-  //       approvalType: 'COUNTER_SIGN'
-  //     },
-  //     {
-  //       nodeDesignFormId: 6666,
-  //       nodeName: '发起节点',
-  //       nodeType: 'START',
-  //       nodeTarget: [
-  //         {
-  //           targetType: 'STAFF',
-  //           targetItem: '21153'
-  //         },
-  //         {
-  //           targetType: 'DEPART',
-  //           targetItem: '22'
-  //         }
-  //       ],
-  //       approvalType: 'COUNTER_SIGN'
-  //     }
-  //   ]
-  // }
-  console.log('res: ', res)
 
   formData.value = omit(res.data, 'flowNode')
 

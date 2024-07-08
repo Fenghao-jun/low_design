@@ -170,7 +170,7 @@ const selectObjectList = computed(() => {
           ? 'id'
           : 'userId'
 
-      console.log('element: ', props.modelValue, element[nodeKey], node)
+      // console.log('element: ', props.modelValue, element[nodeKey], node)
 
       // 人员和部门id数据类型不统一，转一下
       const values = props.modelValue.map((item) => Number(item))
@@ -179,7 +179,7 @@ const selectObjectList = computed(() => {
       }
     })
   }
-  console.log('treeData.value: ', props.modelValue)
+  // console.log('treeData.value: ', props.modelValue)
 
   findObject(treeData.value)
 
@@ -256,7 +256,8 @@ const getTagValue = (node: any) => {
   if (props.type === 'inCharge') {
     const owners = node.staff.filter((item) => item.isOwner === 0)
     return (
-      node.departName + ' : ' + owners.map((item) => item.realName).join(',')
+      node.departName + ' : ' + owners.map((item) => item.realName).join(',') ||
+      ' '
     )
   } else if (props.type === 'department') {
     return node.departName

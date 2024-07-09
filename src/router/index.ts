@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'workFlow',
     component: () =>
       import(
-        /* webpackChunkName: "generator" */ '../design/pages/work-flow/index.vue'
+        /* webpackChunkName: "featureFlow" */ '../design/pages/work-flow/featureFlow/index.vue'
       )
   }
 ]

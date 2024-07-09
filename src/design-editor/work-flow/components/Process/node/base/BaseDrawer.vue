@@ -40,7 +40,7 @@ import { useEditForm } from '../../config/formConfig'
 import { CustomForm } from 'am-admin-component'
 import { getDesignTemplateList } from '@editor/api/workFlow'
 
-const props = defineProps({})
+// const props = defineProps({})
 
 // 节点数据的副本
 const node = ref()

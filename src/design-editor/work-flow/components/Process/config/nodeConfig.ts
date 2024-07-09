@@ -64,54 +64,54 @@ nodeConfig[CONFIRM] = {
 }
 
 // 路由节点配置
-// nodeConfig[ROUTER] = {
-//   title: '条件分支', // 节点标题
-//   canAdd: true, // 节点是否可以增加
-//   hasDrawer: false, // 节点是否可以进行配置
-//   icon: {
-//     // 图标
-//     name: 'router', // 图标名
-//     color: '#3CB371' // 颜色
-//   },
-//   defaultNode: {
-//     // 默认节点结构，用于添加节点时
-//     nodeName: '路由',
-//     nodeType: 'router',
-//     config: {},
-//     childNode: null,
-//     conditionNodes: [
-//       {
-//         nodeName: '条件',
-//         nodeType: 'condition',
-//         isLastCondition: false,
-//         config: {},
-//         childNode: null
-//       }
-//     ]
-//   }
-// }
+nodeConfig[ROUTER] = {
+  title: '条件分支', // 节点标题
+  canAdd: true, // 节点是否可以增加
+  hasDrawer: false, // 节点是否可以进行配置
+  icon: {
+    // 图标
+    name: 'router', // 图标名
+    color: '#3CB371' // 颜色
+  },
+  defaultNode: {
+    // 默认节点结构，用于添加节点时
+    nodeName: '路由',
+    nodeType: 'router',
+    config: {},
+    childNode: null,
+    conditionNodes: [
+      {
+        nodeName: '条件',
+        nodeType: 'condition',
+        isLastCondition: false,
+        config: {},
+        childNode: null
+      }
+    ]
+  }
+}
 
 // 条件节点配置
-// nodeConfig[CONDITION] = {
-//   title: '条件', // 节点标题
-//   color: '#FFFFFF', // 节点标题颜色
-//   bgColor: '#3CB371', // 节点标题背景颜色
-//   canAdd: false, // 节点是否可以增加
-//   canRemoved: true, // 节点是否能够移除
-//   hasDrawer: true, // 节点是否可以进行配置
-//   icon: {
-//     // 图标
-//     name: 'condition', // 图标名
-//     color: '#3CB371' // 颜色
-//   },
-//   defaultNode: {
-//     nodeName: '条件',
-//     nodeType: 'condition',
-//     isLastCondition: false,
-//     config: {},
-//     childNode: {}
-//   }
-// }
+nodeConfig[CONDITION] = {
+  title: '条件', // 节点标题
+  color: '#FFFFFF', // 节点标题颜色
+  bgColor: '#3CB371', // 节点标题背景颜色
+  canAdd: false, // 节点是否可以增加
+  canRemoved: true, // 节点是否能够移除
+  hasDrawer: true, // 节点是否可以进行配置
+  icon: {
+    // 图标
+    name: 'condition', // 图标名
+    color: '#3CB371' // 颜色
+  },
+  defaultNode: {
+    nodeName: '条件',
+    nodeType: 'condition',
+    isLastCondition: false,
+    config: {},
+    childNode: {}
+  }
+}
 
 // 发起人节点配置
 nodeConfig[START] = {

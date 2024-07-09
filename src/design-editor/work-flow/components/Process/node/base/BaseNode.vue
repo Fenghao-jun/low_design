@@ -2,8 +2,6 @@
   <div :class="{ 'ep-node': true, 'ep-node-arrows': !isStart }">
     <div
       :class="{ 'ep-node-content': true, 'ep-node-error': isError }"
-      @mouseenter="mouseenter(true)"
-      @mouseleave="mouseleave(false)"
       @click="showNodeDrawer"
     >
       <!-- header -->
@@ -37,7 +35,7 @@
         />
       </div>
       <!-- 同级节点左移动 -->
-      <div class="ep-node-move ep-node-move-left" v-if="isShowLeftMoveBtn">
+      <!-- <div class="ep-node-move ep-node-move-left" v-if="isShowLeftMoveBtn">
         <svg-icon
           icon-class="left"
           class="ep-node-move-icon"
@@ -46,9 +44,9 @@
           @mouseenter="selectedMoveBtn(1, true)"
           @mouseleave="selectedMoveBtn(1, false)"
         />
-      </div>
+      </div> -->
       <!-- 同级节点右移动 -->
-      <div class="ep-node-move ep-node-move-right" v-if="isShowRightMoveBtn">
+      <!-- <div class="ep-node-move ep-node-move-right" v-if="isShowRightMoveBtn">
         <svg-icon
           icon-class="right"
           class="ep-node-move-icon"
@@ -57,7 +55,7 @@
           @mouseenter="selectedMoveBtn(2, true)"
           @mouseleave="selectedMoveBtn(2, false)"
         />
-      </div>
+      </div> -->
       <!-- 校验错误提示 -->
       <div class="ep-node-error-msg" v-if="isError">
         <div class="ep-node-error-msg-box">
@@ -78,7 +76,7 @@
 
     <!-- <Teleport to="#"></Teleport> -->
     <BaseDrawer
-      ref="nodeDrawer"
+      ref="drawerRef"
       @updateConfig="updateConfig"
       @cancelUpdateConfig="cancelUpdateConfig"
     />
@@ -105,6 +103,7 @@ import { copy, getUUID } from '../../utils/tools'
 import { START, CONDITION } from '../../config/nodeType'
 import { KEY_VALIDATOR } from '../../config/keys'
 import SvgIcon from '../../../SvgIcon/index.vue'
+import { Validator } from '@editor/work-flow/components/Process/utils/validator'
 
 const props = defineProps({
   node: {
@@ -124,8 +123,6 @@ const props = defineProps({
   }
 })
 
-const { proxy } = getCurrentInstance()
-
 // 生成临时节点ID
 const tempNodeId = getUUID()
 
@@ -133,7 +130,7 @@ const tempNodeId = getUUID()
 const config = ref(nodeConfig[props.node.nodeType])
 
 // 获取流程验证器实例
-const validator = inject(KEY_VALIDATOR)
+const validator = inject<Validator>(KEY_VALIDATOR)
 const errorMsg = ref(null)
 const errorTips = ref(false)
 
@@ -142,7 +139,7 @@ watch(
   (val) => {
     console.log('val: ', val)
     config.value = nodeConfig[props.node.nodeType]
-    validator.validate()
+    validator?.validate()
   }
 )
 
@@ -173,8 +170,8 @@ const isSelectedRightMoveBtn = ref(false)
 // onMounted(async () => {})
 
 onUnmounted(async () => {
-  validator.remove(tempNodeId)
-  validator.validate()
+  validator?.remove(tempNodeId)
+  validator?.validate()
 })
 
 const isStart = computed(() => {
@@ -183,13 +180,13 @@ const isStart = computed(() => {
 
 // 节点验证结果是否异常
 const isError = computed(() => {
-  const result = validator.getResult(tempNodeId)
+  const result = validator?.getResult(tempNodeId)
   return result ? !result.valid : false
 })
 
 watch(isError, (newValue) => {
   if (newValue) {
-    errorMsg.value = validator.getResult(tempNodeId)?.message
+    errorMsg.value = validator?.getResult(tempNodeId)?.message
   } else {
     errorMsg.value = null
   }
@@ -204,12 +201,13 @@ const canRemoved = computed(() => {
 })
 
 // 显示节点配置组件
+const drawerRef = ref<InstanceType<typeof BaseDrawer>>()
 const showNodeDrawer = () => {
   if (config.value.hasDrawer) {
     if (isLastCondition()) {
       return false
     }
-    proxy.$refs.nodeDrawer.show(props.node)
+    drawerRef.value?.show(props.node)
   }
 }
 
@@ -237,68 +235,44 @@ const removeNode = () => {
   isShowRightMoveBtn.value = false
 }
 
-// 鼠标移入事件
-const mouseenter = () => {
-  showMoveBtn(1, true)
-  showMoveBtn(2, true)
-}
+// // 鼠标移入事件
+// const mouseenter = () => {
+//   showMoveBtn(1, true)
+//   showMoveBtn(2, true)
+// }
 
-// 鼠标移出事件
-const mouseleave = () => {
-  showMoveBtn(1, false)
-  showMoveBtn(2, false)
-}
+// // 鼠标移出事件
+// const mouseleave = () => {
+//   showMoveBtn(1, false)
+//   showMoveBtn(2, false)
+// }
 
-// 节点左右移动按钮状态
-const showMoveBtn = (direction, flag) => {
-  const index = props.conditionIndex
-  const length = props.conditionNodes.length
-  if (isCondition() && !isLastCondition()) {
-    if (direction === 1 && index !== 0) {
-      isShowLeftMoveBtn.value = flag
-    } else if (direction === 2 && index !== length - 2) {
-      isShowRightMoveBtn.value = flag
-    } else {
-      isShowRightMoveBtn.value = false
-    }
-  }
-}
-
-// 使用const和===，不改变props的值
-const selectedMoveBtn = (direction, flag) => {
-  if (direction === 1) {
-    isSelectedLeftMoveBtn.value = flag
-  } else {
-    isSelectedRightMoveBtn.value = flag
-  }
-}
-
-const moveNode = (direction) => {
-  const index = props.conditionIndex
-  if (direction === 1 && index > 0) {
-    ;[props.conditionNodes[index], props.conditionNodes[index - 1]] = [
-      props.conditionNodes[index - 1],
-      props.conditionNodes[index]
-    ]
-  } else if (direction === 2 && index < props.conditionNodes.length - 1) {
-    ;[props.conditionNodes[index], props.conditionNodes[index + 1]] = [
-      props.conditionNodes[index + 1],
-      props.conditionNodes[index]
-    ]
-  }
-}
+// // 节点左右移动按钮状态
+// const showMoveBtn = (direction, flag) => {
+//   const index = props.conditionIndex
+//   const length = props.conditionNodes.length
+//   if (isCondition() && !isLastCondition()) {
+//     if (direction === 1 && index !== 0) {
+//       isShowLeftMoveBtn.value = flag
+//     } else if (direction === 2 && index !== length - 2) {
+//       isShowRightMoveBtn.value = flag
+//     } else {
+//       isShowRightMoveBtn.value = false
+//     }
+//   }
+// }
 
 // 更新节点配置属性
 const updateConfig = (data) => {
   console.log('data: ', data)
   props.node.config = data
   emit('updateNode', props.node.config, data)
-  validator.validate()
+  validator?.validate()
 }
 
 // 取消更新节点配置属性
 const cancelUpdateConfig = () => {
-  validator.validate()
+  validator?.validate()
 }
 
 // 显示错误提示信息

@@ -27,7 +27,16 @@
         </template>
       </div>
     </div>
-    <AddNode :node="props.node" />
+    <div
+      style="
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <AddNode :node="props.node" />
+    </div>
   </div>
 </template>
 

@@ -83,10 +83,6 @@ Object.keys(nodeConfig).forEach((key) => {
   }
 })
 
-// onMounted(async () => {
-
-// });
-
 const nodeAddSelect = ref<HTMLDivElement>()
 
 const nodeAddBtn = ref<HTMLDivElement>()

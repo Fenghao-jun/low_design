@@ -24,6 +24,14 @@ const routes: Array<RouteRecordRaw> = [
       import(
         /* webpackChunkName: "featureFlow" */ '../design/pages/work-flow/featureFlow/index.vue'
       )
+  },
+  {
+    path: '/project-flow/:id?',
+    name: 'projectFlow',
+    component: () =>
+      import(
+        /* webpackChunkName: "projectFlow" */ '../design/pages/work-flow/projectFlow/index.vue'
+      )
   }
 ]
 

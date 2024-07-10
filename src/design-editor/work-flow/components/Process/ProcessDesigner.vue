@@ -38,17 +38,21 @@ import EndNode from './node/end/endNode.vue'
 import { ref, onMounted, watch, provide } from 'vue'
 import { copy } from './utils/tools'
 import { createValidator } from './utils/validator'
-import { KEY_VALIDATOR, KEY_PROCESS_DATA } from './config/keys'
+import { KEY_VALIDATOR, KEY_PROCESS_DATA, KET_TYPE } from './config/keys'
 import { BaseNodeConfig } from './config/nodeConfig'
-import SvgIcon from '../SvgIcon/index.vue'
+import { flowType } from './config/nodeType'
 
-const props = defineProps({
-  data: {
-    // 传入的流程节点数据
-    type: Object,
-    default: () => ({})
+const props = withDefaults(
+  defineProps<{
+    data: Record<any, any>
+    // 这里会影响添加的节点列表，如果有新增的type，需要去nodeType文件中添加配置暴露节点
+    type: flowType
+  }>(),
+  {
+    data: () => ({}),
+    type: 'feature'
   }
-})
+)
 
 // 缩放值
 const zoom = ref(100)
@@ -61,6 +65,8 @@ provide(KEY_VALIDATOR, validator)
 const processData = ref<BaseNodeConfig>()
 // 依赖注入: 流程数据
 provide(KEY_PROCESS_DATA, processData)
+// 依赖注入: 流程类型
+provide(KET_TYPE, props.type)
 
 watch(
   () => props.data,

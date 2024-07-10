@@ -34,28 +34,6 @@
           :node="props.node"
         />
       </div>
-      <!-- 同级节点左移动 -->
-      <!-- <div class="ep-node-move ep-node-move-left" v-if="isShowLeftMoveBtn">
-        <svg-icon
-          icon-class="left"
-          class="ep-node-move-icon"
-          :color="isSelectedLeftMoveBtn ? '#1e83e9' : '#696969'"
-          @click="moveNode(1)"
-          @mouseenter="selectedMoveBtn(1, true)"
-          @mouseleave="selectedMoveBtn(1, false)"
-        />
-      </div> -->
-      <!-- 同级节点右移动 -->
-      <!-- <div class="ep-node-move ep-node-move-right" v-if="isShowRightMoveBtn">
-        <svg-icon
-          icon-class="right"
-          class="ep-node-move-icon"
-          :color="isSelectedRightMoveBtn ? '#1e83e9' : '#696969'"
-          @click="moveNode(2)"
-          @mouseenter="selectedMoveBtn(2, true)"
-          @mouseleave="selectedMoveBtn(2, false)"
-        />
-      </div> -->
       <!-- 校验错误提示 -->
       <div class="ep-node-error-msg" v-if="isError">
         <div class="ep-node-error-msg-box">

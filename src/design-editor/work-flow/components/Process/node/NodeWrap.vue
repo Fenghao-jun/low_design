@@ -6,6 +6,11 @@
       @removeNode="removeNode"
       v-if="props.node.nodeType == ROUTER"
     />
+    <FeatureRouterNode
+      :node="props.node"
+      @removeNode="removeNode"
+      v-else-if="props.node.nodeType === FEATURE_ROUTER"
+    />
     <!-- 普通节点 -->
     <BaseNode
       :node="props.node"
@@ -27,8 +32,9 @@
 <script lang="ts" setup name="NodeWrap">
 import BaseNode from './base/BaseNode.vue'
 import RouterNode from './router/RouterNode.vue'
+import FeatureRouterNode from './featureRouter/featureRouterNode.vue'
 import { ref } from 'vue'
-import { ROUTER } from '../config/nodeType'
+import { ROUTER, FEATURE_ROUTER } from '../config/nodeType'
 
 const props = defineProps({
   node: {

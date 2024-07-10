@@ -1,4 +1,12 @@
-import { ROUTER, CONFIRM, CONDITION, START, APPROVER, NOTIFY } from './nodeType'
+import {
+  ROUTER,
+  CONFIRM,
+  CONDITION,
+  START,
+  APPROVER,
+  FEATURE_ROUTER,
+  FEATURE
+} from './nodeType'
 
 // 定义图标接口
 export interface Icon {
@@ -14,6 +22,7 @@ export interface DefaultNode {
   childNode?: any | null // 子节点，可选且可以是任意类型或null
   isLastCondition?: boolean // 是否为最后一个条件节点，仅在条件节点中出现，可选
   conditionNodes?: DefaultNode[]
+  featureNodes?: DefaultNode[]
 }
 
 // 定义基础节点配置接口
@@ -88,6 +97,56 @@ nodeConfig[ROUTER] = {
         childNode: null
       }
     ]
+  }
+}
+
+// 功能路由配置
+nodeConfig[FEATURE_ROUTER] = {
+  title: '功能分支', // 节点标题
+  canAdd: true, // 节点是否可以增加
+  hasDrawer: false, // 节点是否可以进行配置
+  icon: {
+    // 图标
+    name: 'router', // 图标名
+    color: '#3CB371' // 颜色
+  },
+  defaultNode: {
+    // 默认节点结构，用于添加节点时
+    nodeName: '功能路由',
+    nodeType: 'featureRouter',
+    config: {},
+    childNode: null,
+    featureNodes: [
+      {
+        nodeName: '功能',
+        nodeType: 'feature',
+        isLastCondition: false,
+        config: {},
+        childNode: null
+      }
+    ]
+  }
+}
+
+// 功能节点配置
+nodeConfig[FEATURE] = {
+  title: '功能', // 节点标题
+  color: '#FFFFFF', // 节点标题颜色
+  bgColor: '#3CB371', // 节点标题背景颜色
+  canAdd: false, // 节点是否可以增加
+  canRemoved: true, // 节点是否能够移除
+  hasDrawer: true, // 节点是否可以进行配置
+  icon: {
+    // 图标
+    name: 'condition', // 图标名
+    color: '#3CB371' // 颜色
+  },
+  defaultNode: {
+    nodeName: '功能',
+    nodeType: 'feature',
+    isLastCondition: false,
+    config: {},
+    childNode: {}
   }
 }
 

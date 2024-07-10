@@ -8,10 +8,9 @@
   </div>
 </template>
 
-<script setup lang="ts" name="ConditionNode">
+<script setup name="FeatureNode">
 import { getCurrentInstance, inject } from 'vue'
 import { KEY_PROCESS_DATA, KEY_VALIDATOR } from '../../config/keys'
-import { Validator } from '@editor/work-flow/components/Process/utils/validator'
 
 const props = defineProps({
   tempNodeId: {
@@ -25,13 +24,15 @@ const props = defineProps({
   }
 })
 
+const { proxy } = getCurrentInstance()
+
 // 获取流程数据
 const processData = inject(KEY_PROCESS_DATA)
 // 获取流程验证器实例
-const validator = inject<Validator>(KEY_VALIDATOR)
+const validator = inject(KEY_VALIDATOR)
 
 // 注册验证器
-validator?.register(props.tempNodeId || '', () => {
+validator.register(props.tempNodeId, () => {
   let valid = true
   if (!props.node.isLastCondition) {
     if (!props.node.config.days) {

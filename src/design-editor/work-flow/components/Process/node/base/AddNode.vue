@@ -45,10 +45,12 @@
 </template>
 
 <script setup lang="ts" name="AddNode">
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, inject } from 'vue'
 import { nodeConfig as configMap, Icon } from '../../config/nodeConfig'
+import { KET_TYPE } from '../../config/keys'
 import { copy } from '../../utils/tools'
 import SvgIcon from '../../../SvgIcon/index.vue'
+import { nodeTypeMap } from '../../config/nodeType'
 
 const nodeConfig = JSON.parse(JSON.stringify(configMap))
 
@@ -70,10 +72,14 @@ const nodeSelect = ref<
   { title: string; type: string; icon: Icon; isSelected: boolean }[]
 >([])
 
+const type = inject(KET_TYPE)
+console.log('type: ', type)
+
 Object.keys(nodeConfig).forEach((key) => {
   const item = nodeConfig[key]
+  const nodeKeyArr = nodeTypeMap[type || ''] || []
   // 生成可增加节点数据
-  if (item.canAdd) {
+  if (item.canAdd && nodeKeyArr.includes(key)) {
     nodeSelect.value.push({
       title: item.title,
       type: key,
@@ -119,6 +125,7 @@ const addNodeSelected = (item, flag) => {
 const emit = defineEmits(['addNode'])
 const addNode = (nodeType) => {
   const typeConfig = nodeConfig[nodeType]
+  console.log('typeConfig: ', typeConfig)
   if (typeConfig) {
     const addNode = copy(typeConfig.defaultNode)
     const childNode = copy(props.node.childNode)

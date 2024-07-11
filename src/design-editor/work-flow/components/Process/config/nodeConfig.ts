@@ -132,7 +132,7 @@ nodeConfig[FEATURE_ROUTER] = {
 nodeConfig[FEATURE] = {
   title: '功能', // 节点标题
   color: '#FFFFFF', // 节点标题颜色
-  bgColor: '#3CB371', // 节点标题背景颜色
+  bgColor: '#52C1F5', // 节点标题背景颜色
   canAdd: false, // 节点是否可以增加
   canRemoved: true, // 节点是否能够移除
   hasDrawer: true, // 节点是否可以进行配置

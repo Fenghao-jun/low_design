@@ -78,3 +78,15 @@ export const getFLowRelationTarget = () =>
 
 export const getBusinessType = () =>
   request.get({ url: APPROVAL_API + '/mp/flow/getBusinessType' })
+
+export interface FlowListItem {
+  id: number
+  flowName: string
+  flowScene: string
+}
+
+export const getFlowList = (businessType: string) =>
+  request.get<any, FlowListItem[]>({
+    url: APPROVAL_API + '/mp/flow/getFlowList',
+    data: { businessType }
+  })

@@ -61,40 +61,34 @@ import {
   NodeTarget,
   getApprovalFlowDetail,
   saveApprovalFlow,
-  getBusinessType
+  getBusinessType,
+  getFlowList,
+  FlowListItem
 } from '@editor/api/workFlow'
-import { ref } from 'vue'
+import { provide, ref, watch } from 'vue'
 import { AnyObject } from '@/types'
 import { ElMessage } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
 import { omit } from 'lodash-es'
+import {
+  PROJECT_DATA_KEY,
+  TOTAL_SELECTED_FLOW_KEY,
+  FLOW_LIST_KEY
+} from './keys'
 
 const mockData = ref({
   processId: '10001',
   processName: '流程设计',
   nodeConfig: {
     nodeName: '发起加盟邀请',
-    nodeType: 'start',
+    nodeType: 'feature',
     config: {
       // name: null
     },
-    childNode: {
-      nodeName: '加盟商确认加盟邀请',
-      nodeType: 'confirm',
-      config: {
-        // name: '确认人'
-      },
-      childNode: {
-        nodeName: '审批人',
-        nodeType: 'approver',
-        config: {
-          // name: '李四2'
-        }
-      }
-    }
+    childNode: null
   }
 })
-const active = ref(1)
+const active = ref(0)
 
 const formData = ref<Omit<SaveApprovalFlowParams, 'flowNode'>>({
   flowName: '',
@@ -103,6 +97,39 @@ const formData = ref<Omit<SaveApprovalFlowParams, 'flowNode'>>({
   flowDesc: '',
   businessType: ''
 })
+
+// 提供功能选项
+const flowList = ref<FlowListItem[]>([])
+provide(FLOW_LIST_KEY, flowList)
+
+// 提供已选择的流程，用于避免流程被重复选择
+const totalSelectedFlow = ref<string[]>([])
+const setSelectedFlow = (nValue: number | string, oValue: number | string) => {
+  if (!oValue) {
+    // 全新的
+    totalSelectedFlow.value.push(String(nValue))
+  } else {
+    // 过滤掉旧的
+    const list = totalSelectedFlow.value.filter(
+      (item) => item !== String(oValue)
+    )
+    list.push(String(nValue))
+    totalSelectedFlow.value = list
+  }
+}
+provide(TOTAL_SELECTED_FLOW_KEY, {
+  totalSelectedFlow,
+  setSelectedFlow
+})
+
+watch(
+  () => formData.value.businessType,
+  async (nValue) => {
+    console.log('nValue: ', nValue)
+    const res = await getFlowList(nValue)
+    flowList.value = res.data
+  }
+)
 
 const flowType = ref([])
 const flowScene = ref([])
@@ -142,20 +169,12 @@ const handleNextClick = (num?: number) => {
     active.value = num
     return
   }
-  formRef.value
-    ?.validate()
-    .then(() => {
-      if (active.value === 1) {
-        return
-      }
-      active.value = active.value + 1
-    })
-    .catch(() => {
-      // if (active.value === 1) {
-      //   return
-      // }
-      // active.value = active.value + 1
-    })
+  formRef.value?.validate().then(() => {
+    if (active.value === 1) {
+      return
+    }
+    active.value = active.value + 1
+  })
 }
 
 // 新增

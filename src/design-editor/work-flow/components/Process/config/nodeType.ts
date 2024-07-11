@@ -20,12 +20,12 @@ export type flowType = 'feature' | 'project'
 export const nodeTypeMap: Record<flowType, string[]> = {
   feature: [START, APPROVER, CONFIRM],
   project: [
-    ROUTER,
-    CONDITION,
-    START,
-    APPROVER,
-    NOTIFY,
-    CONFIRM,
+    // ROUTER,
+    // CONDITION,
+    // START,
+    // APPROVER,
+    // NOTIFY,
+    // CONFIRM,
     FEATURE,
     FEATURE_ROUTER
   ]

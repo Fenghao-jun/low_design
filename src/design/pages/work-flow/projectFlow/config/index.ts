@@ -61,22 +61,22 @@ export const useEditForm = (
           }
         ]
       },
-      {
-        label: '关联功能模块:',
-        type: 'select',
-        field: 'flowScene',
-        options: scene.value,
-        optionsKey: 'code',
-        optionsValueKey: 'desc',
-        placeholder: '请选择关联流程模块',
-        rules: [
-          {
-            required: true,
-            message: '请选择流程应用',
-            trigger: ['blur', 'change']
-          }
-        ]
-      },
+      // {
+      //   label: '关联功能模块:',
+      //   type: 'select',
+      //   field: 'flowScene',
+      //   options: scene.value,
+      //   optionsKey: 'code',
+      //   optionsValueKey: 'desc',
+      //   placeholder: '请选择关联流程模块',
+      //   rules: [
+      //     {
+      //       required: true,
+      //       message: '请选择流程应用',
+      //       trigger: ['blur', 'change']
+      //     }
+      //   ]
+      // },
       {
         label: '流程说明:',
         type: 'input',

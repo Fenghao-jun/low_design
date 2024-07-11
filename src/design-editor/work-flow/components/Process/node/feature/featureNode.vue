@@ -1,16 +1,15 @@
 <template>
-  <!-- 条件节点 -->
+  <!-- 流程应用 -->
   <div class="ep-node-condition">
-    <div v-if="!props.node.isLastCondition">
-      请假天数: {{ node.config.days }}天
-    </div>
-    <div v-else>其他条件进入此流程</div>
+    <div>流程应用: {{ flowNodeText }}</div>
   </div>
 </template>
 
-<script setup name="FeatureNode">
-import { getCurrentInstance, inject } from 'vue'
-import { KEY_PROCESS_DATA, KEY_VALIDATOR } from '../../config/keys'
+<script lang="ts" setup name="FeatureNode">
+import { computed, inject, ref } from 'vue'
+import { KEY_VALIDATOR } from '../../config/keys'
+import { Validator } from '@editor/work-flow/components/Process/utils/validator'
+import { FLOW_LIST_KEY } from '@design/pages/work-flow/projectFlow/keys/index'
 
 const props = defineProps({
   tempNodeId: {
@@ -24,24 +23,35 @@ const props = defineProps({
   }
 })
 
-const { proxy } = getCurrentInstance()
+// 获取功能选项
+const flowList = inject(FLOW_LIST_KEY, ref([]))
 
-// 获取流程数据
-const processData = inject(KEY_PROCESS_DATA)
+const flowNodeText = computed(() => {
+  let text = ''
+
+  if (props.node?.config?.flowScene) {
+    const flow = flowList.value.find(
+      (item) => item.flowScene === props.node.config.flowScene
+    )
+
+    text = flow?.flowName || ''
+  }
+
+  return text
+})
+
 // 获取流程验证器实例
-const validator = inject(KEY_VALIDATOR)
+const validator = inject(KEY_VALIDATOR) as Validator
 
 // 注册验证器
-validator.register(props.tempNodeId, () => {
+validator.register(props.tempNodeId || '', () => {
   let valid = true
-  if (!props.node.isLastCondition) {
-    if (!props.node.config.days) {
-      valid = false
-    }
+  if (!flowNodeText.value) {
+    valid = false
   }
   return {
     valid: valid,
-    message: '请选择条件'
+    message: '请选择功能流程'
   }
 })
 </script>

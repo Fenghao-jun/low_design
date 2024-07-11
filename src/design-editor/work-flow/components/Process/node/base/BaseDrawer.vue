@@ -2,6 +2,7 @@
   <ElDrawer v-model="isShow" icon="setting" title="节点设置" size="38%">
     <template #default>
       <CustomForm
+        v-if="type === 'feature'"
         ref="formRef"
         :from-items="useEditFormItem"
         v-model="formData"
@@ -33,12 +34,13 @@
 </template>
 <script lang="ts" setup name="BaseDrawer">
 // import Button from '@/components/Button/Button'
-import { ref, shallowRef } from 'vue'
+import { inject, ref, shallowRef } from 'vue'
 import { BaseNodeConfig, nodeConfig } from '../../config/nodeConfig'
 import { copy } from '../../utils/tools'
 import { useEditForm } from '../../config/formConfig'
 import { CustomForm } from 'am-admin-component'
 import { getDesignTemplateList } from '@editor/api/workFlow'
+import { KET_TYPE } from '../../config/keys'
 
 // const props = defineProps({})
 
@@ -54,6 +56,9 @@ const formData = ref({
   type: '',
   launch: ''
 })
+
+const type = inject(KET_TYPE, 'feature')
+
 const templateList = ref([])
 const templateListRequest = async () => {
   const res = await getDesignTemplateList()
@@ -61,7 +66,10 @@ const templateListRequest = async () => {
   templateList.value = res.data
 }
 
-templateListRequest()
+// 历史遗留问题
+if (type === 'feature') {
+  templateListRequest()
+}
 
 const { useEditFormItem } = useEditForm(formData, templateList)
 // 加载节点抽屉组件

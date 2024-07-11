@@ -105,6 +105,8 @@ const isHidden = (component: ComponentScheme) => {
       console.log('store.pageData: ', store.pageData, component.hidden.value)
 
       hidden = store.pageData[component.hidden.value]
+    } else if (component.hidden.type === 'formula') {
+      hidden = evaluate(component.hidden.formula || '', store.pageData)
     }
   }
   console.log('hidden: ', hidden)

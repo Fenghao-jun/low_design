@@ -3,7 +3,6 @@
   <div>
     <el-form :model="formData" label-width="130px">
       <el-form-item label="选择功能流程:">
-        <!-- <el-input v-model="formData.name" /> -->
         <el-select
           v-model="formData.flowScene"
           placeholder="请选择功能流程"
@@ -43,10 +42,15 @@ const props = defineProps({
   }
 })
 
+const flowList = inject(FLOW_LIST_KEY)
+
 watch(
   () => props.formData.flowScene,
   (nValue, oValue) => {
     // console.log('nValue, oValue: ', nValue, oValue, selectFlowHandler)
+    const flow = flowList?.value.find((item) => item.flowScene === nValue)
+    console.log('flow: ', flow)
+    props.formData.nodeName = flow?.flowName || ''
     selectFlowHandler?.setSelectedFlow(nValue, oValue)
   }
 )
@@ -56,8 +60,6 @@ const isDisabled = (item: FlowListItem) => {
 
   return selectFlowHandler?.totalSelectedFlow.value.includes(item.flowScene)
 }
-
-const flowList = inject(FLOW_LIST_KEY)
 
 const selectFlowHandler = inject(TOTAL_SELECTED_FLOW_KEY)
 

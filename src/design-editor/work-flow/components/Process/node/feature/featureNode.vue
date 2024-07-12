@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup name="FeatureNode">
-import { computed, inject, ref } from 'vue'
+import { computed, inject, ref, watch } from 'vue'
 import { KEY_VALIDATOR } from '../../config/keys'
 import { Validator } from '@editor/work-flow/components/Process/utils/validator'
 import { FLOW_LIST_KEY } from '@design/pages/work-flow/projectFlow/keys/index'
@@ -42,6 +42,18 @@ const flowNodeText = computed(() => {
 
 // 获取流程验证器实例
 const validator = inject(KEY_VALIDATOR) as Validator
+
+watch(
+  () => flowNodeText,
+  (nValue) => {
+    console.log('nValue: ', nValue)
+    validator.validate()
+  },
+  {
+    deep: true,
+    immediate: true
+  }
+)
 
 // 注册验证器
 validator.register(props.tempNodeId || '', () => {

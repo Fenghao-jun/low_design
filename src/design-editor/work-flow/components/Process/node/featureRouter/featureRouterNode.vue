@@ -41,12 +41,12 @@
 </template>
 
 <script setup lang="ts" name="FeatureRouterNode">
-import NodeWrap from '../NodeWrap'
-import AddNode from '../base/AddNode'
-import { ref, onMounted, getCurrentInstance } from 'vue'
+import NodeWrap from '../NodeWrap.vue'
+import AddNode from '../base/AddNode.vue'
+import { ref } from 'vue'
 import { copy } from '../../utils/tools'
 import { nodeConfig } from '../../config/nodeConfig'
-import { CONDITION, FEATURE } from '../../config/nodeType'
+import { FEATURE } from '../../config/nodeType'
 
 const props = defineProps({
   node: {
@@ -64,7 +64,7 @@ const config = ref({})
 const emit = defineEmits(['removeNode', 'conditionChange'])
 const removeCondition = (index) => {
   const conditionNum = props.node.featureNodes.length
-  if (conditionNum > 2) {
+  if (conditionNum > 1) {
     // emit('conditionChange', index, 1)
     props.node.featureNodes.splice(index, 1)
   } else {

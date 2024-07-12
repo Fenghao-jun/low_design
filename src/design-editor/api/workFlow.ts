@@ -51,10 +51,10 @@ export interface FlowNode {
   nodeId?: number | string
 }
 
-export interface SaveApprovalFlowParams {
+export interface SaveApprovalFlowParams<T = FlowNode[]> {
   flowDesc: string
   flowName: string
-  flowNode: FlowNode[]
+  flowNode: T
   flowScene: string
   flowType: string
   businessType: string
@@ -89,4 +89,28 @@ export const getFlowList = (businessType: string) =>
   request.get<any, FlowListItem[]>({
     url: APPROVAL_API + '/mp/flow/getFlowList',
     data: { businessType }
+  })
+
+export const saveProjectFlow = (data) =>
+  request.post({ url: APPROVAL_API + '/mp/flow/saveProjectFlow', data })
+
+export interface ProjectNode {
+  flowScene: string
+  nodeId: number
+  nodeName: string
+  nodeType: string
+}
+
+export interface ProjectFlowNode {
+  children: ProjectFlowNode[]
+  nodes: ProjectNode[]
+}
+
+export const getProjectFlowDetail = (id) =>
+  request.get<
+    { id: string | number },
+    SaveApprovalFlowParams<ProjectFlowNode[]>
+  >({
+    url: APPROVAL_API + '/mp/flow/getProjectFlowInfo',
+    data: { id }
   })

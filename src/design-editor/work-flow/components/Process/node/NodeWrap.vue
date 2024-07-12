@@ -71,6 +71,8 @@ const removeNode = () => {
 // 移除子节点
 const removeChildNode = () => {
   const nextChildNode = props.node.childNode.childNode
+  console.log('removeChildNode')
+
   props.node.childNode = nextChildNode
 }
 

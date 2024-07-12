@@ -63,18 +63,25 @@ import {
   saveApprovalFlow,
   getBusinessType,
   getFlowList,
-  FlowListItem
+  FlowListItem,
+  saveProjectFlow,
+  getProjectFlowDetail,
+  ProjectFlowNode
 } from '@editor/api/workFlow'
 import { provide, ref, watch } from 'vue'
 import { AnyObject } from '@/types'
 import { ElMessage } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
-import { omit } from 'lodash-es'
+import { omit, cloneDeep } from 'lodash-es'
 import {
   PROJECT_DATA_KEY,
   TOTAL_SELECTED_FLOW_KEY,
   FLOW_LIST_KEY
 } from './keys'
+import {
+  FEATURE,
+  FEATURE_ROUTER
+} from '@/design-editor/work-flow/components/Process/config/nodeType'
 
 const mockData = ref({
   processId: '10001',
@@ -92,7 +99,7 @@ const active = ref(0)
 
 const formData = ref<Omit<SaveApprovalFlowParams, 'flowNode'>>({
   flowName: '',
-  flowType: 'APPROVAL',
+  flowType: 'PROJECT',
   flowScene: '',
   flowDesc: '',
   businessType: ''
@@ -180,67 +187,38 @@ const handleNextClick = (num?: number) => {
 // 新增
 const processRef = ref<InstanceType<typeof ProcessDesigner>>()
 
-// 节点配置表单枚举值
-enum NODE_TARGET_KEYS {
-  userId = 'STAFF',
-  departId = 'DEPART',
-  custom = 'CUSTOM',
-  CUSTOM = 'custom',
-  STAFF = 'userId',
-  DEPART = 'departId'
-  // CUSTOM = ''
-}
+const dataToAddParams = (processData: DefaultNode) => {
+  const getFlowNode = (data: DefaultNode) => {
+    const item = {
+      nodes:
+        data.nodeType === 'feature'
+          ? [
+              {
+                flowScene: data.config.flowScene,
+                nodeName: data.config.nodeName,
+                nodeType: 'SCENE',
+                nodeId: data.config.nodeId || ''
+              }
+            ]
+          : data.featureNodes?.map((item) => ({
+              flowScene: item.config.flowScene,
+              nodeName: item.config.nodeName,
+              nodeType: 'SCENE',
+              nodeId: item.config.nodeId || ''
+            })),
+      children: null
+    } as any
+    // const nodes =
 
-// 节点类型枚举值
-enum NODE_TYPE {
-  start = 'START',
-  confirm = 'CONFIRM',
-  approver = 'APPROVAL',
-  START = 'start',
-  CONFIRM = 'confirm',
-  APPROVAL = 'approver'
-}
+    if (data.childNode) {
+      item.children = getFlowNode(data.childNode)
+    }
 
-const dataToAddParams = (data: DefaultNode) => {
-  // 转换的队列
-  const flowNode: SaveApprovalFlowParams['flowNode'] = []
-
-  // 把每个节点的config转成后端需要的NodeTarget
-  const nodeConfigToNodeTarget = (config: AnyObject) => {
-    const keys = Object.keys(config).filter((item) => NODE_TARGET_KEYS[item])
-    console.log('config: ', config)
-
-    console.log('keys: ', keys)
-
-    const nodeTarget = keys.map((item) => ({
-      targetType: NODE_TARGET_KEYS[item],
-      targetItem: config[item].join(',')
-    })) as NodeTarget[]
-
-    return nodeTarget
+    return [item]
   }
 
-  // 每个节点转成node
-  const changeToFlowNode = (nodeData: DefaultNode) => {
-    console.log('nodeData: ', nodeData)
-    const task: FlowNode = {
-      nodeDesignFormId: nodeData.config.type || '',
-      nodeName: nodeData.config.name,
-      nodeType: NODE_TYPE[nodeData.nodeType],
-      nodeTarget: nodeConfigToNodeTarget(nodeData.config),
-      approvalType: nodeData.config.approvalType || 'NONE',
-      nodeId: nodeData.config.nodeId || ''
-    }
-    if (nodeData.childNode) {
-      changeToFlowNode(nodeData.childNode)
-    }
-    // return task
-    flowNode.push(task)
-  }
-
-  changeToFlowNode(data)
-
-  return flowNode
+  // return flowNode
+  return getFlowNode(processData)
 }
 
 // 提交
@@ -256,16 +234,20 @@ const handleSubmit = () => {
     }
     console.log('validate,messages: ', validate, messages)
     const processData = processRef.value?.getResult()
-    console.log('processData: ', processData)
+    console.log(
+      'processData: ',
+      processData,
+      dataToAddParams(processData.nodeConfig)
+    )
 
-    console.log('32131231', dataToAddParams(processData.nodeConfig))
+    // console.log('32131231', dataToAddParams(processData.nodeConfig))
 
     const params = {
       ...formData.value,
-      flowNode: dataToAddParams(processData.nodeConfig).reverse()
-    } as SaveApprovalFlowParams
+      flowNode: dataToAddParams(processData.nodeConfig)
+    }
 
-    saveApprovalFlow(params).then((res) => {
+    saveProjectFlow(params).then((res) => {
       console.log('res: ', res)
       ElMessage.success('发布成功')
       router.back()
@@ -282,47 +264,62 @@ const getDetail = async () => {
   if (!searchParams.id) {
     return
   }
-  const res = await getApprovalFlowDetail(searchParams.id as string)
+  const res = await getProjectFlowDetail(searchParams.id as string)
 
   formData.value = omit(res.data, 'flowNode')
 
-  const flowNodeToData = (data: FlowNode[]) => {
-    const toData = (index = 0) => {
-      const nodeData = data[index]
-      console.log('nodeData: ', nodeData)
-      const nodeType = NODE_TYPE[nodeData.nodeType]
+  const flowNodeToData = (data: ProjectFlowNode[]) => {
+    const toData = (children: ProjectFlowNode[], first = false) => {
+      const item = children[0] || null
 
-      const defaultNodeConfig = nodeConfig[nodeType].defaultNode
-      console.log('defaultNodeConfig: ', defaultNodeConfig)
+      if (!item) {
+        // 没有值就返回
+        return null
+      }
 
-      // const nodeDataToNodeConfig = ()=>{}
+      if (first) {
+        const featureDefaultConfog = cloneDeep(nodeConfig[FEATURE].defaultNode)
 
-      if (defaultNodeConfig?.config) {
-        // 转换配置
-        defaultNodeConfig.config = {
-          ...nodeData.nodeTarget
-            .filter((item) => NODE_TARGET_KEYS[item.targetType])
-            .reduce((pre, current) => {
-              // 获取当前的key
-              const key = NODE_TARGET_KEYS[current.targetType]
-              pre[key] = current.targetItem.split(',')
-              return pre
-            }, {}),
+        const firstNodeConfig = item.nodes[0]
 
-          name: nodeData.nodeName,
-          type: nodeData.nodeDesignFormId,
-          approvalType: nodeData.approvalType,
-          nodeId: nodeData.nodeId || ''
+        if (firstNodeConfig.flowScene) {
+          setSelectedFlow(firstNodeConfig.flowScene, '')
+        }
+        return {
+          ...featureDefaultConfog,
+          config: {
+            ...firstNodeConfig
+          },
+          childNode: toData(item.children || [])
         }
       }
 
+      // 拿个路由节点
+      const routerDefaultConfig = cloneDeep(
+        nodeConfig[FEATURE_ROUTER].defaultNode
+      )
+
       return {
-        ...defaultNodeConfig,
-        childNode: data[index + 1] ? toData(index + 1) : null
+        ...routerDefaultConfig,
+        featureNodes: item.nodes.map((itemData) => {
+          // 拿个功能节点
+          const featureDefaultConfog = cloneDeep(
+            nodeConfig[FEATURE].defaultNode
+          )
+          setSelectedFlow(itemData.flowScene, '')
+
+          return {
+            ...featureDefaultConfog,
+            config: {
+              ...itemData
+            }
+            // childNode:toData()
+          }
+        })
       }
     }
 
-    return toData()
+    return toData(data, true)
   }
 
   // console.log(flowNodeToData(res..data.flowNode as any), '33333333')

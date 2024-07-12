@@ -81,7 +81,7 @@ const addCondition = () => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .ep-node-router {
   display: flex;
   flex-direction: column;

@@ -47,7 +47,7 @@ const flowList = inject(FLOW_LIST_KEY)
 watch(
   () => props.formData.flowScene,
   (nValue, oValue) => {
-    // console.log('nValue, oValue: ', nValue, oValue, selectFlowHandler)
+    console.log('nValue, oValue: ', nValue, oValue, selectFlowHandler)
     const flow = flowList?.value.find((item) => item.flowScene === nValue)
     console.log('flow: ', flow)
     props.formData.nodeName = flow?.flowName || ''

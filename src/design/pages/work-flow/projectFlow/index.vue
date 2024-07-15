@@ -315,7 +315,8 @@ const getDetail = async () => {
             }
             // childNode:toData()
           }
-        })
+        }),
+        childNode: toData(item.children || [])
       }
     }
 

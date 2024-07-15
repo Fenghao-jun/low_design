@@ -77,7 +77,8 @@ const addCondition = () => {
   const defaultNode = copy(nodeConfig[FEATURE].defaultNode)
   const length = props.node.featureNodes.length
 
-  props.node.featureNodes.splice(length - 1, 0, defaultNode)
+  // props.node.featureNodes.splice(length - 1, 0, defaultNode)
+  props.node.featureNodes.push(defaultNode)
 }
 </script>
 

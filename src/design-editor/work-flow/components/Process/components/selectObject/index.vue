@@ -289,7 +289,7 @@ const filterNode = (value: string, data: any) => {
       ? 'departName'
       : 'realName'
 
-  return data[field].includes(value)
+  return data[field]?.includes(value)
 }
 
 watchThrottled(keyword, (nValue) => {

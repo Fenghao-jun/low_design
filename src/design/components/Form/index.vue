@@ -47,8 +47,9 @@
 
 <script setup lang="ts" name="Form">
 import { computed, ref, onMounted } from 'vue'
+import { Arrayable } from "@vueuse/core";
 import { omit } from 'lodash-es'
-import type { FormInstance } from 'element-plus'
+import type { FormInstance, FormItemProp } from 'element-plus'
 import Render from '@core/render/RootRender/RootRender.vue'
 import { makeRegexp } from '@/utils/regexp'
 import { FormProps } from './type'
@@ -94,7 +95,7 @@ const rules = computed(() => {
 const formRef = ref<FormInstance>()
 
 const validate = async () => await formRef.value?.validate()
-const validateField = async () => await formRef.value?.validateField()
+const validateField = async (prop: Arrayable<FormItemProp> | undefined) => await formRef.value?.validateField(prop)
 const resetFields = async () => await formRef.value?.resetFields()
 const scrollToField = async (arg: any) =>
   await formRef.value?.scrollToField(arg)
@@ -125,9 +126,13 @@ defineExpose({
 onMounted(() => emits('mounted'))
 
 // 更新表单数据
-const updateModel = (fieldKey, newValue) => {
+const updateModel = async (fieldKey: string, newValue: any) => {
   formData.value[fieldKey] = newValue
   console.log('updateModel: ', formData.value)
+  // FIXME: 这里对于数组的引用类型要强制校验一次 否则校验的结果是上一次的，不懂
+  if(Array.isArray(formData.value[fieldKey])) {
+    await validateField(fieldKey)
+  }
 }
 
 const formatCustomValidator = (

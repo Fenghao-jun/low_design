@@ -281,7 +281,7 @@ const getDetail = async () => {
             .reduce((pre, current) => {
               // 获取当前的key
               const key = NODE_TARGET_KEYS[current.targetType]
-              pre[key] = current.targetItem.split(',')
+              pre[key] = current.targetItem ? current.targetItem.split(',') : []
               return pre
             }, {}),
 

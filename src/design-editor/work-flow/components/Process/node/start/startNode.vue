@@ -5,6 +5,7 @@
     <div class="node-row_content">
       <div v-if="userNum">{{ userNum }}</div>
       <div v-if="departNum">{{ departNum }}</div>
+      <div v-if="associatedNum">{{ associatedNum }}</div>
     </div>
     <el-icon><ArrowRight /></el-icon>
   </div>
@@ -40,6 +41,12 @@ const departNum = computed(() => {
     : ''
 })
 
+const associatedNum = computed(() => {
+  return props.node.config.custom && props.node.config.custom.length
+    ? `关联：${props.node.config.custom.length}项`
+    : ''
+})
+
 // 获取流程验证器实例
 const validator = inject<Validator>(KEY_VALIDATOR)
 
@@ -47,7 +54,7 @@ const validator = inject<Validator>(KEY_VALIDATOR)
 validator?.register(props.tempNodeId || '', () => {
   let valid = false
   let message = ''
-  if (!userNum.value && !departNum.value) {
+  if (!userNum.value && !departNum.value && !associatedNum.value) {
     message = '请选择发起对象'
   } else if (!props.node.config.name) {
     message = '请输入节点标题'

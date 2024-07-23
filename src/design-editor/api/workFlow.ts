@@ -92,7 +92,7 @@ export interface FlowListItem {
   flowScene: string
 }
 
-export const getFlowList = (businessType: string) =>
+export const getFlowList = (businessType = '') =>
   request.get<any, FlowListItem[]>({
     url: APPROVAL_API + '/mp/flow/getFlowList',
     data: { businessType }

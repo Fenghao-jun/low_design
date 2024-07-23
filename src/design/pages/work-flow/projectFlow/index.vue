@@ -133,6 +133,9 @@ watch(
   () => formData.value.businessType,
   async (nValue) => {
     console.log('nValue: ', nValue)
+    if (!nValue) {
+      return
+    }
     const res = await getFlowList(nValue)
     flowList.value = res.data
   }

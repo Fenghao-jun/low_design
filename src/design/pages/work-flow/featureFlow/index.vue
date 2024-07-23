@@ -132,6 +132,9 @@ const getBusinessTypeRequest = async () => {
 }
 
 const getSceneStateRequest = async (flowScene) => {
+  if (!flowScene) {
+    return
+  }
   const res = await getSceneState(flowScene)
 
   sceneStatus.value = res.data

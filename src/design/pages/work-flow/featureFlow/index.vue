@@ -104,7 +104,7 @@ const formData = ref<Omit<SaveApprovalFlowParams, 'flowNode'>>({
 const flowType = ref([])
 const flowScene = ref([])
 const flowBusinessType = ref([])
-const sceneStatus = ref([])
+const sceneStatus = ref<any[]>([])
 
 const { useEditFormItem } = useEditForm(
   formData,
@@ -136,15 +136,27 @@ const getSceneStateRequest = async (flowScene) => {
     return
   }
   const res = await getSceneState(flowScene)
+  console.log('getSceneStateRequest: ', res)
 
   sceneStatus.value = res.data
+
+  const clear = res.data.filter((item) => {
+    console.log('item3333: ', item, formData.value)
+    return item.stateCode === formData.value.sceneStatus
+  })
+  // console.log('clear: ', clear)
+
+  if (!clear || clear.length === 0) {
+    formData.value.sceneStatus = ''
+  }
 }
 
 watch(
   () => formData.value.flowScene,
   (nvalue) => {
     console.log('nvalueflowScene: ', nvalue)
-    formData.value.sceneStatus = ''
+
+    // formData.value.sceneStatus = ''
     getSceneStateRequest(nvalue)
   },
   {
@@ -283,6 +295,7 @@ const getDetail = async () => {
     return
   }
   const res = await getApprovalFlowDetail(searchParams.id as string)
+  // console.log('res32131321: ', res.data.sceneStatus)
 
   formData.value = omit(res.data, 'flowNode')
 

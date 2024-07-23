@@ -59,6 +59,7 @@ export interface SaveApprovalFlowParams<T = FlowNode[]> {
   flowType: string
   businessType: string
   id?: number
+  sceneStatus: string
 }
 
 export const saveApprovalFlow = (data: SaveApprovalFlowParams) =>
@@ -78,6 +79,12 @@ export const getFLowRelationTarget = () =>
 
 export const getBusinessType = () =>
   request.get({ url: APPROVAL_API + '/mp/flow/getBusinessType' })
+
+export const getSceneState = (flowScene = '') =>
+  request.get({
+    url: APPROVAL_API + '/mp/flow/getSceneState',
+    data: { flowScene }
+  })
 
 export interface FlowListItem {
   id: number

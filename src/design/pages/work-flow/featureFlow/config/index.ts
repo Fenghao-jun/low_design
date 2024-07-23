@@ -5,7 +5,8 @@ export const useEditForm = (
   formData,
   type: Ref<any[]>,
   scene: Ref<any[]>,
-  business: Ref<any[]>
+  business: Ref<any[]>,
+  sceneStatus: Ref<any[]>
 ) => {
   const useEditFormItem = computed<IFromItem[]>(() => {
     return [
@@ -73,6 +74,22 @@ export const useEditForm = (
           {
             required: true,
             message: '请选择流程应用',
+            trigger: ['blur', 'change']
+          }
+        ]
+      },
+      {
+        label: '完成状态:',
+        type: 'select',
+        field: 'sceneStatus',
+        options: sceneStatus.value,
+        optionsKey: 'stateCode',
+        optionsValueKey: 'stateDesc',
+        placeholder: '请选择完成状态',
+        rules: [
+          {
+            required: true,
+            message: '请选择完成状态',
             trigger: ['blur', 'change']
           }
         ]

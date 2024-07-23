@@ -56,9 +56,10 @@ import {
   NodeTarget,
   getApprovalFlowDetail,
   saveApprovalFlow,
-  getBusinessType
+  getBusinessType,
+  getSceneState
 } from '@editor/api/workFlow'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { AnyObject } from '@/types'
 import { ElMessage } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
@@ -96,18 +97,21 @@ const formData = ref<Omit<SaveApprovalFlowParams, 'flowNode'>>({
   flowType: 'APPROVAL',
   flowScene: '',
   flowDesc: '',
-  businessType: ''
+  businessType: '',
+  sceneStatus: ''
 })
 
 const flowType = ref([])
 const flowScene = ref([])
 const flowBusinessType = ref([])
+const sceneStatus = ref([])
 
 const { useEditFormItem } = useEditForm(
   formData,
   flowType,
   flowScene,
-  flowBusinessType
+  flowBusinessType,
+  sceneStatus
 )
 
 const getFlowTypeRequest = async () => {
@@ -127,6 +131,23 @@ const getBusinessTypeRequest = async () => {
   flowBusinessType.value = res.data
 }
 
+const getSceneStateRequest = async (flowScene) => {
+  const res = await getSceneState(flowScene)
+
+  sceneStatus.value = res.data
+}
+
+watch(
+  () => formData.value.flowScene,
+  (nvalue) => {
+    console.log('nvalueflowScene: ', nvalue)
+    formData.value.sceneStatus = ''
+    getSceneStateRequest(nvalue)
+  },
+  {
+    immediate: true
+  }
+)
 getFlowSceneRequest()
 getFlowTypeRequest()
 getBusinessTypeRequest()

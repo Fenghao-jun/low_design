@@ -33,6 +33,20 @@
         }"
         inline
       >
+        <template #flowEvent>
+          <el-checkbox-group
+            v-model="formData.flowEvent"
+            size="small"
+            style="display: flex; flex-direction: column"
+          >
+            <el-checkbox
+              v-for="item in flowEvent"
+              :key="item.event"
+              :label="item.eventName"
+              :value="item.event"
+            />
+          </el-checkbox-group>
+        </template>
       </CustomForm>
     </div>
     <ProcessDesigner
@@ -66,7 +80,8 @@ import {
   FlowListItem,
   saveProjectFlow,
   getProjectFlowDetail,
-  ProjectFlowNode
+  ProjectFlowNode,
+  getFlowEvent
 } from '@editor/api/workFlow'
 import { provide, ref, watch } from 'vue'
 import { AnyObject } from '@/types'
@@ -102,7 +117,8 @@ const formData = ref<Omit<SaveApprovalFlowParams, 'flowNode'>>({
   flowType: 'PROJECT',
   flowScene: '',
   flowDesc: '',
-  businessType: ''
+  businessType: '',
+  flowEvent: []
 })
 
 // 提供功能选项
@@ -144,12 +160,14 @@ watch(
 const flowType = ref([])
 const flowScene = ref([])
 const flowBusinessType = ref([])
+const flowEvent = ref<any[]>([])
 
 const { useEditFormItem } = useEditForm(
   formData,
   flowType,
   flowScene,
-  flowBusinessType
+  flowBusinessType,
+  flowEvent
 )
 
 const getFlowTypeRequest = async () => {
@@ -169,9 +187,33 @@ const getBusinessTypeRequest = async () => {
   flowBusinessType.value = res.data
 }
 
+const getFlowEventRequest = async (businessType = '') => {
+  if (!businessType) {
+    flowEvent.value = []
+    formData.value.flowEvent = []
+    return
+  }
+  const res = await getFlowEvent(businessType)
+  console.log('getFlowEventRequest: ', res)
+
+  const list = res.data
+    .filter((item) => formData.value.flowEvent.includes(item.event))
+    .map((item) => item.event)
+
+  formData.value.flowEvent = list
+  flowEvent.value = res.data
+}
+
 getFlowSceneRequest()
 getFlowTypeRequest()
 getBusinessTypeRequest()
+
+watch(
+  () => formData.value.businessType,
+  (nValue) => {
+    getFlowEventRequest(nValue)
+  }
+)
 
 const formRef = ref<InstanceType<typeof CustomForm>>()
 const handleNextClick = (num?: number) => {
@@ -247,6 +289,7 @@ const handleSubmit = () => {
 
     const params = {
       ...formData.value,
+      flowEvent: formData.value.flowEvent.join(','),
       flowNode: dataToAddParams(processData.nodeConfig)
     }
 
@@ -269,7 +312,10 @@ const getDetail = async () => {
   }
   const res = await getProjectFlowDetail(searchParams.id as string)
 
-  formData.value = omit(res.data, 'flowNode')
+  formData.value = {
+    ...omit(res.data, 'flowNode'),
+    flowEvent: res.data.flowEvent.split(',')
+  }
 
   const flowNodeToData = (data: ProjectFlowNode[]) => {
     const toData = (children: ProjectFlowNode[], first = false) => {

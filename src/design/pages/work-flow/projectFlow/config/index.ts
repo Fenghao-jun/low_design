@@ -5,7 +5,8 @@ export const useEditForm = (
   formData,
   type: Ref<any[]>,
   scene: Ref<any[]>,
-  business: Ref<any[]>
+  business: Ref<any[]>,
+  flowEvent: Ref<any[]>
 ) => {
   const useEditFormItem = computed<IFromItem[]>(() => {
     return [
@@ -87,6 +88,12 @@ export const useEditForm = (
           'show-word-limit': true
         },
         placeholder: '请输入流程说明'
+      },
+      {
+        label: '流程完成后',
+        type: 'customSlot',
+        field: 'flowEvent',
+        slotName: 'flowEvent'
       }
     ]
   })

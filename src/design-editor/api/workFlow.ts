@@ -59,7 +59,8 @@ export interface SaveApprovalFlowParams<T = FlowNode[]> {
   flowType: string
   businessType: string
   id?: number
-  sceneStatus: string
+  sceneStatus?: string
+  flowEvent?: any
 }
 
 export const saveApprovalFlow = (data: SaveApprovalFlowParams) =>
@@ -120,4 +121,10 @@ export const getProjectFlowDetail = (id) =>
   >({
     url: APPROVAL_API + '/mp/flow/getProjectFlowInfo',
     data: { id }
+  })
+
+export const getFlowEvent = (businessType) =>
+  request.get({
+    url: APPROVAL_API + '/mp/flow/getFlowEvent',
+    data: { businessType }
   })

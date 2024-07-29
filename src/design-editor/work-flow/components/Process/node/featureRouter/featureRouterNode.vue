@@ -3,28 +3,30 @@
   <div class="ep-node-router">
     <div class="ep-condition-node-add" @click="addCondition">添加功能</div>
     <div class="ep-node-router-box">
-      <div
-        class="ep-node-router-col"
-        v-for="(condition, index) in props.node.featureNodes"
-        :key="index"
-      >
-        <!-- 生成节点 -->
-        <NodeWrap
-          :node="condition"
-          :conditionNodes="props.node.featureNodes"
-          :conditionIndex="index"
-          @removeNode="removeCondition(index)"
-        />
-        <!-- 用来遮挡最左列的线 -->
-        <template v-if="index == 0">
-          <div class="cover-line top-left-cover-line"></div>
-          <div class="cover-line bottom-left-cover-line"></div>
-        </template>
-        <!-- 用来遮挡最右列的线 -->
-        <template v-if="index == props.node.featureNodes.length - 1">
-          <div class="cover-line top-right-cover-line"></div>
-          <div class="cover-line bottom-right-cover-line"></div>
-        </template>
+      <div style="display: flex" class="router-warpper">
+        <div
+          class="ep-node-router-col"
+          v-for="(condition, index) in props.node.featureNodes"
+          :key="index"
+        >
+          <!-- 生成节点 -->
+          <NodeWrap
+            :node="condition"
+            :conditionNodes="props.node.featureNodes"
+            :conditionIndex="index"
+            @removeNode="removeCondition(index)"
+          />
+          <!-- 用来遮挡最左列的线 -->
+          <template v-if="index == 0">
+            <div class="cover-line top-left-cover-line"></div>
+            <div class="cover-line bottom-left-cover-line"></div>
+          </template>
+          <!-- 用来遮挡最右列的线 -->
+          <template v-if="index == props.node.featureNodes.length - 1">
+            <div class="cover-line top-right-cover-line"></div>
+            <div class="cover-line bottom-right-cover-line"></div>
+          </template>
+        </div>
       </div>
     </div>
     <div

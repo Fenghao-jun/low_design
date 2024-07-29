@@ -82,6 +82,7 @@ import { START, CONDITION } from '../../config/nodeType'
 import { KEY_VALIDATOR } from '../../config/keys'
 import SvgIcon from '../../../SvgIcon/index.vue'
 import { Validator } from '@editor/work-flow/components/Process/utils/validator'
+import { TOTAL_SELECTED_FLOW_KEY } from '@/design/pages/work-flow/projectFlow/keys'
 
 const props = defineProps({
   node: {
@@ -207,8 +208,12 @@ const isLastCondition = () => {
 
 // 移除当前节点
 const emit = defineEmits(['removeNode', 'updateNode'])
+const selectFlowHandler = inject(TOTAL_SELECTED_FLOW_KEY)
+
 const removeNode = () => {
   emit('removeNode')
+  console.log('removeNode', props.node)
+
   isShowLeftMoveBtn.value = false
   isShowRightMoveBtn.value = false
 }

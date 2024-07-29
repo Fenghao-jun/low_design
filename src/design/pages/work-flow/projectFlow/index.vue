@@ -49,12 +49,14 @@
         </template>
       </CustomForm>
     </div>
-    <ProcessDesigner
-      v-show="active === 1"
-      :data="mockData"
-      ref="processRef"
-      :type="'project'"
-    />
+    <div style="width: 100%; overflow: scroll">
+      <ProcessDesigner
+        v-show="active === 1"
+        :data="mockData"
+        ref="processRef"
+        :type="'project'"
+      />
+    </div>
   </div>
 </template>
 
@@ -128,6 +130,13 @@ provide(FLOW_LIST_KEY, flowList)
 // 提供已选择的流程，用于避免流程被重复选择
 const totalSelectedFlow = ref<string[]>([])
 const setSelectedFlow = (nValue: number | string, oValue: number | string) => {
+  if (oValue && !nValue) {
+    // 清空的
+    const list = totalSelectedFlow.value.filter(
+      (item) => item !== String(oValue)
+    )
+    totalSelectedFlow.value = list
+  }
   if (!oValue) {
     // 全新的
     totalSelectedFlow.value.push(String(nValue))

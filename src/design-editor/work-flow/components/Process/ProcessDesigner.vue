@@ -131,11 +131,13 @@ defineExpose({
   display: flex;
   justify-content: center;
   box-sizing: border-box;
-  width: 100%;
+  min-width: 100%;
+  width: max-content;
+
   height: 100%;
   background-color: #f5f5f7;
-  overflow-x: auto;
-  overflow-y: auto;
+  // overflow-x: auto;
+  // overflow-y: auto;
   padding: 16px 0;
   height: calc(100vh - 216px);
 }

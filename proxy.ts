@@ -1,5 +1,5 @@
 const gatewayLink = 'https://mp-gateway.dataso.net'
-const javaGatewayLink = 'http://192.168.81.11:6018/'
+const javaGatewayLink = 'http://192.168.81.10:6018/'
 
 const proxyConfig = {
   '/pos-api': {

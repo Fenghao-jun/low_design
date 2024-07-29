@@ -49,7 +49,7 @@
         </template>
       </CustomForm>
     </div>
-    <div style="width: 100%; overflow: scroll">
+    <div style="width: 100%; overflow: auto">
       <ProcessDesigner
         v-show="active === 1"
         :data="mockData"
@@ -130,12 +130,18 @@ provide(FLOW_LIST_KEY, flowList)
 // 提供已选择的流程，用于避免流程被重复选择
 const totalSelectedFlow = ref<string[]>([])
 const setSelectedFlow = (nValue: number | string, oValue: number | string) => {
+  console.log(
+    'nValue: number | string, oValue: number | string: ',
+    !nValue,
+    oValue
+  )
   if (oValue && !nValue) {
     // 清空的
     const list = totalSelectedFlow.value.filter(
       (item) => item !== String(oValue)
     )
     totalSelectedFlow.value = list
+    return
   }
   if (!oValue) {
     // 全新的

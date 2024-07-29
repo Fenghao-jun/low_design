@@ -212,7 +212,13 @@ const selectFlowHandler = inject(TOTAL_SELECTED_FLOW_KEY)
 
 const removeNode = () => {
   emit('removeNode')
-  console.log('removeNode', props.node)
+
+  if (selectFlowHandler?.setSelectedFlow) {
+    // console.log('removeNode', props.node.config.flowScene)
+    // 执行一下清空已选的操作
+
+    selectFlowHandler?.setSelectedFlow('', props.node.config.flowScene)
+  }
 
   isShowLeftMoveBtn.value = false
   isShowRightMoveBtn.value = false

@@ -246,16 +246,18 @@ const handleConfirmClick = () => {
 }
 
 const handleTagDeleted = (node) => {
+  console.log('node: ', node, props.modelValue)
   emit(
     'update:modelValue',
     props.modelValue.filter(
       (item) =>
-        item !==
+        item !=
         node[
           props.type === 'department' || props.type === 'inCharge'
             ? 'id'
             : 'userId'
-        ]
+        ] +
+          ''
     )
   )
 }

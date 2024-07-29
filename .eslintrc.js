@@ -29,6 +29,7 @@ module.exports = {
     "@typescript-eslint/ban-ts-comment": "off",
     "no-new-func": "off",
     "@typescript-eslint/no-var-requires": "off",
-    "vue/no-mutating-props": "warn"
+    "vue/no-mutating-props": "warn",
+    "eqeqeq": "warn"
   }
 }

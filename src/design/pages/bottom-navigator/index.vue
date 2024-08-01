@@ -160,16 +160,16 @@
       </div>
     </div>
     <DialogUpload ref="dialogUpload" @postImage="getImage" />
-  </div>
-  <div class="save-container center">
-    <el-button
-      type="primary"
-      class="btn-save padding-right-40 padding-left-40"
-      @click="save"
-      :disabled="loading"
-    >
-      保存
-    </el-button>
+    <div class="save-container center">
+      <el-button
+        type="primary"
+        class="btn-save padding-right-40 padding-left-40"
+        @click="save"
+        :disabled="loading"
+      >
+        保存
+      </el-button>
+    </div>
   </div>
 </template>
 
@@ -356,6 +356,7 @@ onMounted(() => {
   display: flex;
   justify-content: flex-start;
   padding: 20px;
+  padding-bottom: 77px;
   box-sizing: border-box;
   background: #f2f2f2;
 
@@ -450,8 +451,12 @@ onMounted(() => {
 
 .save-container {
   width: 100%;
+  height: 72px;
   padding: 20px;
   box-sizing: border-box;
+  position: fixed;
+  bottom: 0;
+  background-color: #fff;
 }
 
 .el-form-item {

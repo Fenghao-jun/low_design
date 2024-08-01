@@ -3,6 +3,7 @@
 @import "./common/variable/index.scss";
 @import "./element/index.scss";
 @import "./common/index.scss";
+@import "./common.scss";
 
 #app-base {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -23,14 +24,17 @@
   padding: 20px 36px 30px;
   box-sizing: border-box;
 }
+
 .table-box {
+
   // table-search 表格搜索样式
   .table-search {
     background-color: #fff;
     padding: 30px 35px 10px;
     margin-bottom: 20px;
+
     .el-form {
-      .el-form-item__content > * {
+      .el-form-item__content>* {
         width: 100%;
       }
 
@@ -39,6 +43,7 @@
         padding: 0 10px;
       }
     }
+
     .operation {
       display: flex;
       align-items: center;
@@ -47,15 +52,19 @@
     }
   }
 }
+
 .table-main {
+
   // 表格 header 样式
   .table-header {
     .header-button-lf {
       float: left;
     }
+
     .header-button-ri {
       float: right;
     }
+
     .el-button {
       margin-bottom: 15px;
     }
@@ -69,6 +78,7 @@
     table {
       width: 100%;
     }
+
     .el-table__header th {
       height: 45px;
       font-size: 15px;
@@ -76,11 +86,14 @@
       color: var(--el-text-color-primary);
       background: var(--el-fill-color-light);
     }
+
     .el-table__row {
       height: 45px;
       font-size: 14px;
+
       .move {
         cursor: move;
+
         .el-icon {
           cursor: move;
         }
@@ -94,4 +107,17 @@
     justify-content: flex-end;
     margin-top: 20px;
   }
+}
+
+
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

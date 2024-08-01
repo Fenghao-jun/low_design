@@ -32,6 +32,14 @@ const routes: Array<RouteRecordRaw> = [
       import(
         /* webpackChunkName: "projectFlow" */ '../design/pages/work-flow/projectFlow/index.vue'
       )
+  },
+  {
+    path: '/bottom-navigator',
+    name: 'bottomNavigator',
+    component: () =>
+      import(
+        /* webpackChunkName: "bottomNavigator" */ '../design/pages/bottom-navigator/index.vue'
+      )
   }
 ]
 

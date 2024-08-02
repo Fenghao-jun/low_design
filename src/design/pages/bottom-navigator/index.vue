@@ -457,6 +457,7 @@ onMounted(() => {
   position: fixed;
   bottom: 0;
   background-color: #fff;
+  z-index: 10000;
 }
 
 .el-form-item {

@@ -58,7 +58,7 @@ const leftAndRightStyle = reactive({
   justify-content: center;
   align-items: center;
   margin-right: 120px;
-  background-image: url('@/assets/images/phone-modal-bg.png');
+  background-image: url('https://static-comm.dataso.net/upload/20240802/a111111112/0b503bb37b270729e2a53d4a6ad265e1.png');
   background-repeat: no-repeat;
 
   .phone-content {

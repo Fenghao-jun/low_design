@@ -417,7 +417,7 @@ onMounted(() => {
                   cursor: pointer;
                   width: 88px;
                   height: 88px;
-                  background-image: url('../../../assets/images/upload-bg.png');
+                  background-image: url('@/assets/images/upload-bg.png');
                   background-repeat: no-repeat;
                 }
               }

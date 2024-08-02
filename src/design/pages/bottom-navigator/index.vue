@@ -251,9 +251,8 @@ function getImage(data: any) {
     item.selectedIconPath = localImage[1].fileUrl
   } else if (customImage) {
     const { unSelectList, selectList } = customImage
-    item.iconPath = unSelectList&&unSelectList.length?unSelectList[0].url:''
-    item.selectedIconPath = selectList && selectList.length ? selectList[0].url : ''
-    console.log("item", item);
+    item.iconPath = unSelectList&&unSelectList.length?unSelectList[0].url:item.iconPath
+    item.selectedIconPath = selectList && selectList.length ? selectList[0].url : item.selectedIconPath
   }
 }
 

@@ -270,7 +270,7 @@ async function isThereAHomepageForDecoration() {
   const res = await checkSetIndexPage()
   if (res && res.code === '0') {
     // 判断装修模块是否设置 首页
-    homeOptions[2].disabled = res.data.checkRet
+    homeOptions[2].disabled = !res.data.checkRet
     if (res.data.checkRet) {
       // 默认选中
       formData.value.tarbarList[0].pagePath = homeOptions[4].value as any
@@ -342,8 +342,10 @@ function sortHandle() {
 }
 
 onMounted(() => {
-  getTabbarConfigData()
+  // 校验是否设置自定义首页
   isThereAHomepageForDecoration()
+  // 获取当前配置
+  getTabbarConfigData()
   // 排序
   sortHandle()
 })

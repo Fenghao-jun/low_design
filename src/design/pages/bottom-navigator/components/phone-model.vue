@@ -58,7 +58,7 @@ const leftAndRightStyle = reactive({
   justify-content: center;
   align-items: center;
   margin-right: 120px;
-  background-image: url('../../../../assets/images/phone-bg.png');
+  background-image: url('@/assets/images/phone-bg.png');
   background-repeat: no-repeat;
 
   .phone-content {

@@ -42,3 +42,14 @@ export const otherOption = [
     value: 'pages/mine/index',
   }, 
 ]
+
+export function hasDuplicateText(tarbarList) {
+  const textSet = new Set(); // 创建一个新的Set对象用于存储text值
+  for (const item of tarbarList) {
+    if (textSet.has(item.text)) {
+      return true;
+    }
+    textSet.add(item.text);
+  }
+  return false;
+}

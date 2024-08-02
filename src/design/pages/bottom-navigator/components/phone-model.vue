@@ -2,7 +2,7 @@
   <div class="phone-container">
     <div class="phone-content">
       <el-tooltip
-        class="box-item"
+        popper-class="custom-tooltip"
         effect="dark"
         content="底部导航"
         placement="right"

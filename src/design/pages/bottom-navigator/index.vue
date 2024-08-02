@@ -175,7 +175,7 @@
 
 <script setup lang="ts" name="bottomNavigator">
 import { Plus } from '@element-plus/icons-vue'
-import { ElMessage, FormInstance } from 'element-plus'
+import { ElMessage,  } from 'element-plus'
 import { ref, reactive, onMounted, nextTick } from 'vue'
 import DialogUpload from './components/dialog-upload.vue'
 import PhoneModel from './components/phone-model.vue'
@@ -185,7 +185,12 @@ import {
   saveTabbarConfig
 } from '@/design-editor/api/diyApi'
 import Sortable from 'sortablejs'
-import { homeOption, otherOption, typeEnum } from './config/index'
+import {
+  hasDuplicateText,
+  homeOption,
+  otherOption,
+  typeEnum
+} from './config/index'
 
 const formRef = ref<any>()
 const formData = ref({
@@ -245,12 +250,11 @@ function getImage(data: any) {
     item.iconPath = localImage[0].fileUrl
     item.selectedIconPath = localImage[1].fileUrl
   } else if (customImage) {
-    item[key] = customImage.fileUrl
+    const { unSelectList, selectList } = customImage
+    item.iconPath = unSelectList&&unSelectList.length?unSelectList[0].url:''
+    item.selectedIconPath = selectList && selectList.length ? selectList[0].url : ''
+    console.log("item", item);
   }
-  // 触发校验,更新状态
-  formRef.value.validate((valid) => {
-    console.log(valid)
-  })
 }
 
 // 获取配置
@@ -282,6 +286,13 @@ const loading = ref(false)
 // 保存
 async function save() {
   if (loading.value) return
+  if (hasDuplicateText(formData.value.tarbarList)) {
+    ElMessage({
+      message: '名称不能重复',
+      type: 'error'
+    })
+    return
+  }
   if (formData.value.tarbarList.length < 2) {
     ElMessage({
       message: '最少设置两个',
@@ -459,7 +470,7 @@ onMounted(() => {
   position: fixed;
   bottom: 0;
   background-color: #fff;
-  z-index: 10000;
+  z-index: 2004;
 }
 
 .el-form-item {

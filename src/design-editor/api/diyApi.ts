@@ -15,6 +15,10 @@ export const checkSetIndexPage = () =>
     url: DIY_API + '/admin/tabbar/checkSetIndexPage',
   })
 
+export interface saveType {
+  config: string
+}
+
 // 保存标签配置
-export const saveTabbarConfig = (data:{config:string}) =>
+export const saveTabbarConfig = (data: saveType) =>
   request.post({ url: DIY_API + '/admin/tabbar/saveTabbarConfig', data })

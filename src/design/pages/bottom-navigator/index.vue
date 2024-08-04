@@ -182,17 +182,19 @@ import PhoneModel from './components/phone-model.vue'
 import {
   getTabbarConfig,
   checkSetIndexPage,
-  saveTabbarConfig
+  saveTabbarConfig,
+  saveType
 } from '@/design-editor/api/diyApi'
 import Sortable from 'sortablejs'
 import {
+  dataType,
   hasDuplicateText,
   homeOption,
   otherOption,
   typeEnum
 } from './config/index'
 
-const formRef = ref<any>()
+const formRef = ref()
 const formData = ref({
   tarbarList: [
     {
@@ -203,7 +205,7 @@ const formData = ref({
     }
   ]
 })
-const dialogUpload = ref<any>(null)
+const dialogUpload = ref(null)
 const styleValue = ref(1)
 
 const homeOptions = reactive(homeOption)
@@ -242,8 +244,9 @@ function openDailog(type: string, index: number) {
   dialogUpload.value && dialogUpload.value?.open({ key: type, index })
 }
 
-function getImage(data: any) {
-  const { index, key, localImage, customImage } = data
+function getImage(data?: dataType) {
+  if (!data) return 
+  const { index, localImage, customImage } = data
   const item = formData.value.tarbarList[index]
   if (!item) return
   if (localImage) {
@@ -302,13 +305,13 @@ async function save() {
   formRef.value.validate(async (valid) => {
     if (valid) {
       loading.value = true
-      const params: any = {
-        config: {
+      const JSONConfig = JSON.stringify({
           tarbar: formData.value.tarbarList,
           iconStyle: styleValue.value === 1 ? 'vertical' : 'horizontal'
-        }
+        })
+      const params: saveType = {
+        config: JSONConfig
       }
-      params.config = JSON.stringify(params.config)
       const res = await saveTabbarConfig(params)
       if (res && res.code === '0') {
         ElMessage({

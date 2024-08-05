@@ -31,7 +31,7 @@ export const otherOption = [
   },
   {
     label: '购物车',
-    value: 'pages/product/noTabBarCart/index',
+    value: 'pages/cart/index',
   },
   {
     label: '订单',

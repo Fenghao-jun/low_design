@@ -279,7 +279,7 @@ async function isThereAHomepageForDecoration() {
     homeOptions[2].disabled = !res.data.checkRet
     if (res.data.checkRet) {
       // 默认选中
-      formData.value.tarbarList[0].pagePath = homeOptions[4].value as any
+      formData.value.tarbarList[0].pagePath = homeOptions[2].value as any
     }
   }
 }

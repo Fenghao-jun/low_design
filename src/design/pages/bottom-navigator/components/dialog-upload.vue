@@ -67,7 +67,7 @@
 </template>
 <script lang="tsx" setup>
 import axios from 'axios'
-import { ref, defineExpose, reactive, defineEmits } from 'vue'
+import { ref, defineExpose, reactive, defineEmits, nextTick } from 'vue'
 import request from '@/design/http'
 import { ElMessage } from 'element-plus'
 import Upload from './upload.vue'
@@ -102,18 +102,22 @@ const localIconList = reactive([
 ])
 
 // 打开弹窗
-function open(data: unknown) {
+function open(data: object) {
   showDialog.value = true
-  config.value = data
+  config.value = { ...data }
+  console.log('传递的参数',config.value);
+  
 }
 
 // 关闭弹窗
 function close() {
   showDialog.value = false
   activeValue.value = 1
+  activeValue.value = 1
   config.value = {}
   unSelectList.value = []
   selectList.value = []
+  isActive.value = 0
 }
 
 // 本地上传
@@ -181,6 +185,7 @@ function confirmhandle() {
 }
 
 async function systemUpload() {
+  const JSONConfig = {...config.value}
   const i = isActive.value
   const selectedIconPath = localIconList[i].selectedIconPath
   const iconPath = localIconList[i].iconPath
@@ -192,9 +197,11 @@ async function systemUpload() {
   ])
   const isSuccess = response.every((item: any) => item.fileUrl)
   if (!isSuccess) return
-  emit('postImage', { ...config.value, localImage: response })
+  emit('postImage', { ...JSONConfig, localImage: response })
   ElMessage.success('上传成功')
-  close()
+  nextTick(() => { 
+    close()
+  })
 }
 
 defineExpose({

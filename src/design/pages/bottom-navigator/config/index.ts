@@ -55,6 +55,14 @@ export function hasDuplicateText(tarbarList) {
 }
 
 
+interface imageType {
+  url: string;
+  fileName: string;
+}
+export interface selectType {
+  unSelectList: imageType[];
+  selectList: imageType[]
+}
 
 export interface dataType {
   index: number;
@@ -63,13 +71,3 @@ export interface dataType {
   customImage: selectType;
 }
 
-
-export interface selectType {
-  unSelectList: imageType[];
-  selectList: imageType[]
-}
-
-interface imageType {
-  url: string;
-  fileName: string;
-}

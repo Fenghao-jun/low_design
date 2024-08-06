@@ -1,27 +1,16 @@
 <template>
   <div class="phone-container">
-    <div class="phone-content">
-      <el-tooltip
-        popper-class="custom-tooltip"
-        effect="dark"
-        content="底部导航"
-        placement="right"
-        :visible="true"
+    <div class="header-top"></div>
+    <div class="phone-bottom">
+      <div
+        class="nav-item"
+        v-for="(item, index) in tarbarList"
+        :key="index"
+        :style="Number(styleValue) === 1 ? upAndDownStyle : leftAndRightStyle"
       >
-        <div class="phone-bottom">
-          <div
-            class="nav-item"
-            v-for="(item, index) in tarbarList"
-            :key="index"
-            :style="
-              Number(styleValue) === 1 ? upAndDownStyle : leftAndRightStyle
-            "
-          >
-            <el-image class="image" :src="item.iconPath" />
-            <div class="name">{{ item.text }}</div>
-          </div>
-        </div>
-      </el-tooltip>
+        <el-image class="image" :src="item.iconPath" />
+        <div class="name">{{ item.text }}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -51,44 +40,53 @@ const leftAndRightStyle = reactive({
 <style lang="scss" scoped>
 .phone-container {
   display: inline-block;
-  width: 376px;
-  height: 736px;
-  // background: #dddddd;
+  background: #fff;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 120px;
-  background-image: url('https://static-comm.dataso.net/upload/20240802/a111111112/0b503bb37b270729e2a53d4a6ad265e1.png');
-  background-repeat: no-repeat;
+  margin: 0 120px;
+  width: 375px;
+  height: 600px;
+  background: #ffffff;
+  border-radius: 0px 0px 0px 0px;
+  background: #ffffff;
+  border-radius: 0px 0px 0px 0px;
+  position: relative;
+  border: 1px solid #e5e9f2;
+  .header-top {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 375px;
+    height: 64px;
+    background-image: url('https://static-comm.dataso.net/upload/20240806/a111111112/f4edfc55e24f36faba851711134a991f.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #0000;
+  }
 
-  .phone-content {
-    width: 337px;
-    height: 554px;
-    position: relative;
-    left: -2px;
-    bottom: -6px;
+  .phone-bottom {
+    width: 100%;
+    height: 57px;
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;
+    background-color: #fff;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: -6px;
+    border-top: 1px solid #e5e9f2;
+    padding-top: 10px;
 
-    .phone-bottom {
-      width: 100%;
-      height: 57px;
-      display: flex;
-      background-color: #fff;
+    .nav-item {
+      flex: 1;
 
-      .nav-item {
-        flex: 1;
+      .image {
+        width: 20px;
+        height: 20px;
+      }
 
-        .image {
-          width: 20px;
-          height: 20px;
-        }
-
-        .name {
-          font-size: 12px;
-          margin: 3px;
-        }
+      .name {
+        font-size: 12px;
+        margin: 3px;
       }
     }
   }

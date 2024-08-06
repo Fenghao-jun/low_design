@@ -42,13 +42,13 @@
         <el-tab-pane label="自定义上传" :name="2">
           <div class="upload-container">
             <div class="upload-item center">
-                <Upload v-model:fileList="unSelectList" v-if="showDialog"/> 
-                <div class="margin-top-15">未选中</div>
+              <Upload v-model:fileList="unSelectList" v-if="showDialog" />
+              <div class="margin-top-15">未选中</div>
             </div>
             <div class="margin-right-20"></div>
             <div class="upload-item center">
-                <Upload v-model:fileList="selectList"  v-if="showDialog"/>
-                <div class="margin-top-15">选中</div>
+              <Upload v-model:fileList="selectList" v-if="showDialog" />
+              <div class="margin-top-15">选中</div>
             </div>
           </div>
         </el-tab-pane>
@@ -105,8 +105,7 @@ const localIconList = reactive([
 function open(data: object) {
   showDialog.value = true
   config.value = { ...data }
-  console.log('传递的参数',config.value);
-  
+  console.log('传递的参数', config.value)
 }
 
 // 关闭弹窗
@@ -185,7 +184,7 @@ function confirmhandle() {
 }
 
 async function systemUpload() {
-  const JSONConfig = {...config.value}
+  const JSONConfig = { ...config.value }
   const i = isActive.value
   const selectedIconPath = localIconList[i].selectedIconPath
   const iconPath = localIconList[i].iconPath
@@ -199,9 +198,7 @@ async function systemUpload() {
   if (!isSuccess) return
   emit('postImage', { ...JSONConfig, localImage: response })
   ElMessage.success('上传成功')
-  nextTick(() => { 
-    close()
-  })
+  close()
 }
 
 defineExpose({
@@ -212,7 +209,6 @@ defineExpose({
 <style lang="scss" scoped>
 .content {
   height: 380px;
-  overflow-y: scroll;
   position: relative;
 }
 
@@ -226,7 +222,7 @@ defineExpose({
 .confirm-container {
   width: 100%;
   position: absolute;
-  bottom: 0px;
+  bottom: 20px;
   right: 0;
   left: 0;
 }

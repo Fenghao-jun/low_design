@@ -1,0 +1,248 @@
+.nav-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding: 20px;
+    padding-bottom: 77px;
+    box-sizing: border-box;
+    background: #ecf0f4;
+
+    .setting-container {
+        display: inline-block;
+        width: 777px;
+        background: #ffffff;
+        border-radius: 0px 0px 0px 0px;
+        background: #fff;
+        border: #000;
+
+        .header {
+            border-bottom: 1px solid #eeeeee;
+            padding: 25px 20px;
+            text-align: left;
+            font-weight: 400;
+            font-size: 18px;
+            color: #333333;
+            line-height: 18px;
+            text-align: left;
+        }
+
+        .setting {
+            width: 100%;
+            height: 100%;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            margin-bottom: 56px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+
+            .setting-style {
+                display: flex;
+                margin-bottom: 16px;
+                flex-direction: column;
+
+                div {
+                    font-weight: 400;
+                    font-size: 16px;
+                    color: #333333;
+                    line-height: 16px;
+                    text-align: left;
+                    font-style: normal;
+                    text-transform: none;
+                }
+            }
+
+            .item-container {
+                width: 100%;
+
+                .title {
+                    font-weight: 400;
+                    font-size: 16px;
+                    color: #333333;
+                    line-height: 16px;
+                    text-align: left;
+                    font-style: normal;
+                    text-transform: none;
+                    margin-bottom: 13px;
+                    padding-left: 24px;
+                    box-sizing: border-box;
+                }
+
+                .item {
+                    position: relative;
+                    width: 100%;
+                    margin-bottom: 8px;
+                    border: 1px solid #ccc;
+                    padding: 24px 24px 24px 0;
+                    box-sizing: border-box;
+                    height: 214px;
+                    border-radius: 14px 14px 14px 14px;
+                    border: 1px solid #f1f1f1;
+
+                    .item-content {
+                        width: 100%;
+                        display: flex;
+                        justify-content: flex-start;
+
+                        .left {
+                            .el-form-item:nth-child(1) {
+                                margin-left: 24px !important;
+                            }
+
+                            .image-item {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                flex-direction: column;
+                                overflow: hidden;
+
+                                .image-container {
+                                    position: relative;
+                                    width: 112px;
+                                    height: 112px;
+                                    transition: all 0.5s;
+                                    cursor: pointer;
+
+                                    .image-container::after {
+                                        opacity: 0;
+                                    }
+
+                                    .tip {
+                                        cursor: pointer;
+                                        opacity: 0;
+                                        position: absolute;
+                                        bottom: 0;
+                                        right: 0;
+                                        left: 0;
+                                        height: 34px;
+                                    }
+                                }
+
+                                .upload {
+                                    cursor: pointer;
+                                    background-image: url('@/assets/images/upload-bg.png');
+                                    background-repeat: no-repeat;
+                                    width: 112px;
+                                    height: 112px;
+                                    border-radius: 4px 4px 4px 4px;
+                                    background-size: contain;
+                                }
+
+                                .image-text {
+                                    font-weight: 400;
+                                    font-size: 14px;
+                                    color: #333333;
+                                    line-height: 14px;
+                                    text-align: left;
+                                }
+                            }
+
+                            .image-item:hover {
+                                .image-container::after {
+                                    position: absolute;
+                                    bottom: 0;
+                                    right: 0;
+                                    left: 0;
+                                    top: 0;
+                                    background-color: rgb(255, 255, 255, 0.5);
+                                    opacity: 1;
+                                    z-index: 50;
+                                    content: '';
+                                }
+
+                                .tip {
+                                    opacity: 1;
+                                    position: absolute;
+                                    bottom: 0;
+                                    right: 0;
+                                    left: 0;
+                                    height: 34px;
+                                    z-index: 100;
+                                    background: #000000;
+                                    border-radius: 0px 0px 4px 4px;
+                                    opacity: 0.8;
+                                    font-family: Source Han Sans CN, Source Han Sans CN;
+                                    font-weight: 400;
+                                    font-size: 14px;
+                                    color: #ffffff;
+                                    line-height: 34px;
+                                    text-align: center;
+                                    font-style: normal;
+                                    text-transform: none;
+                                }
+                            }
+                        }
+
+                        .right {
+                            flex: 1;
+
+                            .right-item {
+                                .title-item {
+                                    white-space: nowrap;
+                                }
+                            }
+                        }
+                    }
+
+                    .remove {
+                        position: absolute;
+                        cursor: pointer;
+                        right: 20px;
+                        top: 20px;
+                        transform: rotate(-45deg);
+                        font-size: 22px;
+                        color: #ddd;
+                    }
+                }
+            }
+
+            .add-btn {
+                width: 143px;
+                height: 38px;
+                border-radius: 4px 4px 4px 4px;
+                border: 1px solid #b2945e;
+                font-size: 14px;
+                color: #b2945e;
+                line-height: 38px;
+                text-align: left;
+                font-style: normal;
+                text-transform: none;
+            }
+        }
+    }
+}
+
+.save-container {
+    width: 100%;
+    height: 72px;
+    padding: 20px;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    background-color: #fff;
+    z-index: 2004;
+}
+
+.right {
+    .el-form-item {
+        width: 100% !important;
+    }
+
+    :deep(.el-form-item--label-right) {
+        font-weight: 400;
+        font-size: 16px !important;
+        color: #666666;
+        line-height: 16px;
+    }
+}
+
+/* 隐藏Element UI el-image组件加载失败时的字体图标 */
+:deep(.el-image__error) {
+    display: none !important;
+}
+
+.xingxing {
+    font-size: 16px;
+    color: #ff3b30;
+}

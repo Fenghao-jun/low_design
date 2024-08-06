@@ -20,14 +20,14 @@
               :key="index"
               :data-index="index"
             >
-              <div class="title margin-bottom-15">
+              <div class="title">
                 导航{{ index + 1 }}
-                <template v-if="!index"> ：首页 </template>
+                <span v-if="!index">：首页</span>
               </div>
               <div class="item-content">
-                <div class="left flex-start">
+                <div class="left flex-start margin-right-40">
                   <el-form-item
-                    label=" "
+                    label=""
                     :prop="`tarbarList.${index}.iconPath`"
                     :rules="{
                       required: true,
@@ -35,25 +35,30 @@
                       trigger: ['change']
                     }"
                   >
-                    <div class="image-item margin-right-10">
+                    <div class="image-item margin-right-16">
                       <div
-                        class="upload margin-bottom-5"
+                        class="upload margin-bottom-12"
                         @click="() => openDailog('iconPath', index)"
                         v-if="!item.iconPath"
                       ></div>
-                      <el-image
-                        class="margin-bottom-5"
-                        style="width: 88px; height: 88px"
-                        :src="item.iconPath"
-                        fit="cover"
+                      <div
                         v-else
+                        class="image-container margin-bottom-12"
                         @click="() => openDailog('iconPath', index)"
-                      />
-                      <span class="font-14">未选中</span>
+                      >
+                        <el-image
+                          style="width: 112px; height: 112px"
+                          :src="item.iconPath"
+                          fit="cover"
+                          class=""
+                        />
+                        <div class="tip">更换图片</div>
+                      </div>
+                      <span class="image-text">未选中</span>
                     </div>
                   </el-form-item>
                   <el-form-item
-                    label=" "
+                    label=""
                     :prop="`tarbarList.${index}.selectedIconPath`"
                     :rules="{
                       required: true,
@@ -63,26 +68,31 @@
                   >
                     <div class="image-item">
                       <div
-                        class="upload margin-bottom-5"
+                        class="upload margin-bottom-12"
                         @click="() => openDailog('selectedIconPath', index)"
                         v-if="!item.selectedIconPath"
                       ></div>
-                      <el-image
-                        class="margin-bottom-5"
-                        style="width: 88px; height: 88px"
-                        :src="item.selectedIconPath"
-                        fit="cover"
+                      <div
                         v-else
+                        class="image-container margin-bottom-12"
                         @click="() => openDailog('selectedIconPath', index)"
-                      />
-                      <span class="font-14">选中</span>
+                      >
+                        <el-image
+                          style="width: 112px; height: 112px"
+                          :src="item.selectedIconPath"
+                          fit="cover"
+                          class="margin-bottom-12"
+                        />
+                        <div class="tip">更换图片</div>
+                      </div>
+                      <span class="image-text">选中</span>
                     </div>
                   </el-form-item>
                 </div>
                 <div class="right">
                   <div class="right-item flex-start margin-bottom-12">
                     <el-form-item
-                      label="名称"
+                      label=""
                       :prop="`tarbarList.${index}.text`"
                       :rules="{
                         required: true,
@@ -90,16 +100,22 @@
                         trigger: ['blur', 'change']
                       }"
                     >
+                      <template #label>
+                        <span class="xingxing">*</span>
+                        <span>名称：</span>
+                      </template>
                       <el-input
+                        clearable
                         v-model="item.text"
                         maxlength="3"
+                        style="width: 100%"
                         placeholder="请输入"
                       />
                     </el-form-item>
                   </div>
                   <div class="right-item flex-start">
                     <el-form-item
-                      label="跳转"
+                      label=""
                       :prop="`tarbarList.${index}.pagePath`"
                       :rules="{
                         required: true,
@@ -107,6 +123,10 @@
                         trigger: ['blur', 'change']
                       }"
                     >
+                      <template #label>
+                        <span class="xingxing">*</span>
+                        <span>跳转：</span>
+                      </template>
                       <el-select
                         v-model="item.pagePath"
                         placeholder="请选择"
@@ -150,7 +170,7 @@
           </div>
         </el-form>
         <el-button
-          type="primary"
+          class="add-btn"
           :icon="Plus"
           @click="add"
           :disabled="formData.tarbarList.length >= 4"
@@ -175,7 +195,7 @@
 
 <script setup lang="ts" name="bottomNavigator">
 import { Plus } from '@element-plus/icons-vue'
-import { ElMessage,  } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { ref, reactive, onMounted, nextTick } from 'vue'
 import DialogUpload from './components/dialog-upload.vue'
 import PhoneModel from './components/phone-model.vue'
@@ -245,7 +265,7 @@ function openDailog(type: string, index: number) {
 }
 
 function getImage(data?: dataType) {
-  if (!data) return 
+  if (!data) return
   const { index, localImage, customImage } = data
   const item = formData.value.tarbarList[index]
   if (!item) return
@@ -254,8 +274,12 @@ function getImage(data?: dataType) {
     item.selectedIconPath = localImage[1].fileUrl
   } else if (customImage) {
     const { unSelectList, selectList } = customImage
-    item.iconPath = unSelectList&&unSelectList.length?unSelectList[0].url:item.iconPath
-    item.selectedIconPath = selectList && selectList.length ? selectList[0].url : item.selectedIconPath
+    item.iconPath =
+      unSelectList && unSelectList.length ? unSelectList[0].url : item.iconPath
+    item.selectedIconPath =
+      selectList && selectList.length
+        ? selectList[0].url
+        : item.selectedIconPath
   }
 }
 
@@ -306,9 +330,9 @@ async function save() {
     if (valid) {
       loading.value = true
       const JSONConfig = JSON.stringify({
-          tarbar: formData.value.tarbarList,
-          iconStyle: styleValue.value === 1 ? 'vertical' : 'horizontal'
-        })
+        tarbar: formData.value.tarbarList,
+        iconStyle: styleValue.value === 1 ? 'vertical' : 'horizontal'
+      })
       const params: saveType = {
         config: JSONConfig
       }
@@ -365,122 +389,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.nav-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: flex-start;
-  padding: 20px;
-  padding-bottom: 77px;
-  box-sizing: border-box;
-  background: #f2f2f2;
-
-  .setting-container {
-    display: inline-block;
-    width: 500px;
-    background: #fff;
-    border: #000;
-
-    .header {
-      border-bottom: 1px solid #ccc;
-      padding: 15px 0;
-      margin-bottom: 10px;
-    }
-
-    .setting {
-      width: 100%;
-      height: 100%;
-      padding: 15px;
-
-      .setting-style {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        margin-bottom: 15px;
-      }
-
-      .item-container {
-        width: 100%;
-
-        .title {
-          text-align: start;
-        }
-
-        .item {
-          position: relative;
-          width: 100%;
-          margin-bottom: 10px;
-          border: 1px solid #ccc;
-          padding: 10px;
-          box-sizing: border-box;
-
-          .item-content {
-            width: 100%;
-            display: flex;
-            justify-content: flex-start;
-
-            .left {
-              flex: 1;
-
-              .image-item {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-
-                .upload {
-                  cursor: pointer;
-                  width: 88px;
-                  height: 88px;
-                  background-image: url('@/assets/images/upload-bg.png');
-                  background-repeat: no-repeat;
-                }
-              }
-            }
-
-            .right {
-              flex: 1;
-
-              .right-item {
-                .title-item {
-                  white-space: nowrap;
-                }
-              }
-            }
-          }
-
-          .remove {
-            position: absolute;
-            cursor: pointer;
-            right: 10px;
-            top: 10px;
-            transform: rotate(-45deg);
-            font-size: 22px;
-            color: #ddd;
-          }
-        }
-      }
-    }
-  }
-}
-
-.save-container {
-  width: 100%;
-  height: 72px;
-  padding: 20px;
-  box-sizing: border-box;
-  position: fixed;
-  bottom: 0;
-  background-color: #fff;
-  z-index: 2004;
-}
-
-.el-form-item {
-  width: 100% !important;
-}
-
-/* 隐藏Element UI el-image组件加载失败时的字体图标 */
-:deep(.el-image__error) {
-  display: none !important;
-}
+@import './index.scss';
 </style>

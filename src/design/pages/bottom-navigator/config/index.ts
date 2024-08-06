@@ -71,3 +71,35 @@ export interface dataType {
   customImage: selectType;
 }
 
+export const localImageList = [
+  {
+    iconPath: require('@/assets/images/icon/shouyeweixuanzhong.png'),
+    selectedIconPath: require('@/assets/images/icon/shouyexuanzhong.png'),
+    text: '首页'
+  },
+  {
+    iconPath: require('@/assets/images/icon/diancanweixuanzhong.png'),
+    selectedIconPath: require('@/assets/images/icon/diancanxuanzhong.png'),
+    text: '点餐'
+  },
+  {
+    iconPath: require('@/assets/images/icon/shangchengweixuanzhong.png'),
+    selectedIconPath: require('@/assets/images/icon/shangchengxuanzhong.png'),
+    text: '商城'
+  },
+  {
+    iconPath: require('@/assets/images/icon/gouwucheweixuanzhong.png'),
+    selectedIconPath: require('@/assets/images/icon/gouwuchexuanzhong.png'),
+    text: '购物车'
+  },
+  {
+    iconPath: require('@/assets/images/icon/wodeweixuanzhong.png'),
+    selectedIconPath: require('@/assets/images/icon/wodexuanzhong.png'),
+    text: '个人中心'
+  },
+  {
+    iconPath: require('@/assets/images/icon/dingdanweixuanzhong.png'),
+    selectedIconPath: require('@/assets/images/icon/dingdanxuanzhong.png'),
+    text: '订单中心'
+  },
+]

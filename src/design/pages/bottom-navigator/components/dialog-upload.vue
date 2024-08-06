@@ -71,6 +71,7 @@ import { ref, defineExpose, reactive, defineEmits, nextTick } from 'vue'
 import request from '@/design/http'
 import { ElMessage } from 'element-plus'
 import Upload from './upload.vue'
+import { localImageList } from '../config'
 
 const emit = defineEmits(['postImage'])
 
@@ -83,23 +84,7 @@ const unSelectList = ref([])
 const selectList = ref([])
 
 // TODO 删除 mock 假数据
-const localIconList = reactive([
-  {
-    iconPath: require('@/assets/wxapp-icon/test.png'),
-    selectedIconPath: require('@/assets/wxapp-icon/test.png'),
-    text: '首页'
-  },
-  {
-    iconPath: require('@/assets/wxapp-icon/test.png'),
-    selectedIconPath: require('@/assets/wxapp-icon/test.png'),
-    text: '我的'
-  },
-  {
-    iconPath: require('@/assets/wxapp-icon/test.png'),
-    selectedIconPath: require('@/assets/wxapp-icon/test.png'),
-    text: '商城'
-  }
-])
+const localIconList = reactive(localImageList)
 
 // 打开弹窗
 function open(data: object) {
@@ -191,8 +176,8 @@ async function systemUpload() {
   const fileSelect = await getLocalImageAsFile(selectedIconPath)
   const fileunSelect = await getLocalImageAsFile(iconPath)
   const response = await Promise.all([
-    uploadAPI(fileSelect),
-    uploadAPI(fileunSelect)
+    uploadAPI(fileunSelect),
+    uploadAPI(fileSelect)
   ])
   const isSuccess = response.every((item: any) => item.fileUrl)
   if (!isSuccess) return

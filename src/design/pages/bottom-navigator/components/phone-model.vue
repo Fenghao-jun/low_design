@@ -44,13 +44,15 @@ const leftAndRightStyle = reactive({
   display: flex;
   margin: 0 120px;
   width: 375px;
-  height: 600px;
+  height: 675px;
   background: #ffffff;
   border-radius: 0px 0px 0px 0px;
   background: #ffffff;
   border-radius: 0px 0px 0px 0px;
   position: relative;
   border: 1px solid #e5e9f2;
+  overflow: hidden;
+
   .header-top {
     position: absolute;
     top: 0;
@@ -60,7 +62,7 @@ const leftAndRightStyle = reactive({
     height: 64px;
     background-image: url('https://static-comm.dataso.net/upload/20240806/a111111112/f4edfc55e24f36faba851711134a991f.png');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     background-color: #0000;
   }
 
@@ -74,7 +76,8 @@ const leftAndRightStyle = reactive({
     right: 0px;
     bottom: -6px;
     border-top: 1px solid #e5e9f2;
-    padding-top: 10px;
+    padding: 10px 0;
+    box-sizing: border-box;
 
     .nav-item {
       flex: 1;

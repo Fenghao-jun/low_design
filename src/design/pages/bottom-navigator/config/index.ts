@@ -15,7 +15,7 @@ export const homeOption = [
   },
   {
     label: '装修首页',
-    value: 'pages/custom/index',
+    value: 'pages/diy/index',
     disabled: false
   }
 ]

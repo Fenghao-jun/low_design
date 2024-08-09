@@ -1,11 +1,5 @@
 <template>
-  <el-dialog
-    ref="dialog"
-    :closeOnClickModal="false"
-    :width="'800'"
-    close-on-press-escape
-    v-model="showDialog"
-  >
+  <el-dialog ref="dialog" :closeOnClickModal="false" :width="'800'" close-on-press-escape v-model="showDialog">
     <div class="content" v-loading="loading" element-loading-text="上传中">
       <el-tabs v-model="activeValue" class="tabs">
         <el-tab-pane label="系统图标" :name="1">
@@ -13,27 +7,15 @@
             说明：选中效果会根据皮肤主题色自动变更
           </div>
           <div class="icon-container">
-            <div
-              v-for="(item, index) in localIconList"
-              :key="index"
-              :class="{
-                item: true,
-                'margin-right-20': true,
-                'margin-bottom-20': true,
-                active: isActive === index
-              }"
-              @click="() => clickItem(index)"
-            >
+            <div v-for="(item, index) in localIconList" :key="index" :class="{
+    item: true,
+    'margin-right-20': true,
+    'margin-bottom-20': true,
+    active: isActive === index
+  }" @click="() => clickItem(index)">
               <div class="center margin-bottom-24">
-                <el-image
-                  style="width: 40px; height: 40px"
-                  :src="item.iconPath"
-                  class="margin-right-6"
-                />
-                <el-image
-                  style="width: 40px; height: 40px"
-                  :src="item.selectedIconPath"
-                />
+                <el-image style="width: 40px; height: 40px" :src="item.iconPath" class="margin-right-6" />
+                <el-image style="width: 40px; height: 40px" :src="item.selectedIconPath" />
               </div>
               <div class="font-14">{{ item.text }}</div>
             </div>
@@ -54,11 +36,7 @@
         </el-tab-pane>
       </el-tabs>
       <div class="confirm-container center">
-        <el-button
-          type="primary"
-          class="confirm-btn padding-right-40 padding-left-40"
-          @click="confirmhandle"
-        >
+        <el-button type="primary" class="confirm-btn padding-right-40 padding-left-40" @click="confirmhandle">
           确认
         </el-button>
       </div>
@@ -83,25 +61,22 @@ const isActive = ref(0) //  系统选择选中项
 const unSelectList = ref([])
 const selectList = ref([])
 
-// TODO 删除 mock 假数据
 const localIconList = reactive(localImageList)
 
 // 打开弹窗
 function open(data: object) {
   showDialog.value = true
   config.value = { ...data }
-  console.log('传递的参数', config.value)
 }
 
 // 关闭弹窗
 function close() {
   showDialog.value = false
-  activeValue.value = 1
-  activeValue.value = 1
   config.value = {}
   unSelectList.value = []
   selectList.value = []
   isActive.value = 0
+  activeValue.value = 1
 }
 
 // 本地上传
@@ -211,6 +186,7 @@ defineExpose({
   right: 0;
   left: 0;
 }
+
 .item {
   width: 100px;
   height: 100px;
@@ -228,6 +204,7 @@ defineExpose({
   width: 100%;
   display: flex;
   justify-content: flex-start;
+
   .upload-item {
     flex-direction: column;
   }

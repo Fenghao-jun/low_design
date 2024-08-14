@@ -1,5 +1,11 @@
 <template>
-  <el-dialog ref="dialog" :closeOnClickModal="false" :width="'800'" close-on-press-escape v-model="showDialog">
+  <el-dialog
+    ref="dialog"
+    :closeOnClickModal="false"
+    :width="'800'"
+    close-on-press-escape
+    v-model="showDialog"
+  >
     <div class="content" v-loading="loading" element-loading-text="上传中">
       <el-tabs v-model="activeValue" class="tabs">
         <el-tab-pane label="系统图标" :name="1">
@@ -7,12 +13,17 @@
             说明：选中效果会根据皮肤主题色自动变更
           </div>
           <div class="icon-container">
-            <div v-for="(item, index) in  localIconList " :key="index" :class="{
-    item: true,
-    'margin-right-20': true,
-    'margin-bottom-20': true,
-    active: isActive === index
-  }" @click="() => clickItem(index)">
+            <div
+              v-for="(item, index) in localIconList"
+              :key="index"
+              :class="{
+                item: true,
+                'margin-right-20': true,
+                'margin-bottom-20': true,
+                active: isActive === index
+              }"
+              @click="() => clickItem(index)"
+            >
               <div class="center margin-bottom-24">
                 <div :class="'iconfont ' + item.iconPath"></div>
                 <div :class="'iconfont ' + item.selectedIconPath"></div>
@@ -38,7 +49,11 @@
         </el-tab-pane>
       </el-tabs>
       <div class="confirm-container center">
-        <el-button type="primary" class="confirm-btn padding-right-40 padding-left-40" @click="confirmhandle">
+        <el-button
+          type="primary"
+          class="confirm-btn padding-right-40 padding-left-40"
+          @click="confirmhandle"
+        >
           确认
         </el-button>
       </div>
@@ -151,8 +166,10 @@ async function systemUpload() {
   const selectedIconPath = localIconList[i].selectedIconPath
   const iconPath = localIconList[i].iconPath
   emit('postImage', {
-    ...JSONConfig, localImage: {
-      selectedIconPath, iconPath
+    ...JSONConfig,
+    localImage: {
+      selectedIconPath,
+      iconPath
     }
   })
   close()
@@ -189,6 +206,10 @@ defineExpose({
   height: 100px;
   transition: all 0.3s;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .active {

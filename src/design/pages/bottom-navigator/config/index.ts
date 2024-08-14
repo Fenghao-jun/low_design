@@ -67,39 +67,48 @@ export interface selectType {
 export interface dataType {
   index: number;
   key: string;
-  localImage: selectType;
+  localImage: {
+    iconPath: string;
+    selectedIconPath: string
+  };
   customImage: selectType;
 }
 
 export const localImageList = [
   {
-    iconPath: require('@/assets/images/icon/shouyeweixuanzhong.png'),
-    selectedIconPath: require('@/assets/images/icon/shouyexuanzhong.png'),
+    iconPath: 'icon-shouyeweixuanzhong',
+    selectedIconPath: 'icon-shouyexuanzhong',
     text: '首页'
   },
   {
-    iconPath: require('@/assets/images/icon/diancanweixuanzhong.png'),
-    selectedIconPath: require('@/assets/images/icon/diancanxuanzhong.png'),
+    iconPath: 'icon-diancanweixuanzhong',
+    selectedIconPath: 'icon-diancanxuanzhong',
     text: '点餐'
   },
   {
-    iconPath: require('@/assets/images/icon/shangchengweixuanzhong.png'),
-    selectedIconPath: require('@/assets/images/icon/shangchengxuanzhong.png'),
+    iconPath: 'icon-shangchengweixuanzhong',
+    selectedIconPath: 'icon-shangchengxuanzhong',
     text: '商城'
   },
   {
-    iconPath: require('@/assets/images/icon/gouwucheweixuanzhong.png'),
-    selectedIconPath: require('@/assets/images/icon/gouwuchexuanzhong.png'),
+    iconPath: 'icon-gouwucheweixuanzhong',
+    selectedIconPath: 'icon-gouwuchexuanzhong',
     text: '购物车'
   },
   {
-    iconPath: require('@/assets/images/icon/wodeweixuanzhong.png'),
-    selectedIconPath: require('@/assets/images/icon/wodexuanzhong.png'),
+    iconPath: 'icon-wodeweixuanzhong',
+    selectedIconPath: 'icon-wodexuanzhong',
     text: '个人中心'
   },
   {
-    iconPath: require('@/assets/images/icon/dingdanweixuanzhong.png'),
-    selectedIconPath: require('@/assets/images/icon/dingdanxuanzhong.png'),
+    iconPath: 'icon-dingdanweixuanzhong',
+    selectedIconPath: 'icon-dingdanxuanzhong',
     text: '订单中心'
   },
 ]
+
+export function containsIconPathOrSelectedIconPath(str) {
+  return localImageList.some(item =>
+    item.iconPath.includes(str) || item.selectedIconPath.includes(str)
+  );
+}

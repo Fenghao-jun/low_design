@@ -7,15 +7,17 @@
             说明：选中效果会根据皮肤主题色自动变更
           </div>
           <div class="icon-container">
-            <div v-for="(item, index) in localIconList" :key="index" :class="{
+            <div v-for="(item, index) in  localIconList " :key="index" :class="{
     item: true,
     'margin-right-20': true,
     'margin-bottom-20': true,
     active: isActive === index
   }" @click="() => clickItem(index)">
               <div class="center margin-bottom-24">
-                <el-image style="width: 40px; height: 40px" :src="item.iconPath" class="margin-right-6" />
-                <el-image style="width: 40px; height: 40px" :src="item.selectedIconPath" />
+                <div :class="'iconfont ' + item.iconPath"></div>
+                <div :class="'iconfont ' + item.selectedIconPath"></div>
+                <!-- <el-image style="width: 40px; height: 40px" :src="item.iconPath" class="margin-right-6" />
+                <el-image style="width: 40px; height: 40px" :src="item.selectedIconPath" /> -->
               </div>
               <div class="font-14">{{ item.text }}</div>
             </div>
@@ -148,16 +150,11 @@ async function systemUpload() {
   const i = isActive.value
   const selectedIconPath = localIconList[i].selectedIconPath
   const iconPath = localIconList[i].iconPath
-  const fileSelect = await getLocalImageAsFile(selectedIconPath)
-  const fileunSelect = await getLocalImageAsFile(iconPath)
-  const response = await Promise.all([
-    uploadAPI(fileunSelect),
-    uploadAPI(fileSelect)
-  ])
-  const isSuccess = response.every((item: any) => item.fileUrl)
-  if (!isSuccess) return
-  emit('postImage', { ...JSONConfig, localImage: response })
-  ElMessage.success('上传成功')
+  emit('postImage', {
+    ...JSONConfig, localImage: {
+      selectedIconPath, iconPath
+    }
+  })
   close()
 }
 
@@ -208,5 +205,9 @@ defineExpose({
   .upload-item {
     flex-direction: column;
   }
+}
+
+.iconfont {
+  font-size: 40px;
 }
 </style>

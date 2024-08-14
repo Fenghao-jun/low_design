@@ -98,7 +98,7 @@
                                 overflow: hidden;
 
                                 .image-container {
-                                    position: relative;
+                                    // position: relative;
                                     width: 112px;
                                     height: 112px;
                                     transition: all 0.5s;
@@ -245,4 +245,11 @@
 .xingxing {
     font-size: 16px;
     color: #ff3b30;
+}
+
+.iconfont {
+    width: 112px;
+    height: 112px;
+    font-size: 112px;
+    line-height: 112px;
 }

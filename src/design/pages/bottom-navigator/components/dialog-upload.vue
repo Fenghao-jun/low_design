@@ -64,7 +64,6 @@
 import axios from 'axios'
 import { ref, defineExpose, reactive, defineEmits, nextTick } from 'vue'
 import request from '@/design/http'
-import { ElMessage } from 'element-plus'
 import Upload from './upload.vue'
 import { localImageList } from '../config'
 

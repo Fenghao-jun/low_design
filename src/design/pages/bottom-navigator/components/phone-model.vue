@@ -8,7 +8,10 @@
         :key="index"
         :style="Number(styleValue) === 1 ? upAndDownStyle : leftAndRightStyle"
       >
-        <el-image class="image" :src="item.iconPath" />
+        <el-image
+          :class="'image iconfont ' + item.iconPath"
+          :src="item.iconPath"
+        />
         <div class="name">{{ item.text }}</div>
       </div>
     </div>

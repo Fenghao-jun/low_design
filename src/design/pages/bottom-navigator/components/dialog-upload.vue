@@ -27,8 +27,6 @@
               <div class="center">
                 <div :class="'iconfont ' + item.iconPath"></div>
                 <div :class="'iconfont ' + item.selectedIconPath"></div>
-                <!-- <el-image style="width: 40px; height: 40px" :src="item.iconPath" class="margin-right-6" />
-                <el-image style="width: 40px; height: 40px" :src="item.selectedIconPath" /> -->
               </div>
               <div class="font-14 margin-top-24">{{ item.text }}</div>
             </div>
@@ -62,7 +60,7 @@
 </template>
 <script lang="tsx" setup>
 import axios from 'axios'
-import { ref, defineExpose, reactive, defineEmits, nextTick } from 'vue'
+import { ref, defineExpose, reactive, defineEmits } from 'vue'
 import request from '@/design/http'
 import Upload from './upload.vue'
 import { localImageList } from '../config'

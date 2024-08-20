@@ -8,10 +8,11 @@
         :key="index"
         :style="Number(styleValue) === 1 ? upAndDownStyle : leftAndRightStyle"
       >
-        <el-image
-          :class="'image iconfont ' + item.iconPath"
-          :src="item.iconPath"
-        />
+        <div
+          :class="'icon iconfont ' + item.iconPath"
+          v-if="containsIconPathOrSelectedIconPath(item.iconPath)"
+        ></div>
+        <el-image v-else class="image" :src="item.iconPath" />
         <div class="name">{{ item.text }}</div>
       </div>
     </div>
@@ -19,6 +20,8 @@
 </template>
 <script lang="tsx" setup name="phoneModel">
 import { reactive } from 'vue'
+import { containsIconPathOrSelectedIconPath } from '../config/index'
+
 const props = withDefaults(
   defineProps<{ tarbarList: any[]; styleValue: number }>(),
   {
@@ -84,6 +87,11 @@ const leftAndRightStyle = reactive({
 
     .nav-item {
       flex: 1;
+
+      .icon {
+        line-height: 20px;
+        font-size: 20px;
+      }
 
       .image {
         width: 20px;

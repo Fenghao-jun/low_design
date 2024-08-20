@@ -88,6 +88,7 @@ const leftAndRightStyle = reactive({
       .image {
         width: 20px;
         height: 20px;
+        line-height: 20px;
       }
 
       .name {

@@ -33,6 +33,21 @@
         }"
         inline
       >
+        <template #flowEvent>
+          <el-checkbox-group
+            v-model="formData.flowEvent"
+            size="small"
+            style="display: flex; flex-direction: column"
+          >
+            <el-checkbox
+              v-for="item in flowEvent"
+              :key="item.event"
+              :label="item.eventName"
+              :value="item.event"
+              :disabled="item.isDisable"
+            />
+          </el-checkbox-group>
+        </template>
       </CustomForm>
     </div>
     <ProcessDesigner v-show="active === 1" :data="mockData" ref="processRef" />
@@ -57,7 +72,8 @@ import {
   getApprovalFlowDetail,
   saveApprovalFlow,
   getBusinessType,
-  getSceneState
+  getSceneState,
+  getFlowEvent
 } from '@editor/api/workFlow'
 import { ref, watch } from 'vue'
 import { AnyObject } from '@/types'
@@ -98,7 +114,8 @@ const formData = ref<Omit<SaveApprovalFlowParams, 'flowNode'>>({
   flowScene: '',
   flowDesc: '',
   businessType: '',
-  sceneStatus: ''
+  sceneStatus: '',
+  flowEvent: []
 })
 
 const flowType = ref([])
@@ -166,6 +183,55 @@ watch(
 getFlowSceneRequest()
 getFlowTypeRequest()
 getBusinessTypeRequest()
+
+const flowEvent = ref<any[]>([])
+const getFlowEventRequest = async (val = '') => {
+  if (!val) {
+    flowEvent.value = []
+    formData.value.flowEvent = []
+    return
+  }
+  const params = {
+    businessType: formData.value.businessType,
+    flowScene: val,
+    flowType: formData.value.flowType
+  }
+  const res = await getFlowEvent(params)
+  console.log('getFlowEventRequest: ', res)
+
+  let list = []
+  if (formData.value.flowEvent.length > 0) {
+    list = res.data
+      .filter((item) => formData.value.flowEvent.includes(item.event))
+      .map((item) => item.event)
+  } else {
+    // 加盟退出默认全部选中
+    if (val === 'FRANCHISEE_EXIT') {
+      list = res.data.map((item) => item.event)
+    } else {
+      list = res.data
+        .filter((item) => item.isDisable === 1)
+        .map((item) => item.event)
+    }
+  }
+
+  formData.value.flowEvent = list
+  flowEvent.value = res.data
+}
+
+watch(
+  [() => formData.value.flowScene, () => formData.value.businessType],
+  ([flowScene, businessType]) => {
+    if (flowScene && businessType) {
+      if (flowScene === 'FRANCHISEE_EXIT') {
+        getFlowEventRequest(flowScene)
+      } else {
+        flowEvent.value = []
+        formData.value.flowEvent = []
+      }
+    }
+  }
+)
 
 const formRef = ref<InstanceType<typeof CustomForm>>()
 const handleNextClick = (num?: number) => {
@@ -274,7 +340,8 @@ const handleSubmit = () => {
 
     const params = {
       ...formData.value,
-      flowNode: dataToAddParams(processData.nodeConfig).reverse()
+      flowNode: dataToAddParams(processData.nodeConfig).reverse(),
+      flowEvent: formData.value.flowEvent.join(',')
     } as SaveApprovalFlowParams
 
     saveApprovalFlow(params).then((res) => {
@@ -282,7 +349,7 @@ const handleSubmit = () => {
       ElMessage.success('发布成功')
       router.back()
     })
-    // console.log('params: ', JSON.stringify(params))
+    console.log('params: ', JSON.stringify(params))
   })
 }
 
@@ -297,7 +364,10 @@ const getDetail = async () => {
   const res = await getApprovalFlowDetail(searchParams.id as string)
   // console.log('res32131321: ', res.data.sceneStatus)
 
-  formData.value = omit(res.data, 'flowNode')
+  formData.value = {
+    ...omit(res.data, 'flowNode'),
+    flowEvent: res.data.flowEvent.split(',')
+  }
 
   const flowNodeToData = (data: FlowNode[]) => {
     const toData = (index = 0) => {

@@ -208,7 +208,12 @@ const getFlowEventRequest = async (businessType = '') => {
     formData.value.flowEvent = []
     return
   }
-  const res = await getFlowEvent(businessType)
+  const params = {
+    businessType,
+    flowType: formData.value.flowType,
+    flowScene: ''
+  }
+  const res = await getFlowEvent(params)
   console.log('getFlowEventRequest: ', res)
 
   const list = res.data

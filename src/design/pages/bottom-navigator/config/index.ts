@@ -7,11 +7,11 @@ export const typeEnum = {
 export const homeOption = [
   {
     label: '商城',
-    value: 'pages/index/index',
+    value: 'pages/index/index'
   },
   {
     label: '点餐',
-    value: 'pages/dish/index',
+    value: 'pages/dish/index'
   },
   {
     label: '装修首页',
@@ -23,55 +23,54 @@ export const homeOption = [
 export const otherOption = [
   {
     label: '商城',
-    value: 'pages/index/index',
+    value: 'pages/index/index'
   },
   {
     label: '点餐',
-    value: 'pages/dish/index',
+    value: 'pages/dish/index'
   },
   {
     label: '购物车',
-    value: 'pages/cart/index',
+    value: 'pages/cart/index'
   },
   {
     label: '订单',
-    value: 'pages/order/index',
+    value: 'pages/order/index'
   },
   {
     label: '个人中心',
-    value: 'pages/mine/index',
-  },
+    value: 'pages/mine/index'
+  }
 ]
 
 export function hasDuplicateText(tarbarList) {
-  const textSet = new Set(); // 创建一个新的Set对象用于存储text值
+  const textSet = new Set() // 创建一个新的Set对象用于存储text值
   for (const item of tarbarList) {
     if (textSet.has(item.text)) {
-      return true;
+      return true
     }
-    textSet.add(item.text);
+    textSet.add(item.text)
   }
-  return false;
+  return false
 }
-
 
 interface imageType {
-  url: string;
-  fileName: string;
+  url: string
+  fileName: string
 }
 export interface selectType {
-  unSelectList: imageType[];
+  unSelectList: imageType[]
   selectList: imageType[]
 }
 
 export interface dataType {
-  index: number;
-  key: string;
+  index: number
+  key: string
   localImage: {
-    iconPath: string;
+    iconPath: string
     selectedIconPath: string
-  };
-  customImage: selectType;
+  }
+  customImage: selectType
 }
 
 export const localImageList = [
@@ -104,11 +103,11 @@ export const localImageList = [
     iconPath: 'icon-dingdanweixuanzhong',
     selectedIconPath: 'icon-dingdanxuanzhong',
     text: '订单中心'
-  },
+  }
 ]
 
 export function containsIconPathOrSelectedIconPath(str) {
-  return localImageList.some(item =>
-    item.iconPath.includes(str) || item.selectedIconPath.includes(str)
-  );
+  return localImageList.some(
+    (item) => item.iconPath.includes(str) || item.selectedIconPath.includes(str)
+  )
 }

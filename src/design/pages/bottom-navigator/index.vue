@@ -217,7 +217,7 @@ import {
   checkSetIndexPage,
   saveTabbarConfig,
   saveType
-} from '@/design-editor/api/diyApi'
+} from '@/design/api/diyApi'
 import Sortable from 'sortablejs'
 import {
   containsIconPathOrSelectedIconPath,
@@ -240,7 +240,7 @@ const formData = ref({
     }
   ]
 })
-const dialogUpload = ref(null)
+const dialogUpload = ref<InstanceType<typeof DialogUpload>>()
 const styleValue = ref(1)
 
 const homeOptions = reactive(homeOption)

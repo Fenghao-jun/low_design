@@ -8,6 +8,7 @@ export const useEditForm = (
   business: Ref<any[]>,
   sceneStatus: Ref<any[]>
 ) => {
+  console.log('111',formData.value.flowScene)
   const useEditFormItem = computed<IFromItem[]>(() => {
     return [
       {
@@ -109,7 +110,8 @@ export const useEditForm = (
         label: '流程完成后:',
         type: 'customSlot',
         slotName: 'flowEvent',
-        field: 'flowEvent'
+        field: 'flowEvent',
+        hidden: formData.value.flowScene !== 'FRANCHISEE_EXIT'
       },
     ]
   })

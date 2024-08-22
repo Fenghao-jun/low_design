@@ -123,8 +123,8 @@ export const getProjectFlowDetail = (id) =>
     data: { id }
   })
 
-export const getFlowEvent = (businessType) =>
+export const getFlowEvent = (data) =>
   request.get({
     url: APPROVAL_API + '/mp/flow/getFlowEvent',
-    data: { businessType }
+    data
   })

@@ -104,7 +104,13 @@ export const useEditForm = (
           'show-word-limit': true
         },
         placeholder: '请输入流程说明'
-      }
+      },
+      {
+        label: '流程完成后:',
+        type: 'customSlot',
+        slotName: 'flowEvent',
+        field: 'flowEvent'
+      },
     ]
   })
 

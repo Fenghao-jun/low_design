@@ -77,8 +77,14 @@ const proxyConfig = {
   '/approval-api': {
     target: javaGatewayLink,
     changeOrigin: true,
-    secure: false,
+    secure: false,   
     wx: true
+  },
+  '/diy-api': {
+    target: javaGatewayLink,
+    changeOrigin: true,
+    secure: false,
+    wx: true,
   }
 }
 

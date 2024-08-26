@@ -1,10 +1,10 @@
 ## 项目结构
 
 ```
-|-- design 项目页面入口
+|-- design 项目页面入口/业务页面
 	｜-- pages 页面
 	｜-- component 关于低代码业务封装的ui
-|-- design-code 低代码逻辑处理
+|-- design-code 低代码逻辑处理(不是pc低代码的东西别搞出来)
 	｜-- actions 事件处理
 	｜-- render 包装物料和总render的入口
 	｜-- types 类型
@@ -12,7 +12,10 @@
 		｜-- componentActionCenter 组件事件
 		｜-- component-ref 渲染组件注册
 		｜-- component-regiter 物料注册
-
+|-- design-editor 关于低代码内容设置的编辑器
+	|-- flow-event 低代码事件流
+	|-- work-flow 工作流
+	|-- api 编辑器需要用到的api
 
 ```
 

@@ -66,19 +66,27 @@ export class ExportAction implements RendererAction {
         })
       } else {
         // 等待流
+        const merge = {
+          ...eventData,
+          ...initEventData,
+          ...requestParams
+        }
+
+        const data = {}
+
+        for (const key in merge) {
+          if (Object.prototype.hasOwnProperty.call(merge, key)) {
+            const element = merge[key]
+            if (element) {
+              data[key] = element
+            }
+          }
+        }
+
         const res = await request.post({
           url,
           responseType: 'blob',
-          data: {
-            ...eventData,
-            ...initEventData,
-            ...requestParams
-          },
-          params: {
-            ...eventData,
-            ...initEventData,
-            ...requestParams
-          }
+          data
         })
       }
     } catch (error) {

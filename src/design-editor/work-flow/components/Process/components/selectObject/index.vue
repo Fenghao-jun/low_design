@@ -123,16 +123,12 @@ const treeData = ref<any[]>([])
 
 function mergeStaffWithChildren(node) {
   node.forEach((element) => {
-    if (
-      element.children &&
-      element.children.length > 0 &&
-      element.staff.length > 0
-    ) {
+    if (element.children && element.children.length > 0) {
       mergeStaffWithChildren(element.children)
     }
     console.log('element: ', element)
 
-    element.children = element.children.concat(element.staff)
+    element.children = element.children.concat(element.staff || [])
   })
 }
 const getData = () => {

@@ -34,20 +34,12 @@
         <el-tab-pane label="自定义上传" name="custom">
           <div class="upload-container">
             <div class="upload-item center">
-              <Upload
-                v-if="activeValue === 'custom'"
-                v-model:fileList="unSelectList"
-                :limit="1"
-              />
+              <Upload v-model:fileList="unSelectList" :limit="1" />
               <div class="margin-top-15">未选中</div>
             </div>
             <div class="margin-right-20"></div>
             <div class="upload-item center">
-              <Upload
-                v-if="activeValue === 'custom'"
-                v-model:fileList="selectList"
-                :limit="1"
-              />
+              <Upload v-model:fileList="selectList" :limit="1" />
               <div class="margin-top-15">选中</div>
             </div>
           </div>

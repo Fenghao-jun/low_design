@@ -1,45 +1,47 @@
 <template>
-  <!-- 上传列表 -->
-  <div v-if="props.fileList && props.fileList.length">
-    <div
-      class="image-item"
-      v-for="(item, index) in props.fileList"
-      :key="index"
-    >
-      <el-image class="image" :src="item.url" fit="cover" />
-      <div class="hover-container">
-        <span class="preview" @click="() => handlePictureCardPreview(item)">
-          <el-icon><zoom-in /></el-icon>
-        </span>
-        <span class="delete-item">
-          <el-icon @click="() => handleRemove(index)"><Delete /></el-icon>
-        </span>
+  <div>
+    <!-- 上传列表 -->
+    <div v-if="props.fileList && props.fileList.length">
+      <div
+        class="image-item"
+        v-for="(item, index) in props.fileList"
+        :key="index"
+      >
+        <el-image class="image" :src="item.url" fit="cover" />
+        <div class="hover-container">
+          <span class="preview" @click="() => handlePictureCardPreview(item)">
+            <el-icon><zoom-in /></el-icon>
+          </span>
+          <span class="delete-item">
+            <el-icon @click="() => handleRemove(index)"><Delete /></el-icon>
+          </span>
+        </div>
       </div>
     </div>
+
+    <!-- 上传组件 -->
+    <el-upload
+      v-if="props.fileList.length < props.limit"
+      :show-file-list="false"
+      list-type="picture-card"
+      :limit="props.limit"
+      :http-request="customUpload"
+      :before-upload="beforeAvatarUpload"
+    >
+      <!-- 加号标识 -->
+      <template #default>
+        <el-icon><Plus /></el-icon>
+      </template>
+    </el-upload>
+
+    <el-dialog v-model="dialogVisible" width="80%">
+      <img
+        style="width: 100%; height: 500px"
+        :src="dialogImageUrl"
+        alt="Preview Image"
+      />
+    </el-dialog>
   </div>
-
-  <!-- 上传组件 -->
-  <el-upload
-    v-if="props.fileList.length < props.limit"
-    :show-file-list="false"
-    list-type="picture-card"
-    :limit="props.limit"
-    :http-request="customUpload"
-    :before-upload="beforeAvatarUpload"
-  >
-    <!-- 加号标识 -->
-    <template #default>
-      <el-icon><Plus /></el-icon>
-    </template>
-  </el-upload>
-
-  <el-dialog v-model="dialogVisible" width="80%">
-    <img
-      style="width: 100%; height: 500px"
-      :src="dialogImageUrl"
-      alt="Preview Image"
-    />
-  </el-dialog>
 </template>
 
 <script lang="ts" setup name="upload">

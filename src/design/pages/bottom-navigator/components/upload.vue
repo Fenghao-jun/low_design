@@ -104,7 +104,14 @@ async function customUpload({ file }) {
         console.log('res: ', res)
         const { fileUrl, fileName } = res.data as any
         const list = props.fileList.length
-          ? [...props.fileList]
+          ? [
+              ...JSON.parse(JSON.stringify(props.fileList)),
+              {
+                name: fileName,
+                url: fileUrl,
+                id: props.fileList.length
+              }
+            ]
           : [
               {
                 name: fileName,

@@ -121,22 +121,18 @@ async function clickItem(i: number) {
 
 // 确认
 function confirmhandle() {
-  try {
-    if (activeValue.value === 'system') {
-      systemUpload()
-    } else {
-      emit('postImage', {
-        ...config.value,
-        customImage: {
-          unSelectList: deepClone(unSelectList.value),
-          selectList: deepClone(selectList.value)
-        }
-      })
-    }
-    close()
-  } catch (error) {
-    console.log('error', error)
+  if (activeValue.value === 'system') {
+    systemUpload()
+  } else {
+    emit('postImage', {
+      ...config.value,
+      customImage: {
+        unSelectList: deepClone(unSelectList.value),
+        selectList: deepClone(selectList.value)
+      }
+    })
   }
+  close()
 }
 
 async function systemUpload() {

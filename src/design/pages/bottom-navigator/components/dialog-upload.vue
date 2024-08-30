@@ -7,7 +7,7 @@
   >
     <div class="content" v-loading="loading" element-loading-text="上传中">
       <el-tabs v-model="activeValue" class="tabs">
-        <el-tab-pane label="系统图标" name="system">
+        <el-tab-pane label="系统图标" :name="1">
           <div class="font-size-14 margin-bottom-15 flex-start">
             说明：选中效果会根据皮肤主题色自动变更
           </div>
@@ -31,7 +31,7 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="自定义上传" name="custom">
+        <el-tab-pane label="自定义上传" :name="2">
           <div class="upload-container">
             <div class="upload-item center">
               <Upload
@@ -76,7 +76,7 @@ const emit = defineEmits(['postImage'])
 
 const loading = ref<boolean>(false)
 const showDialog = ref<boolean>(false)
-const activeValue = ref<any>('system')
+const activeValue = ref<any>(1)
 const config = ref<any>({})
 const isActive = ref(0) //  系统选择选中项
 const unSelectList = ref<any>([])
@@ -89,8 +89,9 @@ function open(data: any) {
   showDialog.value = true
   config.value = { ...data }
   const { item } = data
-  activeValue.value = item.type || 'system'
-  if (activeValue.value === 'custom') {
+  console.log('item', item)
+  activeValue.value = item.type === 'custom' ? 2 : 1
+  if (activeValue.value === 2) {
     // 未选中
     unSelectList.value = item.iconPath
       ? [{ name: '自定义图片', url: item.iconPath, id: 1 }]
@@ -111,7 +112,7 @@ function close() {
   unSelectList.value = []
   selectList.value = []
   isActive.value = 0
-  activeValue.value = 'system'
+  activeValue.value = 1
 }
 
 // 本地上传
@@ -121,7 +122,7 @@ async function clickItem(i: number) {
 
 // 确认
 function confirmhandle() {
-  if (activeValue.value === 'system') {
+  if (activeValue.value === 1) {
     systemUpload()
   } else {
     emit('postImage', {

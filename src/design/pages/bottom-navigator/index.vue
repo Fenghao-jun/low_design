@@ -263,7 +263,7 @@ function add() {
     pagePath: undefined,
     iconPath: '',
     selectedIconPath: '',
-    type: 'custom',
+    type: 'system',
     text: ''
   })
 }

@@ -71,6 +71,7 @@ import { ref, defineExpose, reactive, defineEmits } from 'vue'
 import Upload from './upload.vue'
 import { localImageList } from '../config'
 import {} from 'am-admin-component'
+import { deepClone } from 'am-polyfill'
 
 const emit = defineEmits(['postImage'])
 
@@ -129,8 +130,8 @@ function confirmhandle() {
     emit('postImage', {
       ...config.value,
       customImage: {
-        unSelectList: unSelectList.value,
-        selectList: selectList.value
+        unSelectList: deepClone(unSelectList.value),
+        selectList: deepClone(selectList.value)
       }
     })
   }

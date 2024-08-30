@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="props.fileList && props.fileList.length">
     <div
       class="image-item"
       v-for="(item, index) in props.fileList"

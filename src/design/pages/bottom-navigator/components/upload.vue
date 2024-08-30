@@ -6,17 +6,7 @@
       v-for="(item, index) in props.fileList"
       :key="index"
     >
-      <el-image
-        class="image"
-        :src="item.url"
-        :zoom-rate="1.2"
-        :max-scale="7"
-        :min-scale="0.2"
-        :preview-src-list="props.fileList"
-        :initial-index="4"
-        fit="cover"
-      />
-
+      <el-image class="image" :src="item.url" fit="cover" />
       <div class="hover-container">
         <span class="preview" @click="() => handlePictureCardPreview(item)">
           <el-icon><zoom-in /></el-icon>
@@ -31,7 +21,6 @@
   <!-- 上传组件 -->
   <el-upload
     v-if="props.fileList.length < props.limit"
-    v-model:file-list="props.fileList"
     :show-file-list="false"
     list-type="picture-card"
     :limit="props.limit"

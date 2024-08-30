@@ -1,13 +1,40 @@
 <template>
+  <div>
+    <div
+      class="image-item"
+      v-for="(item, index) in props.fileList"
+      :key="index"
+    >
+      <el-image
+        class="image"
+        :src="item.url"
+        :zoom-rate="1.2"
+        :max-scale="7"
+        :min-scale="0.2"
+        :preview-src-list="props.fileList"
+        :initial-index="4"
+        fit="cover"
+      />
+
+      <div class="hover-container">
+        <span class="preview" @click="() => handlePictureCardPreview(item)">
+          <el-icon><zoom-in /></el-icon>
+        </span>
+        <span class="delete-item">
+          <el-icon @click="() => handleRemove(index)"><Delete /></el-icon>
+        </span>
+      </div>
+    </div>
+  </div>
+
   <el-upload
-    v-model:file-list="fileList"
+    v-if="props.fileList.length < props.limit"
+    :file-list="file"
+    :show-file-list="false"
     list-type="picture-card"
-    :limit="1"
+    :limit="props.limit"
     :http-request="customUpload"
     :before-upload="beforeAvatarUpload"
-    :class="{
-      hide: fileList.length >= 1
-    }"
   >
     <!-- 加号标识 -->
     <template #default>
@@ -15,7 +42,12 @@
     </template>
     <!-- 上传后显示 -->
     <template #file="{ file }">
-      <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+      <img
+        class="el-upload-list__item-thumbnail"
+        :src="file.url"
+        alt=""
+        v-if="file.status === 'success' && file.url.includes('http')"
+      />
       <span class="el-upload-list__item-actions">
         <span
           class="el-upload-list__item-preview"
@@ -34,8 +66,12 @@
     </template>
   </el-upload>
 
-  <el-dialog v-model="dialogVisible">
-    <img w-full :src="dialogImageUrl" alt="Preview Image" />
+  <el-dialog v-model="dialogVisible" width="80%">
+    <img
+      style="width: 100%; height: 500px"
+      :src="dialogImageUrl"
+      alt="Preview Image"
+    />
   </el-dialog>
 </template>
 
@@ -48,9 +84,11 @@ import { Delete, Plus, UploadProps, ZoomIn } from '@element-plus/icons-vue'
 const props = withDefaults(
   defineProps<{
     fileList?: any[]
+    limit: number
   }>(),
   {
-    fileList: () => []
+    fileList: () => [],
+    limit: 1
   }
 )
 
@@ -60,12 +98,16 @@ const emits = defineEmits<{
 
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
-const fileList = ref<any>([])
+
+// 没啥用
+const file = ref<any>([])
 const disabled = ref(false)
 
 // 清除
-const handleRemove = (file) => {
-  fileList.value = []
+const handleRemove = (index) => {
+  const list = [...props.fileList]
+  list.splice(index, 1)
+  emits('update:fileList', list)
 }
 
 function handlePictureCardPreview(uploadFile) {
@@ -98,22 +140,73 @@ async function customUpload({ file }) {
       .then((res) => {
         console.log('res: ', res)
         const { fileUrl, fileName } = res.data as any
-        emits('update:fileList', [
-          { name: fileName, url: fileUrl, id: fileList.value.length }
-        ])
+        const list = props.fileList.length
+          ? [...props.fileList]
+          : [
+              {
+                name: fileName,
+                url: fileUrl,
+                id: props.fileList.length
+              }
+            ]
+        emits('update:fileList', list)
       })
       .catch((err) => {
         console.log(err)
       })
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
 .hide {
   :deep(.el-upload--picture-card) {
     display: none !important;
+  }
+}
+
+.image-item {
+  transition: all 0.3s;
+  position: relative;
+  width: 146px;
+  height: 146px;
+  border: 1px dashed #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+
+  .image {
+    width: 146px;
+    height: 146px;
+    margin-right: 20px;
+  }
+  .hover-container {
+    transition: all 0.3s;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    background-color: rgb(0, 0, 0, 0.3);
+    z-index: -1;
+    .preview {
+      margin-right: 10px;
+    }
+  }
+}
+
+.image-item:hover {
+  .hover-container {
+    z-index: 100;
+    opacity: 1;
+    cursor: pointer;
+    font-size: 22px;
+    color: #fff;
   }
 }
 </style>

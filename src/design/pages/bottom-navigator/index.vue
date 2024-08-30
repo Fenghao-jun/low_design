@@ -281,9 +281,16 @@ function remove(i: number) {
 
 // type icon 类型
 function openDailog(type: string, index: number) {
-  dialogUpload.value && dialogUpload.value?.open({ key: type, index })
+  const item = formData.value.tarbarList[index]
+  dialogUpload.value &&
+    dialogUpload.value?.open({
+      key: type,
+      index,
+      item: JSON.parse(JSON.stringify(item))
+    })
 }
 
+// 接受用户选中的图片
 function getImage(data?: dataType) {
   if (!data) return
   const { index, localImage, customImage } = data
@@ -309,7 +316,6 @@ function getImage(data?: dataType) {
     item.selectedIconPath =
       selectList && selectList.length ? selectList[0].url : selectedIconPath
   }
-  console.log('item', item)
 }
 
 // 获取配置

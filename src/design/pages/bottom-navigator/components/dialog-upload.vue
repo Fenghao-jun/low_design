@@ -1,6 +1,5 @@
 <template>
   <el-dialog
-    ref="dialog"
     :closeOnClickModal="false"
     :width="'800'"
     close-on-press-escape
@@ -36,8 +35,8 @@
           <div class="upload-container">
             <div class="upload-item center">
               <Upload
-                v-model:fileList="unSelectList"
                 v-if="showDialog"
+                v-model:fileList="unSelectList"
                 :limit="1"
               />
               <div class="margin-top-15">未选中</div>
@@ -45,8 +44,8 @@
             <div class="margin-right-20"></div>
             <div class="upload-item center">
               <Upload
-                v-model:fileList="selectList"
                 v-if="showDialog"
+                v-model:fileList="selectList"
                 :limit="1"
               />
               <div class="margin-top-15">选中</div>
@@ -102,8 +101,6 @@ function open(data: any) {
       ? [{ name: '自定义图片', url: item.selectedIconPath, id: 1 }]
       : []
   }
-
-  console.log(unSelectList.value, selectList.value)
   delete config.value.item
 }
 
@@ -124,18 +121,22 @@ async function clickItem(i: number) {
 
 // 确认
 function confirmhandle() {
-  if (activeValue.value === 'system') {
-    systemUpload()
-  } else {
-    emit('postImage', {
-      ...config.value,
-      customImage: {
-        unSelectList: deepClone(unSelectList.value),
-        selectList: deepClone(selectList.value)
-      }
-    })
+  try {
+    if (activeValue.value === 'system') {
+      systemUpload()
+    } else {
+      emit('postImage', {
+        ...config.value,
+        customImage: {
+          unSelectList: deepClone(unSelectList.value),
+          selectList: deepClone(selectList.value)
+        }
+      })
+    }
+    close()
+  } catch (error) {
+    console.log('error', error)
   }
-  close()
 }
 
 async function systemUpload() {

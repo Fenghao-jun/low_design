@@ -1,4 +1,5 @@
 <template>
+  <!-- 上传列表 -->
   <div v-if="props.fileList && props.fileList.length">
     <div
       class="image-item"
@@ -27,9 +28,10 @@
     </div>
   </div>
 
+  <!-- 上传组件 -->
   <el-upload
     v-if="props.fileList.length < props.limit"
-    :file-list="file"
+    v-model:file-list="props.fileList"
     :show-file-list="false"
     list-type="picture-card"
     :limit="props.limit"
@@ -39,30 +41,6 @@
     <!-- 加号标识 -->
     <template #default>
       <el-icon><Plus /></el-icon>
-    </template>
-    <!-- 上传后显示 -->
-    <template #file="{ file }">
-      <img
-        class="el-upload-list__item-thumbnail"
-        :src="file.url"
-        alt=""
-        v-if="file.status === 'success' && file.url.includes('http')"
-      />
-      <span class="el-upload-list__item-actions">
-        <span
-          class="el-upload-list__item-preview"
-          @click="handlePictureCardPreview(file)"
-        >
-          <el-icon><zoom-in /></el-icon>
-        </span>
-        <span
-          v-if="!disabled"
-          class="el-upload-list__item-delete"
-          @click="handleRemove(file)"
-        >
-          <el-icon><Delete /></el-icon>
-        </span>
-      </span>
     </template>
   </el-upload>
 
@@ -98,10 +76,6 @@ const emits = defineEmits<{
 
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
-
-// 没啥用
-const file = ref<any>([])
-const disabled = ref(false)
 
 // 清除
 const handleRemove = (index) => {

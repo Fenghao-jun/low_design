@@ -33,7 +33,7 @@
         </el-tab-pane>
         <el-tab-pane label="自定义上传" :name="2">
           <div class="upload-container">
-            <div class="upload-item center">
+            <!-- <div class="upload-item center">
               <Upload
                 v-if="showDialog"
                 v-model:fileList="unSelectList"
@@ -49,7 +49,7 @@
                 :limit="1"
               />
               <div class="margin-top-15">选中</div>
-            </div>
+            </div> -->
           </div>
         </el-tab-pane>
       </el-tabs>

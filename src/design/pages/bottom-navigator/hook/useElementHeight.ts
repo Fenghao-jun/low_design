@@ -1,4 +1,3 @@
-// useElementHeight.js
 import { ref, onMounted, onUnmounted } from 'vue'
 
 export default function useElementHeight() {

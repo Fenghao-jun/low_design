@@ -456,10 +456,11 @@ onMounted(() => {
   // 排序
   sortHandle()
   nextTick(() => {
+    const clientHeight = document.documentElement.clientHeight
     if (window.__POWERED_BY_QIANKUN__) {
-      scrollHeight.value = height.value - 144
+      scrollHeight.value = clientHeight - 144
     } else {
-      scrollHeight.value = height.value - 68
+      scrollHeight.value = clientHeight - 68
     }
   })
 })

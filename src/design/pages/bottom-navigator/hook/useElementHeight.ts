@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted } from 'vue'
 
 export default function useElementHeight() {
   const elementRef = ref(null)
@@ -21,15 +21,15 @@ export default function useElementHeight() {
       observer.disconnect()
     }
   }
+
   onMounted(() => {
     if (elementRef.value) {
       setHeight(elementRef.value)
       observeHeight(elementRef.value)
     }
   })
-  onUnmounted(() => {
-    // 如果有需要断开的观察者，在这里断开
-  })
+  // onUnmounted(() => {
+  // })
   return {
     elementRef,
     height

@@ -4,15 +4,26 @@
     <!-- 右侧配置项 -->
     <div class="setting-container" v-loading="loading">
       <div class="header">底部导航</div>
-      <div class="setting">
-        <div class="setting-style">
-          <div>样式选择：</div>
-          <el-radio-group v-model="styleValue" @change="handleChange">
-            <el-radio :value="1">上图下文</el-radio>
-            <el-radio :value="2">左图右文</el-radio>
-          </el-radio-group>
-        </div>
-        <el-form ref="formRef" :model="formData" hide-required-asterisk>
+      <el-form ref="formRef" :model="formData">
+        <div class="setting">
+          <el-form-item label="类型选择：">
+            <el-radio-group v-model="styleValue" @change="handleChange">
+              <el-radio :value="1">上图下文</el-radio>
+              <el-radio :value="2">左图右文</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="样式选择：">
+            <div>
+              <div>
+                <el-radio-group v-model="showType">
+                  <el-radio :value="1">常规</el-radio>
+                  <el-radio :value="2">中间凹陷</el-radio>
+                  <el-radio :value="3">中间凸出</el-radio>
+                </el-radio-group>
+              </div>
+              <div class="tip-desc">说明：选择凹陷或凸出样式时只能上传单数</div>
+            </div>
+          </el-form-item>
           <div class="item-container" ref="sortableList">
             <div
               :class="['item', 'item-' + index]"
@@ -176,21 +187,22 @@
               </div>
             </div>
           </div>
-        </el-form>
-        <el-button
-          class="add-btn"
-          :icon="Plus"
-          @click="add"
-          :disabled="
-            styleValue === 1
-              ? formData.tarbarList.length >= 5
-              : formData.tarbarList.length >= 4
-          "
-        >
-          添加导航（{{ formData.tarbarList.length }}/
-          {{ styleValue === 1 ? 5 : 4 }}）
-        </el-button>
-      </div>
+
+          <el-button
+            class="add-btn"
+            :icon="Plus"
+            @click="add"
+            :disabled="
+              styleValue === 1
+                ? formData.tarbarList.length >= 5
+                : formData.tarbarList.length >= 4
+            "
+          >
+            添加导航（{{ formData.tarbarList.length }}/
+            {{ styleValue === 1 ? 5 : 4 }}）
+          </el-button>
+        </div>
+      </el-form>
     </div>
     <DialogUpload ref="dialogUpload" @postImage="getImage" />
     <div class="save-container center">
@@ -230,6 +242,7 @@ import {
 
 const formRef = ref()
 const formData = ref({
+  showType: '',
   tarbarList: [
     {
       pagePath: undefined,

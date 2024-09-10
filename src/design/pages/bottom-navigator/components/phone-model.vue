@@ -64,11 +64,10 @@ const leftAndRightStyle = reactive({
     top: 0;
     right: 0;
     left: 0;
-    width: 375px;
     height: 64px;
     background-image: url('https://static-comm.dataso.net/upload/20240806/a111111112/f4edfc55e24f36faba851711134a991f.png');
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     background-color: #0000;
   }
 
@@ -104,6 +103,11 @@ const leftAndRightStyle = reactive({
         margin: 3px;
       }
     }
+  }
+}
+.dataso-container {
+  .header-top {
+    left: 200px;
   }
 }
 </style>

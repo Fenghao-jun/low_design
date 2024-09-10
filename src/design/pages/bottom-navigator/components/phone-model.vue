@@ -50,6 +50,8 @@ const leftAndRightStyle = reactive({
   display: flex;
   margin: 0 120px;
   width: 375px;
+  min-width: 375px;
+  max-width: 375px;
   height: 675px;
   background: #ffffff;
   border-radius: 0px 0px 0px 0px;

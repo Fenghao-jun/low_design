@@ -1,207 +1,211 @@
 <template>
-  <div class="nav-container">
+  <div class="nav-container" ref="elementRef">
     <PhoneModel :tarbarList="formData.tarbarList" :styleValue="styleValue" />
     <!-- 右侧配置项 -->
     <div class="setting-container" v-loading="loading">
       <div class="header">底部导航</div>
       <el-form ref="formRef" :model="formData">
-        <div class="setting">
-          <el-form-item label="类型选择：">
-            <el-radio-group v-model="styleValue" @change="handleChange">
-              <el-radio :value="1">上图下文</el-radio>
-              <el-radio :value="2">左图右文</el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="样式选择：">
-            <div>
+        <el-scrollbar :height="scrollHeight + 'px'">
+          <div class="setting">
+            <el-form-item label="类型选择：">
+              <el-radio-group v-model="styleValue" @change="handleChange">
+                <el-radio :value="1">上图下文</el-radio>
+                <el-radio :value="2">左图右文</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="样式选择：">
               <div>
-                <el-radio-group v-model="showType">
-                  <el-radio :value="1">常规</el-radio>
-                  <el-radio :value="2">中间凹陷</el-radio>
-                  <el-radio :value="3">中间凸出</el-radio>
-                </el-radio-group>
-              </div>
-              <div class="tip-desc">说明：选择凹陷或凸出样式时只能上传单数</div>
-            </div>
-          </el-form-item>
-          <div class="item-container" ref="sortableList">
-            <div
-              :class="['item', 'item-' + index]"
-              v-for="(item, index) in formData.tarbarList"
-              :key="index"
-              :data-index="index"
-            >
-              <div class="title">
-                导航{{ index + 1 }}
-                <span v-if="!index">：首页</span>
-              </div>
-              <div class="item-content">
-                <div class="left flex-start margin-right-40">
-                  <el-form-item
-                    label=""
-                    :prop="`tarbarList.${index}.iconPath`"
-                    :rules="{
-                      required: true,
-                      message: '请上传图片',
-                      trigger: ['change']
-                    }"
-                  >
-                    <div class="image-item margin-right-16">
-                      <div
-                        class="upload margin-bottom-12"
-                        @click="() => openDailog('iconPath', index)"
-                        v-if="!item.iconPath"
-                      ></div>
-                      <div
-                        v-else
-                        class="image-container margin-bottom-12"
-                        @click="() => openDailog('iconPath', index)"
-                      >
-                        <div
-                          :class="'iconfont ' + item.iconPath"
-                          v-if="item.type === 'system'"
-                        ></div>
-                        <el-image
-                          style="width: 112px; height: 112px"
-                          :src="item.iconPath"
-                          fit="cover"
-                          v-else
-                        />
-                        <div class="tip">更换图片</div>
-                      </div>
-                      <span class="image-text">未选中</span>
-                    </div>
-                  </el-form-item>
-                  <el-form-item
-                    label=""
-                    :prop="`tarbarList.${index}.selectedIconPath`"
-                    :rules="{
-                      required: true,
-                      message: '请上传图片',
-                      trigger: ['change']
-                    }"
-                  >
-                    <div class="image-item">
-                      <div
-                        class="upload margin-bottom-12"
-                        @click="() => openDailog('selectedIconPath', index)"
-                        v-if="!item.selectedIconPath"
-                      ></div>
-                      <div
-                        v-else
-                        class="image-container margin-bottom-12"
-                        @click="() => openDailog('selectedIconPath', index)"
-                      >
-                        <div
-                          :class="'iconfont ' + item.selectedIconPath"
-                          v-if="item.type === 'system'"
-                        ></div>
-                        <el-image
-                          style="width: 112px; height: 112px"
-                          :src="item.selectedIconPath"
-                          fit="cover"
-                          class="margin-bottom-12"
-                        />
-                        <div class="tip">更换图片</div>
-                      </div>
-                      <span class="image-text">选中</span>
-                    </div>
-                  </el-form-item>
+                <div>
+                  <el-radio-group v-model="showType">
+                    <el-radio :value="1">常规</el-radio>
+                    <el-radio :value="2">中间凹陷</el-radio>
+                    <el-radio :value="3">中间凸出</el-radio>
+                  </el-radio-group>
                 </div>
-                <div class="right">
-                  <div class="right-item flex-start margin-bottom-12">
-                    <el-form-item
-                      label=""
-                      :prop="`tarbarList.${index}.text`"
-                      :rules="{
-                        required: true,
-                        message: '请输入名称',
-                        trigger: ['blur', 'change']
-                      }"
-                    >
-                      <template #label>
-                        <span class="xingxing">*</span>
-                        <span>名称：</span>
-                      </template>
-                      <el-input
-                        clearable
-                        v-model="item.text"
-                        maxlength="3"
-                        style="width: 100%"
-                        placeholder="请输入"
-                      />
-                    </el-form-item>
-                  </div>
-                  <div class="right-item flex-start">
-                    <el-form-item
-                      label=""
-                      :prop="`tarbarList.${index}.pagePath`"
-                      :rules="{
-                        required: true,
-                        message: '请选择',
-                        trigger: ['blur', 'change']
-                      }"
-                    >
-                      <template #label>
-                        <span class="xingxing">*</span>
-                        <span>跳转：</span>
-                      </template>
-                      <el-select
-                        v-model="item.pagePath"
-                        placeholder="请选择"
-                        style="width: 100%"
-                        clearable
-                      >
-                        <template v-if="!index">
-                          <el-option
-                            v-for="v in homeOptions"
-                            :disabled="v.disabled"
-                            :key="v.value"
-                            :label="v.label"
-                            :value="v.value"
-                          />
-                        </template>
-                        <template v-else>
-                          <el-option
-                            v-for="v in otherOption"
-                            :disabled="v.disabled"
-                            :key="v.value"
-                            :label="v.label"
-                            :value="v.value"
-                          />
-                        </template>
-                      </el-select>
-                    </el-form-item>
-                    <div class="title-item"></div>
-                  </div>
+                <div class="tip-desc">
+                  说明：选择凹陷或凸出样式时只能上传单数
                 </div>
               </div>
+            </el-form-item>
+            <div class="item-container" ref="sortableList">
               <div
-                class="remove"
-                @click="() => remove(index)"
-                v-if="index !== 0"
+                :class="['item', 'item-' + index]"
+                v-for="(item, index) in formData.tarbarList"
+                :key="index"
+                :data-index="index"
               >
-                <el-icon>
-                  <CirclePlus />
-                </el-icon>
+                <div class="title">
+                  导航{{ index + 1 }}
+                  <span v-if="!index">：首页</span>
+                </div>
+                <div class="item-content">
+                  <div class="left flex-start margin-right-40">
+                    <el-form-item
+                      label=""
+                      :prop="`tarbarList.${index}.iconPath`"
+                      :rules="{
+                        required: true,
+                        message: '请上传图片',
+                        trigger: ['change']
+                      }"
+                    >
+                      <div class="image-item margin-right-16">
+                        <div
+                          class="upload margin-bottom-12"
+                          @click="() => openDailog('iconPath', index)"
+                          v-if="!item.iconPath"
+                        ></div>
+                        <div
+                          v-else
+                          class="image-container margin-bottom-12"
+                          @click="() => openDailog('iconPath', index)"
+                        >
+                          <div
+                            :class="'iconfont ' + item.iconPath"
+                            v-if="item.type === 'system'"
+                          ></div>
+                          <el-image
+                            style="width: 112px; height: 112px"
+                            :src="item.iconPath"
+                            fit="cover"
+                            v-else
+                          />
+                          <div class="tip">更换图片</div>
+                        </div>
+                        <span class="image-text">未选中</span>
+                      </div>
+                    </el-form-item>
+                    <el-form-item
+                      label=""
+                      :prop="`tarbarList.${index}.selectedIconPath`"
+                      :rules="{
+                        required: true,
+                        message: '请上传图片',
+                        trigger: ['change']
+                      }"
+                    >
+                      <div class="image-item">
+                        <div
+                          class="upload margin-bottom-12"
+                          @click="() => openDailog('selectedIconPath', index)"
+                          v-if="!item.selectedIconPath"
+                        ></div>
+                        <div
+                          v-else
+                          class="image-container margin-bottom-12"
+                          @click="() => openDailog('selectedIconPath', index)"
+                        >
+                          <div
+                            :class="'iconfont ' + item.selectedIconPath"
+                            v-if="item.type === 'system'"
+                          ></div>
+                          <el-image
+                            style="width: 112px; height: 112px"
+                            :src="item.selectedIconPath"
+                            fit="cover"
+                            class="margin-bottom-12"
+                          />
+                          <div class="tip">更换图片</div>
+                        </div>
+                        <span class="image-text">选中</span>
+                      </div>
+                    </el-form-item>
+                  </div>
+                  <div class="right">
+                    <div class="right-item flex-start margin-bottom-12">
+                      <el-form-item
+                        label=""
+                        :prop="`tarbarList.${index}.text`"
+                        :rules="{
+                          required: true,
+                          message: '请输入名称',
+                          trigger: ['blur', 'change']
+                        }"
+                      >
+                        <template #label>
+                          <span class="xingxing">*</span>
+                          <span>名称：</span>
+                        </template>
+                        <el-input
+                          clearable
+                          v-model="item.text"
+                          maxlength="3"
+                          style="width: 100%"
+                          placeholder="请输入"
+                        />
+                      </el-form-item>
+                    </div>
+                    <div class="right-item flex-start">
+                      <el-form-item
+                        label=""
+                        :prop="`tarbarList.${index}.pagePath`"
+                        :rules="{
+                          required: true,
+                          message: '请选择',
+                          trigger: ['blur', 'change']
+                        }"
+                      >
+                        <template #label>
+                          <span class="xingxing">*</span>
+                          <span>跳转：</span>
+                        </template>
+                        <el-select
+                          v-model="item.pagePath"
+                          placeholder="请选择"
+                          style="width: 100%"
+                          clearable
+                        >
+                          <template v-if="!index">
+                            <el-option
+                              v-for="v in homeOptions"
+                              :disabled="v.disabled"
+                              :key="v.value"
+                              :label="v.label"
+                              :value="v.value"
+                            />
+                          </template>
+                          <template v-else>
+                            <el-option
+                              v-for="v in otherOption"
+                              :disabled="v.disabled"
+                              :key="v.value"
+                              :label="v.label"
+                              :value="v.value"
+                            />
+                          </template>
+                        </el-select>
+                      </el-form-item>
+                      <div class="title-item"></div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="remove"
+                  @click="() => remove(index)"
+                  v-if="index !== 0"
+                >
+                  <el-icon>
+                    <CirclePlus />
+                  </el-icon>
+                </div>
               </div>
             </div>
-          </div>
 
-          <el-button
-            class="add-btn"
-            :icon="Plus"
-            @click="add"
-            :disabled="
-              styleValue === 1
-                ? formData.tarbarList.length >= 5
-                : formData.tarbarList.length >= 4
-            "
-          >
-            添加导航（{{ formData.tarbarList.length }}/
-            {{ styleValue === 1 ? 5 : 4 }}）
-          </el-button>
-        </div>
+            <el-button
+              class="add-btn"
+              :icon="Plus"
+              @click="add"
+              :disabled="
+                styleValue === 1
+                  ? formData.tarbarList.length >= 5
+                  : formData.tarbarList.length >= 4
+              "
+            >
+              添加导航（{{ formData.tarbarList.length }}/
+              {{ styleValue === 1 ? 5 : 4 }}）
+            </el-button>
+          </div>
+        </el-scrollbar>
       </el-form>
     </div>
     <DialogUpload ref="dialogUpload" @postImage="getImage" />
@@ -239,6 +243,10 @@ import {
   otherOption,
   typeEnum
 } from './config/index'
+
+import useElementHeight from './hook/useElementHeight'
+
+const { elementRef, height } = useElementHeight()
 
 const formRef = ref()
 const formData = ref({
@@ -438,6 +446,8 @@ function handleChange(value) {
   }
 }
 
+const scrollHeight = ref(0)
+
 onMounted(() => {
   // 校验是否设置自定义首页
   isThereAHomepageForDecoration()
@@ -445,6 +455,13 @@ onMounted(() => {
   getTabbarConfigData()
   // 排序
   sortHandle()
+  nextTick(() => {
+    if (window.__POWERED_BY_QIANKUN__) {
+      scrollHeight.value = height.value - 144
+    } else {
+      scrollHeight.value = height.value - 68
+    }
+  })
 })
 </script>
 

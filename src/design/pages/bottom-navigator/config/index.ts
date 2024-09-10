@@ -119,7 +119,7 @@ export function calculateHeight(scrollHeight) {
   nextTick(() => {
     const clientHeight = document.documentElement.clientHeight
     if (window.__POWERED_BY_QIANKUN__) {
-      scrollHeight.value = clientHeight - 164
+      scrollHeight.value = clientHeight - 184
     } else {
       scrollHeight.value = clientHeight - 68
     }

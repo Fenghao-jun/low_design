@@ -134,7 +134,7 @@
                           clearable
                           v-model="item.text"
                           maxlength="3"
-                          style="width: 100%"
+                          style="width: 180px"
                           placeholder="请输入"
                         />
                       </el-form-item>
@@ -156,7 +156,7 @@
                         <el-select
                           v-model="item.pagePath"
                           placeholder="请选择"
-                          style="width: 100%"
+                          style="width: 180px"
                           clearable
                         >
                           <template v-if="!index">

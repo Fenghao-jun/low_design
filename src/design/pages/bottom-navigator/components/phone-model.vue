@@ -1,5 +1,5 @@
 <template>
-  <div class="phone-container">
+  <div class="phone-container" :style="{ height: `${height - 72}px` }">
     <div class="header-top"></div>
     <div class="phone-bottom">
       <div
@@ -23,10 +23,11 @@ import { reactive } from 'vue'
 import { containsIconPathOrSelectedIconPath } from '../config/index'
 
 const props = withDefaults(
-  defineProps<{ tarbarList: any[]; styleValue: number }>(),
+  defineProps<{ tarbarList: any[]; styleValue: number; height: number }>(),
   {
     tarbarList: () => [],
-    styleValue: 1
+    styleValue: 1,
+    height: 0
   }
 )
 
@@ -52,7 +53,7 @@ const leftAndRightStyle = reactive({
   width: 375px;
   min-width: 375px;
   max-width: 375px;
-  height: 675px;
+  max-height: 675px;
   background: #ffffff;
   border-radius: 0px 0px 0px 0px;
   background: #ffffff;

@@ -1,6 +1,10 @@
 <template>
-  <div class="nav-container">
-    <PhoneModel :tarbarList="formData.tarbarList" :styleValue="styleValue" />
+  <div class="nav-container" ref="elementRef">
+    <PhoneModel
+      :tarbarList="formData.tarbarList"
+      :styleValue="styleValue"
+      :height="height"
+    />
     <!-- 右侧配置项 -->
     <div class="setting-container" v-loading="loading">
       <div class="header">底部导航</div>
@@ -244,6 +248,10 @@ import {
   typeEnum,
   calculateHeight
 } from './config/index'
+
+import useElementHeight from './hook/useElementHeight'
+
+const { elementRef, height } = useElementHeight()
 
 const formRef = ref()
 const formData = ref({

@@ -1,5 +1,5 @@
 <template>
-  <div class="nav-container" ref="elementRef">
+  <div class="nav-container">
     <PhoneModel :tarbarList="formData.tarbarList" :styleValue="styleValue" />
     <!-- 右侧配置项 -->
     <div class="setting-container" v-loading="loading">
@@ -241,12 +241,9 @@ import {
   hasDuplicateText,
   homeOption,
   otherOption,
-  typeEnum
+  typeEnum,
+  calculateHeight
 } from './config/index'
-
-import useElementHeight from './hook/useElementHeight'
-
-const { elementRef, height } = useElementHeight()
 
 const formRef = ref()
 const formData = ref({
@@ -455,14 +452,8 @@ onMounted(() => {
   getTabbarConfigData()
   // 排序
   sortHandle()
-  nextTick(() => {
-    const clientHeight = document.documentElement.clientHeight
-    if (window.__POWERED_BY_QIANKUN__) {
-      scrollHeight.value = clientHeight - 144
-    } else {
-      scrollHeight.value = clientHeight - 68
-    }
-  })
+  // 计算scroll 的高度
+  calculateHeight(scrollHeight)
 })
 </script>
 

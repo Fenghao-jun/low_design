@@ -1,3 +1,5 @@
+import { nextTick } from 'vue'
+
 export const typeEnum = {
   vertical: 1,
   horizontal: 2
@@ -110,4 +112,16 @@ export function containsIconPathOrSelectedIconPath(str) {
   return localImageList.some(
     (item) => item.iconPath.includes(str) || item.selectedIconPath.includes(str)
   )
+}
+
+// 计算 scroll 的高度
+export function calculateHeight(scrollHeight) {
+  nextTick(() => {
+    const clientHeight = document.documentElement.clientHeight
+    if (window.__POWERED_BY_QIANKUN__) {
+      scrollHeight.value = clientHeight - 164
+    } else {
+      scrollHeight.value = clientHeight - 68
+    }
+  })
 }

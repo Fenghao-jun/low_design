@@ -79,6 +79,7 @@ const localIconList = reactive(localImageList)
 // 打开弹窗
 function open(data: any) {
   showDialog.value = true
+  isActive.value = 0
   config.value = { ...data }
   const { item } = data
   activeValue.value = item.type || 'system'

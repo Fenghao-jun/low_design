@@ -109,6 +109,7 @@ export const localImageList = [
 ]
 
 export function containsIconPathOrSelectedIconPath(str) {
+  if (!str) return false
   return localImageList.some(
     (item) => item.iconPath.includes(str) || item.selectedIconPath.includes(str)
   )

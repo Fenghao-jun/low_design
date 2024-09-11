@@ -137,7 +137,8 @@ function showAutuStyle(index: number) {
     position: absolute;
     left: 0px;
     right: 0px;
-    bottom: -6px;
+    // bottom: -6px;
+    bottom: 0px;
     border-top: 1px solid #e5e9f2;
 
     .nav-item {

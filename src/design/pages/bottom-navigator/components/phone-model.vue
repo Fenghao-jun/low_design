@@ -77,6 +77,7 @@ const leftAndRightStyle = reactive({
   alignItems: 'center'
 })
 
+// 展示凸出效果
 function showTuChuStyle(index: number) {
   const { tarbarList } = props
   if (
@@ -86,6 +87,8 @@ function showTuChuStyle(index: number) {
     return true
   }
 }
+
+// 展示凹陷效果
 function showAutuStyle(index: number) {
   const { tarbarList } = props
   if (
@@ -128,17 +131,14 @@ function showAutuStyle(index: number) {
 
   .phone-bottom {
     width: 100%;
-    height: 54px;
+    height: 54px !important;
     display: flex;
-    // background-color: #000;
+    background-color: #fff;
     position: absolute;
     left: 0px;
     right: 0px;
     bottom: -6px;
     border-top: 1px solid #e5e9f2;
-
-    // padding: 8px 0;
-    // box-sizing: border-box;
 
     .nav-item {
       flex: 1;
@@ -228,7 +228,6 @@ function showAutuStyle(index: number) {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  // background: #ffffff;
   background-color: transparent;
   box-shadow: 0px 2px 4px 0px rgba(88, 88, 88, 0.08);
   z-index: 100;
@@ -250,34 +249,31 @@ function showAutuStyle(index: number) {
   content: '';
   position: absolute;
   top: 18px;
-  left: -22px;
-  width: 25px;
+  left: -16px;
+  width: 18px;
   height: 25px;
-  border-top-right-radius: 25px;
   border-radius: 0 22px 0 0;
   box-shadow: 1px -4px 2px -3px rgba(88, 88, 88, 0.08);
-  // background-color: #fff;
   background-color: transparent;
 }
 .autu::after {
   content: '';
   position: absolute;
   top: 18px;
-  right: -22px;
-  width: 25px;
+  right: -16px;
+  width: 18px;
   height: 25px;
   border-radius: 22px 0 0 0;
   box-shadow: -1px -4px 2px -3px rgba(88, 88, 88, 0.08);
-  // background-color: #fff;
   background-color: transparent;
 }
 
 .mask-line {
-  width: 76px;
-  height: 18px;
+  width: 70px;
+  height: 5px;
   position: absolute;
-  top: -18px;
-  background-color: #fff;
+  top: -5px;
+  background: #fff;
   z-index: 98;
 }
 </style>

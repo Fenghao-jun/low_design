@@ -222,6 +222,7 @@ async function save() {
       loading.value = true
       const JSONConfig = JSON.stringify({
         tarbar: formData.value.tarbarList,
+        showType: formData.value.showType,
         iconStyle: styleValue.value === 1 ? 'vertical' : 'horizontal'
       })
       const params: saveType = {

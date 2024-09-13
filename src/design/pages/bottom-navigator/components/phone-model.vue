@@ -144,7 +144,7 @@ function showAutuStyle(index: number) {
 
   .phone-bottom {
     width: 100%;
-    height: 54px !important;
+    height: 54px;
     display: flex;
     background-color: #fff;
     position: absolute;
@@ -190,12 +190,11 @@ function showAutuStyle(index: number) {
 }
 
 .shadow-style {
-  border-top: none !important;
-  width: 375px;
-  height: 53px !important;
   background: #ffffff;
   box-shadow: 0px -2px 4px 0px rgba(88, 88, 88, 0.08);
   border-radius: 0px 0px 0px 0px;
+  height: 54px !important;
+  border-top: 1px solid transparent !important;
 }
 
 .tu {

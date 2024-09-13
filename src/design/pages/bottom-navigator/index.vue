@@ -23,8 +23,8 @@
                 <div>
                   <el-radio-group v-model="formData.showType">
                     <el-radio value="CHANGE_GUI">常规</el-radio>
-                    <el-radio value="AO_TU">中间凹陷</el-radio>
-                    <el-radio value="TU_CHU">中间凸出</el-radio>
+                    <el-radio value="AO">中间凹陷</el-radio>
+                    <el-radio value="TU">中间凸出</el-radio>
                   </el-radio-group>
                 </div>
                 <div class="tip-desc">
@@ -97,7 +97,7 @@ const { elementRef, height } = useElementHeight()
 
 const formRef = ref()
 const formData = ref({
-  showType: 'AO_TU',
+  showType: 'AO',
   tarbarList: [
     {
       pagePath: undefined,

@@ -15,31 +15,44 @@
       >
         <!--  icon 类型 -->
         <template v-if="containsIconPathOrSelectedIconPath(item.iconPath)">
-          <div :class="'icon iconfont ' + item.iconPath"></div>
-          <div class="name">{{ item.text }}</div>
-        </template>
-
-        <!-- 凸效果类型 -->
-        <template v-else-if="showType === 'TU_CHU' && showTuChuStyle(index)">
-          <div class="tuchu">
-            <el-image class="tuchu-image" :src="item.iconPath" />
-          </div>
-          <div class="tuchu-name">{{ item.text }}</div>
-        </template>
-
-        <!-- 凹效果类型 -->
-        <template v-else-if="showType === 'AO_TU' && showAutuStyle(index)">
-          <div class="autu">
-            <el-image class="autu-image" :src="item.iconPath" />
-          </div>
-          <div class="mask-line" />
-          <div class="aotu-name">{{ item.text }}</div>
+          <template v-if="showType === 'TU' && showTuChuStyle(index)">
+            <div class="tu">
+              <div :class="'icon iconfont ' + item.iconPath"></div>
+            </div>
+            <div class="tu-name">{{ item.text }}</div>
+          </template>
+          <template v-else-if="showType === 'AO' && showAutuStyle(index)">
+            <div class="ao">
+              <el-image class="ao-image" :src="item.iconPath" />
+            </div>
+            <!-- <div class="mask-line" /> -->
+            <div class="ao-name">{{ item.text }}</div>
+          </template>
+          <template v-else>
+            <div :class="'icon iconfont ' + item.iconPath"></div>
+            <div class="name">{{ item.text }}</div>
+          </template>
         </template>
 
         <!-- 用户自定义上传类型 -->
         <template v-else>
-          <el-image class="image" :src="item.iconPath" />
-          <div class="name">{{ item.text }}</div>
+          <template v-if="showType === 'TU' && showTuChuStyle(index)">
+            <div class="tu">
+              <el-image class="tu-image" :src="item.iconPath" />
+            </div>
+            <div class="tu-name">{{ item.text }}</div>
+          </template>
+          <template v-else-if="showType === 'AO' && showAutuStyle(index)">
+            <div class="ao">
+              <el-image class="ao-image" :src="item.iconPath" />
+            </div>
+            <!-- <div class="mask-line" /> -->
+            <div class="ao-name">{{ item.text }}</div>
+          </template>
+          <template v-else>
+            <el-image class="image" :src="item.iconPath" />
+            <div class="name">{{ item.text }}</div>
+          </template>
         </template>
       </div>
     </div>
@@ -59,7 +72,7 @@ const props = withDefaults(
   {
     tarbarList: () => [],
     styleValue: 1,
-    showType: 'TU_CHU',
+    showType: 'TU',
     height: 0
   }
 )
@@ -185,7 +198,7 @@ function showAutuStyle(index: number) {
   border-radius: 0px 0px 0px 0px;
 }
 
-.tuchu {
+.tu {
   width: 48px;
   height: 48px;
   background: #ffffff;
@@ -196,7 +209,7 @@ function showAutuStyle(index: number) {
   box-shadow: 0px -2px 4px 0px rgba(88, 88, 88, 0.2);
   position: absolute;
   top: -19px;
-  .tuchu-image {
+  .tu-image {
     width: 40px !important;
     height: 40px !important;
     background: #ebebeb;
@@ -204,9 +217,14 @@ function showAutuStyle(index: number) {
     border-radius: 50%;
     z-index: 101;
   }
+  .icon {
+    line-height: 40px !important;
+    font-size: 40px !important;
+    z-index: 101;
+  }
 }
 
-.tuchu::after {
+.tu::after {
   content: '';
   position: absolute;
   top: 19px;
@@ -215,12 +233,12 @@ function showAutuStyle(index: number) {
   background-color: #fff;
 }
 
-.tuchu-name {
-  margin-top: 22px;
+.tu-name {
+  margin-top: 24px;
   font-size: 12px;
 }
 
-.autu {
+.ao {
   position: absolute;
   top: -18px;
   width: 46px;
@@ -232,7 +250,8 @@ function showAutuStyle(index: number) {
   background-color: transparent;
   box-shadow: 0px 2px 4px 0px rgba(88, 88, 88, 0.08);
   z-index: 100;
-  .autu-image {
+
+  .ao-image {
     width: 38px;
     height: 38px;
     border-radius: 50%;
@@ -241,32 +260,29 @@ function showAutuStyle(index: number) {
   }
 }
 
-.aotu-name {
+.ao-name {
   margin-top: 22px;
   font-size: 12px;
 }
-
-.autu::before {
+.ao::before,
+.ao::after {
   content: '';
   position: absolute;
   top: 18px;
-  left: -16px;
-  width: 18px;
-  height: 25px;
-  border-radius: 0 22px 0 0;
-  box-shadow: 1px -4px 2px -3px rgba(88, 88, 88, 0.08);
+  width: 15px;
+  height: 12px;
   background-color: transparent;
 }
-.autu::after {
-  content: '';
-  position: absolute;
-  top: 18px;
-  right: -16px;
-  width: 18px;
-  height: 25px;
+.ao::before {
+  left: -14px;
+  border-radius: 0 22px 0 0;
+  box-shadow: 1px -4px 2px -3px rgba(88, 88, 88, 0.08);
+}
+
+.ao::after {
+  right: -14px;
   border-radius: 22px 0 0 0;
   box-shadow: -1px -4px 2px -3px rgba(88, 88, 88, 0.08);
-  background-color: transparent;
 }
 
 .mask-line {

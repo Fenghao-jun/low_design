@@ -4,7 +4,9 @@
     <div
       :class="{
         'phone-bottom': true,
-        'shadow-style': showType !== 'CHANGE_GUI'
+        'tab-bar': true,
+        'TU-container': showType === 'TU',
+        'AO-container': showType === 'AO'
       }"
     >
       <div
@@ -19,14 +21,11 @@
             <div class="tu">
               <div :class="'icon iconfont ' + item.iconPath"></div>
             </div>
-            <div class="tu-name">{{ item.text }}</div>
+            <div class="custom-name">{{ item.text }}</div>
           </template>
           <template v-else-if="showType === 'AO' && showAutuStyle(index)">
-            <div class="ao">
-              <el-image class="ao-image" :src="item.iconPath" />
-            </div>
-            <!-- <div class="mask-line" /> -->
-            <div class="ao-name">{{ item.text }}</div>
+            <div :class="'AO-icon icon iconfont ' + item.iconPath"></div>
+            <div class="custom-name">{{ item.text }}</div>
           </template>
           <template v-else>
             <div :class="'icon iconfont ' + item.iconPath"></div>
@@ -40,20 +39,27 @@
             <div class="tu">
               <el-image class="tu-image" :src="item.iconPath" />
             </div>
-            <div class="tu-name">{{ item.text }}</div>
+            <div class="custom-name">{{ item.text }}</div>
           </template>
           <template v-else-if="showType === 'AO' && showAutuStyle(index)">
-            <div class="ao">
-              <el-image class="ao-image" :src="item.iconPath" />
-            </div>
-            <!-- <div class="mask-line" /> -->
-            <div class="ao-name">{{ item.text }}</div>
+            <el-image class="middle-image" :src="item.iconPath" />
+            <div class="custom-name">{{ item.text }}</div>
           </template>
           <template v-else>
             <el-image class="image" :src="item.iconPath" />
             <div class="name">{{ item.text }}</div>
           </template>
         </template>
+      </div>
+
+      <!-- 凹陷效果 -->
+      <div
+        class="tab-bar-bottom"
+        v-if="showType === 'AO' && [3, 5].includes(tarbarList.length)"
+      >
+        <div class="left"></div>
+        <div class="middle"></div>
+        <div class="right"></div>
       </div>
     </div>
   </div>
@@ -115,16 +121,15 @@ function showAutuStyle(index: number) {
 <style lang="scss" scoped>
 .phone-container {
   display: inline-block;
-  background: #000;
   display: flex;
   margin: 0 120px;
   width: 375px;
   min-width: 375px;
   max-width: 375px;
   max-height: 675px;
-  background: #ffffff;
   border-radius: 0px 0px 0px 0px;
-  background: #ffffff;
+  // background: blue;
+  background: #fff;
   border-radius: 0px 0px 0px 0px;
   position: relative;
   border: 1px solid #e5e9f2;
@@ -146,11 +151,10 @@ function showAutuStyle(index: number) {
     width: 100%;
     height: 54px;
     display: flex;
-    background-color: #fff;
+    background-color: transparent;
     position: absolute;
     left: 0px;
     right: 0px;
-    // bottom: -6px;
     bottom: 0px;
     border-top: 1px solid #e5e9f2;
 
@@ -160,7 +164,6 @@ function showAutuStyle(index: number) {
       z-index: 100;
       padding: 8px 0;
       box-sizing: border-box;
-      // box-shadow: 0px -2px 4px 0px rgba(88, 88, 88, 0.08);
 
       .icon {
         line-height: 20px;
@@ -189,9 +192,15 @@ function showAutuStyle(index: number) {
   }
 }
 
-.shadow-style {
+.TU-container {
   background: #ffffff;
   box-shadow: 0px -2px 4px 0px rgba(88, 88, 88, 0.08);
+  border-radius: 0px 0px 0px 0px;
+  height: 54px !important;
+  border-top: 1px solid transparent !important;
+}
+
+.AO-container {
   border-radius: 0px 0px 0px 0px;
   height: 54px !important;
   border-top: 1px solid transparent !important;
@@ -218,7 +227,7 @@ function showAutuStyle(index: number) {
   }
   .icon {
     line-height: 40px !important;
-    font-size: 40px !important;
+    font-size: 22px !important;
     z-index: 101;
   }
 }
@@ -232,64 +241,55 @@ function showAutuStyle(index: number) {
   background-color: #fff;
 }
 
-.tu-name {
-  margin-top: 24px;
-  font-size: 12px;
-}
-
-.ao {
-  position: absolute;
-  top: -18px;
-  width: 46px;
-  height: 46px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  background-color: transparent;
-  box-shadow: 0px 2px 4px 0px rgba(88, 88, 88, 0.08);
-  z-index: 100;
-
-  .ao-image {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    z-index: 102;
-    position: absolute;
-  }
-}
-
-.ao-name {
+.custom-name {
   margin-top: 22px;
   font-size: 12px;
 }
-.ao::before,
-.ao::after {
-  content: '';
+
+.nav-item .middle-image {
+  width: 38px;
+  height: 38px;
   position: absolute;
-  top: 18px;
-  width: 15px;
-  height: 12px;
-  background-color: transparent;
+  border-radius: 50%;
+  top: -14px;
 }
-.ao::before {
-  left: -14px;
-  border-radius: 0 22px 0 0;
-  box-shadow: 1px -4px 2px -3px rgba(88, 88, 88, 0.08);
+.nav-item .AO-icon {
+  width: 38px;
+  height: 38px;
+  font-size: 22px !important;
+  line-height: 38px !important;
+  position: absolute;
+  border-radius: 50%;
+  top: -14px;
+}
+.tab-bar-bottom {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  z-index: 1;
+  filter: drop-shadow(0 0 3px rgba(88, 88, 88, 0.15));
 }
 
-.ao::after {
-  right: -14px;
-  border-radius: 22px 0 0 0;
-  box-shadow: -1px -4px 2px -3px rgba(88, 88, 88, 0.08);
+.tab-bar-bottom .left {
+  min-height: 54px;
+  flex: 1;
+  background: white;
+  border-top-right-radius: 10px;
 }
 
-.mask-line {
-  width: 70px;
-  height: 5px;
-  position: absolute;
-  top: -5px;
-  background: #fff;
-  z-index: 98;
+.tab-bar-bottom .middle {
+  min-height: 54px;
+  width: 48px;
+  position: relative;
+  background: radial-gradient(circle at 50% 5px, transparent 24px, white 46%)
+    top left 100% no-repeat;
+  overflow: hidden;
+}
+.tab-bar-bottom .right {
+  min-height: 54px;
+  flex: 1;
+  background: white;
+  border-top-left-radius: 10px;
 }
 </style>

@@ -22,9 +22,15 @@
               <div>
                 <div>
                   <el-radio-group v-model="formData.showType">
-                    <el-radio value="CHANGE_GUI">常规</el-radio>
-                    <el-radio value="AO">中间凹陷</el-radio>
-                    <el-radio value="TU">中间凸出</el-radio>
+                    <el-radio value="CHANGE_GUI" :disabled="styleValue === 2"
+                      >常规</el-radio
+                    >
+                    <el-radio value="AO" :disabled="styleValue === 2"
+                      >中间凹陷</el-radio
+                    >
+                    <el-radio value="TU" :disabled="styleValue === 2"
+                      >中间凸出</el-radio
+                    >
                   </el-radio-group>
                 </div>
                 <div class="tip-desc">
@@ -181,6 +187,7 @@ async function getTabbarConfigData() {
     const config = res.data.config ? JSON.parse(res.data.config) : ''
     if (config) {
       formData.value.tarbarList = config.tarbar
+      formData.value.showType = config.showType
       styleValue.value = typeEnum[config.iconStyle]
     }
   }
@@ -249,6 +256,9 @@ function handleChange(value) {
       type: 'error'
     })
     styleValue.value = 1
+  }
+  if (value === 2) {
+    formData.value.showType = 'CHANGE_GUI'
   }
 }
 

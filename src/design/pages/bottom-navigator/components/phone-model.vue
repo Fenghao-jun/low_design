@@ -267,14 +267,14 @@ const AOAndTuChuConfig = computed(() => {
   min-height: 54px;
   flex: 1;
   background: white;
-  border-top-right-radius: 10px;
+  border-top-right-radius: 14px;
 }
 
 .tab-bar-bottom .middle {
   min-height: 54px;
   width: 48px;
   position: relative;
-  background: radial-gradient(circle at 50% 5px, transparent 24px, white 46%)
+  background: radial-gradient(circle at 50% 5px, transparent 25px, white 46%)
     top left 100% no-repeat;
   overflow: hidden;
 }
@@ -282,6 +282,6 @@ const AOAndTuChuConfig = computed(() => {
   min-height: 54px;
   flex: 1;
   background: white;
-  border-top-left-radius: 10px;
+  border-top-left-radius: 14px;
 }
 </style>

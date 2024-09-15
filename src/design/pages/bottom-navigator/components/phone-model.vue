@@ -5,8 +5,8 @@
       :class="{
         'phone-bottom': true,
         'tab-bar': true,
-        'TU-container': showType === 'TU',
-        'AO-container': showType === 'AO'
+        'TU-container': showType === 'TU' && AOAndTuChuConfig,
+        'AO-container': showType === 'AO' && AOAndTuChuConfig
       }"
     >
       <div
@@ -17,13 +17,13 @@
       >
         <!--  icon 类型 -->
         <template v-if="containsIconPathOrSelectedIconPath(item.iconPath)">
-          <template v-if="showType === 'TU' && showTuChuStyle(index)">
+          <template v-if="showType === 'TU' && showAOAndTuChuStyle(index)">
             <div class="tu">
               <div :class="'icon iconfont ' + item.iconPath"></div>
             </div>
             <div class="custom-name">{{ item.text }}</div>
           </template>
-          <template v-else-if="showType === 'AO' && showAutuStyle(index)">
+          <template v-else-if="showType === 'AO' && showAOAndTuChuStyle(index)">
             <div :class="'AO-icon icon iconfont ' + item.iconPath"></div>
             <div class="custom-name">{{ item.text }}</div>
           </template>
@@ -35,13 +35,13 @@
 
         <!-- 用户自定义上传类型 -->
         <template v-else>
-          <template v-if="showType === 'TU' && showTuChuStyle(index)">
+          <template v-if="showType === 'TU' && showAOAndTuChuStyle(index)">
             <div class="tu">
               <el-image class="tu-image" :src="item.iconPath" />
             </div>
             <div class="custom-name">{{ item.text }}</div>
           </template>
-          <template v-else-if="showType === 'AO' && showAutuStyle(index)">
+          <template v-else-if="showType === 'AO' && showAOAndTuChuStyle(index)">
             <el-image class="middle-image" :src="item.iconPath" />
             <div class="custom-name">{{ item.text }}</div>
           </template>
@@ -53,10 +53,7 @@
       </div>
 
       <!-- 凹陷效果 -->
-      <div
-        class="tab-bar-bottom"
-        v-if="showType === 'AO' && [3, 5].includes(tarbarList.length)"
-      >
+      <div class="tab-bar-bottom" v-if="showType === 'AO' && AOAndTuChuConfig">
         <div class="left"></div>
         <div class="middle"></div>
         <div class="right"></div>
@@ -65,7 +62,7 @@
   </div>
 </template>
 <script lang="tsx" setup name="phoneModel">
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 import { containsIconPathOrSelectedIconPath } from '../config/index'
 
 const props = withDefaults(
@@ -96,9 +93,10 @@ const leftAndRightStyle = reactive({
   alignItems: 'center'
 })
 
-// 展示凸出效果
-function showTuChuStyle(index: number) {
+// 展示凸出 | 凹陷效果
+function showAOAndTuChuStyle(index: number) {
   const { tarbarList } = props
+
   if (
     (index === 1 && tarbarList.length === 3) ||
     (index === 2 && tarbarList.length === 5)
@@ -107,16 +105,10 @@ function showTuChuStyle(index: number) {
   }
 }
 
-// 展示凹陷效果
-function showAutuStyle(index: number) {
+const AOAndTuChuConfig = computed(() => {
   const { tarbarList } = props
-  if (
-    (index === 1 && tarbarList.length === 3) ||
-    (index === 2 && tarbarList.length === 5)
-  ) {
-    return true
-  }
-}
+  return [3, 5].includes(tarbarList.length)
+})
 </script>
 <style lang="scss" scoped>
 .phone-container {

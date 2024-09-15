@@ -5,8 +5,8 @@
       :class="{
         'phone-bottom': true,
         'tab-bar': true,
-        'TU-container': showType === 'TU' && AOAndTuChuConfig,
-        'AO-container': showType === 'AO' && AOAndTuChuConfig
+        'TU-container': showType === 'TU' && AoOrTu,
+        'AO-container': showType === 'AO' && AoOrTu
       }"
     >
       <div
@@ -53,7 +53,7 @@
       </div>
 
       <!-- 凹陷效果 -->
-      <div class="tab-bar-bottom" v-if="showType === 'AO' && AOAndTuChuConfig">
+      <div class="tab-bar-bottom" v-if="showType === 'AO' && AoOrTu">
         <div class="left"></div>
         <div class="middle"></div>
         <div class="right"></div>
@@ -105,7 +105,7 @@ function showAOAndTuChuStyle(index: number) {
   }
 }
 
-const AOAndTuChuConfig = computed(() => {
+const AoOrTu = computed(() => {
   const { tarbarList } = props
   return [3, 5].includes(tarbarList.length)
 })
@@ -274,7 +274,14 @@ const AOAndTuChuConfig = computed(() => {
   min-height: 54px;
   width: 48px;
   position: relative;
-  background: radial-gradient(circle at 50% 5px, transparent 25px, white 46%)
+
+  background: radial-gradient(
+      circle at 50% 12rpx,
+      transparent 48rpx,
+      white 49rpx
+    )
+    top left 100% no-repeat;
+  background: radial-gradient(circle at 50% 6px, transparent 24px, white 25px)
     top left 100% no-repeat;
   overflow: hidden;
 }

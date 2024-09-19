@@ -27,8 +27,7 @@
                 @click="() => openDailog('iconPath', index)"
                 v-if="!item.iconPath"
               >
-                <div class="plus">+</div>
-                <div class="upload-text">上传图片</div>
+                <el-icon class="plus"><Plus /></el-icon>
               </div>
               <div
                 v-else
@@ -65,8 +64,7 @@
                 @click="() => openDailog('selectedIconPath', index)"
                 v-if="!item.selectedIconPath"
               >
-                <div class="plus">+</div>
-                <div class="upload-text">上传图片</div>
+                <el-icon class="plus"><Plus /></el-icon>
               </div>
               <div
                 v-else

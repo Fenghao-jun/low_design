@@ -3,7 +3,7 @@
     height: 100%;
     display: flex;
     justify-content: flex-start;
-    padding: 0 20px;
+    // padding: 0 20px;
     // padding-bottom: 77px;
     box-sizing: border-box;
     background: #ecf0f4;
@@ -62,6 +62,7 @@
 
             .item-container {
                 width: 100%;
+                overflow-x: auto;
 
                 .title {
                     font-weight: 400;
@@ -130,12 +131,27 @@
 
                                 .upload {
                                     cursor: pointer;
-                                    background-image: url('@/assets/images/upload-bg.png');
-                                    background-repeat: no-repeat;
+                                    // background-image: url('@/assets/images/upload-bg.png');
+                                    // background-repeat: no-repeat;
                                     width: 112px;
                                     height: 112px;
                                     border-radius: 4px 4px 4px 4px;
+                                    border: 1px dashed rgb(204, 204, 204, 0.5);
                                     background-size: contain;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    flex-direction: column;
+
+                                    .plus {
+                                        font-size: 50px;
+                                        color: #ddd;
+                                    }
+
+                                    .upload-text {
+                                        color: #ddd;
+                                        font-size: 18px;
+                                    }
                                 }
 
                                 .image-text {

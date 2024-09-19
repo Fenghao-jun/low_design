@@ -67,7 +67,7 @@
         type="primary"
         class="btn-save padding-right-40 padding-left-40"
         @click="save"
-        :disabled="loading"
+        :disabled="loading || disabled"
       >
         保存
       </el-button>
@@ -78,7 +78,7 @@
 <script setup lang="ts" name="bottomNavigator">
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
-import { ref, onMounted, nextTick, reactive } from 'vue'
+import { ref, onMounted, nextTick, reactive, computed } from 'vue'
 import DialogUpload from './components/dialog-upload.vue'
 import PhoneModel from './components/phone-model.vue'
 import tarBarItem from './components/tarBar-item.vue'
@@ -103,7 +103,7 @@ const { elementRef, height } = useElementHeight()
 
 const formRef = ref()
 const formData = ref({
-  showType: 'AO',
+  showType: 'CHANGE_GUI',
   tarbarList: [
     {
       pagePath: undefined,
@@ -113,6 +113,13 @@ const formData = ref({
       text: '首页'
     }
   ]
+})
+
+const disabled = computed(() => {
+  return (
+    ![3, 5].includes(formData.value.tarbarList.length) &&
+    (formData.value.showType === 'AO' || formData.value.showType === 'TU')
+  )
 })
 const dialogUpload = ref<InstanceType<typeof DialogUpload>>()
 const styleValue = ref(1)

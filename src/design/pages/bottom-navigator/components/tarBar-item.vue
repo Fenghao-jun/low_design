@@ -26,7 +26,10 @@
                 class="upload margin-bottom-12"
                 @click="() => openDailog('iconPath', index)"
                 v-if="!item.iconPath"
-              ></div>
+              >
+                <div class="plus">+</div>
+                <div class="upload-text">上传图片</div>
+              </div>
               <div
                 v-else
                 class="image-container margin-bottom-12"
@@ -61,7 +64,10 @@
                 class="upload margin-bottom-12"
                 @click="() => openDailog('selectedIconPath', index)"
                 v-if="!item.selectedIconPath"
-              ></div>
+              >
+                <div class="plus">+</div>
+                <div class="upload-text">上传图片</div>
+              </div>
               <div
                 v-else
                 class="image-container margin-bottom-12"
@@ -101,7 +107,7 @@
                 clearable
                 v-model="item.text"
                 maxlength="3"
-                style="width: 337px"
+                style="width: 200px"
                 placeholder="请输入"
               />
             </el-form-item>
@@ -122,7 +128,7 @@
               <el-select
                 v-model="item.pagePath"
                 placeholder="请选择"
-                style="width: 337px"
+                style="width: 200px"
                 clearable
               >
                 <template v-if="!index">

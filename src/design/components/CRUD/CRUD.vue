@@ -1,12 +1,11 @@
 <template>
   <div>
-    <ProTable
+    <!-- <ProTable
       v-bind="proTablePropsWrapper"
       :columns="columns"
       ref="tableRef"
       @sortChange="handleTableSortChange"
     >
-      <!-- 操作列 -->
       <template #operation="scope">
         <template v-for="(item, index) in operations" :key="index">
           <ElButton
@@ -17,19 +16,18 @@
           >
             {{ item.text }}
           </ElButton>
-          <!-- <RootRender :components="headerSlot" /> -->
         </template>
       </template>
 
       <template #tableHeader>
         <RootRender :components="headerSlot" />
       </template>
-    </ProTable>
+    </ProTable> -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { ProTable } from 'am-admin-component'
+// import { ProTable } from 'am-admin-component'
 import { computed, withDefaults, defineExpose, ref, watch } from 'vue'
 import { CRUDProps, RowOperation } from './props'
 import { useApi } from '@design/hooks/useApi'
@@ -59,7 +57,7 @@ const sortField = ref({ field: '', order: 'asc' })
 
 const store = usePageDataStore()
 
-const tableRef = ref<InstanceType<typeof ProTable>>()
+const tableRef = ref<any>()
 
 const handleTableSortChange = (data: {
   column: any

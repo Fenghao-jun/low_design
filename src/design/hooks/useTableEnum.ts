@@ -4,7 +4,7 @@ import { computed, Ref, ref, unref } from 'vue'
 import { ColumnsProps, CRUDProps } from '../components/CRUD/props'
 import { useApi } from './useApi'
 import { watchThrottled } from '@vueuse/core'
-import { ProTable } from 'am-admin-component'
+// import { ProTable } from 'am-admin-component'
 
 export interface ITableEnumParams {
   pageData: Record<string, any>
@@ -109,7 +109,7 @@ const getRequestParams = (
 export const useTableEnum = (
   tableColumns: CRUDProps['columns'],
   params: Ref<ITableEnumParams>,
-  tableRef: Ref<InstanceType<typeof ProTable>>
+  tableRef: Ref<any>
 ) => {
   // 需要api的列
   const _apiColumns = tableColumns.filter((item) => item.api)

@@ -1,7 +1,7 @@
 import { ListenerAction } from '@/design-core/utils/componentActionCenter/Action'
 import { RequestActionArgs } from '@core/actions/RequestAction'
 import { ApiConfig, ComponentScheme, HiddenConfig } from '@core/types'
-import { ProTableProps, ColumnProps } from 'am-admin-component'
+// import { ProTableProps, ColumnProps } from 'am-admin-component'
 import { EventNode } from '@core/utils/event-flow'
 
 type RowOperationType = 'edit' | 'delete' | 'custom'
@@ -20,11 +20,12 @@ type TableRowOperation = {
   [key in RowOperationType]: RowOperation
 }
 
-export interface ColumnsProps extends ColumnProps {
+export interface ColumnsProps {
+  [key: string]: any
   api?: RequestActionArgs
 }
-
-export interface CRUDProps extends ProTableProps {
+export interface CRUDProps {
+  [key: string]: any
   /**
    * 请求的数据
    */

@@ -50,6 +50,9 @@ export class ComponentRegisterCenter {
 
       indexTsFiles.forEach((filePath) => {
         const componentName = filePath.split('/')[1]
+        if (componentName === 'CRUD') {
+          return
+        }
         const path = require('@/design/components' + filePath.split('.')[1])
 
         ComponentRegisterCenter.register(componentName, path.default)

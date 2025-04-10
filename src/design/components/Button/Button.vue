@@ -1,10 +1,8 @@
 <template>
   <template v-if="isPermissionBtn">
-    <AuthButton :code="permissionCode">
-      <ElButton v-bind="props" @click="handleClick" :loading="loading">
-        {{ content }}
-      </ElButton>
-    </AuthButton>
+    <ElButton v-bind="props" @click="handleClick" :loading="loading">
+      {{ content }}
+    </ElButton>
   </template>
   <ElButton v-else v-bind="props" @click="handleClick" :loading="loading">
     {{ content }}
@@ -14,7 +12,6 @@
 <script setup lang="ts">
 import { computed, defineEmits, defineExpose, ref } from 'vue'
 import { ButtonProps } from './props'
-import { AuthButton } from 'am-admin-component'
 
 const props = withDefaults(defineProps<ButtonProps>(), {
   content: 'hello',

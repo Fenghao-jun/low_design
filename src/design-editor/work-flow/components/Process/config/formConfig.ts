@@ -1,8 +1,8 @@
 import { computed, Ref } from 'vue'
-import { IFromItem } from 'am-admin-component'
+// import { IFromItem } from 'am-admin-component'
 
 export const useEditForm = (formData, templateList: Ref<any[]>) => {
-  const useEditFormItem = computed<IFromItem[]>(() => {
+  const useEditFormItem = computed<any[]>(() => {
     return [
       {
         label: '流程节点标题:',

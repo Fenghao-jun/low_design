@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import { ElDropdown } from 'element-plus'
 
 interface ContentMenuProps {
@@ -49,7 +49,6 @@ const showDropDown = () => {
 const hiddenDropDown = () => {
   dropDownRef.value?.handleClose()
 }
-
 defineExpose({
   showDropDown,
   hiddenDropDown

@@ -26,7 +26,6 @@ onErrorCaptured((...rest) => {
   console.log('[onErrorCaptured] ', ...rest)
   emits('error', { ...rest })
 })
-
 const handleRef = (el: any) => {
   setComponentRef((attr as Record<string, any>)._id, el)
 }

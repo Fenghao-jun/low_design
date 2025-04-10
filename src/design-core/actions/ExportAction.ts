@@ -63,7 +63,7 @@ export class ExportAction implements RendererAction {
             ...initEventData,
             ...requestParams
           }
-        })
+        } as any)
       } else {
         // 等待流
         const merge = {
@@ -87,7 +87,7 @@ export class ExportAction implements RendererAction {
           url,
           responseType: 'blob',
           data
-        })
+        } as any)
       }
     } catch (error) {
       excelEventFlow(

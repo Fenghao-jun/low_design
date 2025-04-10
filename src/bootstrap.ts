@@ -10,11 +10,11 @@ import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import './styles/main.scss'
 import { createPinia } from 'pinia'
-import { usePermission } from 'am-admin-hooks'
+// import { usePermission } from 'am-admin-hooks'
 
-const { provideAuthButton, setGlobalState } = usePermission()
+// const { provideAuthButton, setGlobalState } = usePermission()
 
-setGlobalState?.()
+// setGlobalState?.()
 // import VueTinymce from '@packy-tang/vue-tinymce'
 
 let router: any = null
@@ -61,7 +61,7 @@ export async function bootstrap() {
 
 export async function mount(props: any) {
   render(props)
-  provideAuthButton(instance, props)
+  // provideAuthButton(instance, props)
   instance.config.globalProperties.$onGlobalStateChange =
     props.onGlobalStateChange
   instance.config.globalProperties.$setGlobalState = props.setGlobalState

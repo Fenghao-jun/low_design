@@ -1,5 +1,5 @@
 import { computed, Ref } from 'vue'
-import { IFromItem } from 'am-admin-component'
+// import { IFromItem } from 'am-admin-component'
 
 export const useEditForm = (
   formData,
@@ -8,8 +8,8 @@ export const useEditForm = (
   business: Ref<any[]>,
   sceneStatus: Ref<any[]>
 ) => {
-  console.log('111',formData.value.flowScene)
-  const useEditFormItem = computed<IFromItem[]>(() => {
+  console.log('111', formData.value.flowScene)
+  const useEditFormItem = computed<any[]>(() => {
     return [
       {
         label: '流程名称:',
@@ -112,7 +112,7 @@ export const useEditForm = (
         slotName: 'flowEvent',
         field: 'flowEvent',
         hidden: formData.value.flowScene !== 'FRANCHISEE_EXIT'
-      },
+      }
     ]
   })
 

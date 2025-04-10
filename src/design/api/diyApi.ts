@@ -6,17 +6,17 @@ const DIY_API = '/diy-api'
 export const getTabbarConfig = () =>
   request.get({
     url: DIY_API + '/admin/tabbar/getTabbarConfig'
-  })
+  } as any)
 
 // 查询是否存在首页装修页
 export const checkSetIndexPage = () =>
   request.get({
     url: DIY_API + '/admin/tabbar/checkSetIndexPage'
-  })
+  } as any)
 
 export interface saveType {
   config: string
 }
 // 保存标签配置
 export const saveTabbarConfig = (data: saveType) =>
-  request.post({ url: DIY_API + '/admin/tabbar/saveTabbarConfig', data })
+  request.post({ url: DIY_API + '/admin/tabbar/saveTabbarConfig', data } as any)

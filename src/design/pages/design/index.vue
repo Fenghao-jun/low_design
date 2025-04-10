@@ -16,6 +16,7 @@ import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { usePageDataStore } from '@core/store/page-data'
 import { Variable } from '@core/types/index'
+import { pageData } from './pageData'
 
 const store = usePageDataStore()
 
@@ -26,11 +27,11 @@ const pageConfig = ref({
 const loadingPage = ref(true)
 
 const initPageConfig = async (pageId: string) => {
-  const res = await getPageConfig(pageId)
+  // const res = await getPageConfig(pageId)
 
-  initializePageData(res.data.pageData)
+  initializePageData(pageData.pageData)
 
-  pageConfig.value = res.data as any
+  pageConfig.value = pageData as any
   loadingPage.value = false
 }
 
